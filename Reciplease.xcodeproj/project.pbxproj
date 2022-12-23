@@ -103,10 +103,9 @@
 			children = (
 				BC2BD7FD2955D7500030016C /* AppDelegate.swift */,
 				BC2BD7FF2955D7500030016C /* SceneDelegate.swift */,
-				BC2BD8012955D7500030016C /* ViewController.swift */,
-				BC2BD8032955D7500030016C /* Main.storyboard */,
-				BC2BD8092955D7510030016C /* Assets.xcassets */,
-				BC2BD80B2955D7510030016C /* LaunchScreen.storyboard */,
+				BC2BD8312955E0850030016C /* Controller */,
+				BC2BD8322955E0910030016C /* View */,
+				BC2BD8332955E09E0030016C /* Files */,
 				BC2BD80E2955D7510030016C /* Info.plist */,
 				BC2BD8062955D7500030016C /* Reciplease.xcdatamodeld */,
 			);
@@ -128,6 +127,31 @@
 				BC2BD8232955D7510030016C /* RecipleaseUITestsLaunchTests.swift */,
 			);
 			path = RecipleaseUITests;
+			sourceTree = "<group>";
+		};
+		BC2BD8312955E0850030016C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BD8012955D7500030016C /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC2BD8322955E0910030016C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BD8032955D7500030016C /* Main.storyboard */,
+				BC2BD80B2955D7510030016C /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BC2BD8332955E09E0030016C /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BD8092955D7510030016C /* Assets.xcassets */,
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
