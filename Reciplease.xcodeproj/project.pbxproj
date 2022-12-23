@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		BC2BD7FE2955D7500030016C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD7FD2955D7500030016C /* AppDelegate.swift */; };
 		BC2BD8002955D7500030016C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD7FF2955D7500030016C /* SceneDelegate.swift */; };
-		BC2BD8022955D7500030016C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8012955D7500030016C /* ViewController.swift */; };
+		BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8012955D7500030016C /* FridgeViewController.swift */; };
 		BC2BD8052955D7500030016C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC2BD8032955D7500030016C /* Main.storyboard */; };
 		BC2BD8082955D7500030016C /* Reciplease.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8062955D7500030016C /* Reciplease.xcdatamodeld */; };
 		BC2BD80A2955D7510030016C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC2BD8092955D7510030016C /* Assets.xcassets */; };
@@ -17,6 +17,9 @@
 		BC2BD8182955D7510030016C /* RecipleaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8172955D7510030016C /* RecipleaseTests.swift */; };
 		BC2BD8222955D7510030016C /* RecipleaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8212955D7510030016C /* RecipleaseUITests.swift */; };
 		BC2BD8242955D7510030016C /* RecipleaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8232955D7510030016C /* RecipleaseUITestsLaunchTests.swift */; };
+		BC2BD835295615620030016C /* RecipeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD834295615620030016C /* RecipeListViewController.swift */; };
+		BC2BD837295615DE0030016C /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD836295615DD0030016C /* Recipe.swift */; };
+		BC2BD83929561CB10030016C /* Fridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD83829561CB10030016C /* Fridge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +43,7 @@
 		BC2BD7FA2955D7500030016C /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2BD7FD2955D7500030016C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC2BD7FF2955D7500030016C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BC2BD8012955D7500030016C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BC2BD8012955D7500030016C /* FridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
 		BC2BD8042955D7500030016C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BC2BD8072955D7500030016C /* Reciplease.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reciplease.xcdatamodel; sourceTree = "<group>"; };
 		BC2BD8092955D7510030016C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +54,9 @@
 		BC2BD81D2955D7510030016C /* RecipleaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipleaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2BD8212955D7510030016C /* RecipleaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseUITests.swift; sourceTree = "<group>"; };
 		BC2BD8232955D7510030016C /* RecipleaseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BC2BD834295615620030016C /* RecipeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewController.swift; sourceTree = "<group>"; };
+		BC2BD836295615DD0030016C /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		BC2BD83829561CB10030016C /* Fridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fridge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				BC2BD7FD2955D7500030016C /* AppDelegate.swift */,
+				BC2BD836295615DD0030016C /* Recipe.swift */,
+				BC2BD83829561CB10030016C /* Fridge.swift */,
 				BC2BD7FF2955D7500030016C /* SceneDelegate.swift */,
 				BC2BD8312955E0850030016C /* Controller */,
 				BC2BD8322955E0910030016C /* View */,
@@ -132,7 +140,8 @@
 		BC2BD8312955E0850030016C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BC2BD8012955D7500030016C /* ViewController.swift */,
+				BC2BD8012955D7500030016C /* FridgeViewController.swift */,
+				BC2BD834295615620030016C /* RecipeListViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -285,8 +294,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC2BD835295615620030016C /* RecipeListViewController.swift in Sources */,
 				BC2BD8082955D7500030016C /* Reciplease.xcdatamodeld in Sources */,
-				BC2BD8022955D7500030016C /* ViewController.swift in Sources */,
+				BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */,
+				BC2BD837295615DE0030016C /* Recipe.swift in Sources */,
+				BC2BD83929561CB10030016C /* Fridge.swift in Sources */,
 				BC2BD7FE2955D7500030016C /* AppDelegate.swift in Sources */,
 				BC2BD8002955D7500030016C /* SceneDelegate.swift in Sources */,
 			);

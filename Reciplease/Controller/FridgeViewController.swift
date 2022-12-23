@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FridgeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
