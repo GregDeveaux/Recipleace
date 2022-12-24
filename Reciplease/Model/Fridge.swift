@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Fridge {
-    var ingredients: [String]
+struct StuffOfFridge {
+    var stuff: String
     var number: Int
 }

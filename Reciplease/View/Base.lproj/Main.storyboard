@@ -65,6 +65,9 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Search for recipes">
                                     <color key="baseBackgroundColor" red="0.34962487219999999" green="0.57332998509999999" blue="0.38371044399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tappedSearchRecipes:" destination="DDW-gg-OnG" eventType="touchUpInside" id="DGT-Oh-XcE"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6AK-vb-9jA">
                                 <rect key="frame" x="0.0" y="117.5" width="375" height="120"/>
@@ -105,6 +108,9 @@
                                                 <buttonConfiguration key="configuration" style="filled" title="Add">
                                                     <color key="baseBackgroundColor" red="0.34962487219999999" green="0.57332998509999999" blue="0.38371044399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="tappedAddStuffsFromFridge:" destination="DDW-gg-OnG" eventType="touchUpInside" id="ZYO-ou-mdE"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -148,31 +154,39 @@
                                         <buttonConfiguration key="configuration" style="filled" title="Clear">
                                             <color key="baseBackgroundColor" red="0.34962487219999999" green="0.57332998509999999" blue="0.38371044399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="tappedClearAllStuffsFromFridge:" destination="DDW-gg-OnG" eventType="touchUpInside" id="fTQ-4P-K5r"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MdI-ah-ifZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="25" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MdI-ah-ifZ">
                                 <rect key="frame" x="20" y="312" width="335" height="216"/>
                                 <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="xMb-xW-mKr" style="IBUITableViewCellStyleDefault" id="tno-7R-Cd2">
-                                        <rect key="frame" x="0.0" y="50" width="335" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StuffsFromFridge" textLabel="xMb-xW-mKr" style="IBUITableViewCellStyleDefault" id="tno-7R-Cd2">
+                                        <rect key="frame" x="0.0" y="50" width="335" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tno-7R-Cd2" id="8eb-vC-XLl">
-                                            <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xMb-xW-mKr">
-                                                    <rect key="frame" x="16" y="0.0" width="303" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="303" height="25"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="DDW-gg-OnG" id="rNI-Ox-fMg"/>
+                                    <outlet property="delegate" destination="DDW-gg-OnG" id="fOx-d6-oot"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uei-bU-NdV"/>
@@ -198,6 +212,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="vZs-kT-hhX"/>
                     <connections>
+                        <outlet property="addButton" destination="AdK-sm-PTM" id="iiY-cx-Ys1"/>
+                        <outlet property="addStuffsFromFridgeTextField" destination="1jX-Z0-6uh" id="O48-At-43r"/>
+                        <outlet property="clearButton" destination="xqu-Qs-nqj" id="bFl-h2-hXY"/>
+                        <outlet property="listOfStuffsFromFridgeTableView" destination="MdI-ah-ifZ" id="w8P-Dn-HS2"/>
+                        <outlet property="searchRecipes" destination="fjI-rW-JF5" id="gEQ-bl-0Dv"/>
                         <segue destination="ewp-Pr-JLI" kind="show" id="bMK-SJ-1JV"/>
                     </connections>
                 </viewController>
@@ -298,6 +317,16 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="sro-4j-IFJ"/>
                                 </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="F8e-Ry-ZLX">
+                                        <rect key="frame" x="0.0" y="50" width="335" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="F8e-Ry-ZLX" id="CEa-Ur-deG">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTt-A4-Ncs">
                                 <rect key="frame" x="20" y="356.5" width="335" height="23.5"/>
