@@ -21,6 +21,8 @@
 		BC2BD837295615DE0030016C /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD836295615DD0030016C /* Recipe.swift */; };
 		BC2BD83929561CB10030016C /* Fridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD83829561CB10030016C /* Fridge.swift */; };
 		BC2BD83D295627790030016C /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD83C295627790030016C /* APIKeys.swift */; };
+		BC6F56F32959065D0003E73A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6F56F22959065D0003E73A /* API.swift */; };
+		BC93A98A295889A7004DCE13 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93A989295889A7004DCE13 /* UIViewController+Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		BC2BD836295615DD0030016C /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		BC2BD83829561CB10030016C /* Fridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fridge.swift; sourceTree = "<group>"; };
 		BC2BD83C295627790030016C /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		BC6F56F22959065D0003E73A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		BC93A989295889A7004DCE13 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 			children = (
 				BC2BD8012955D7500030016C /* FridgeViewController.swift */,
 				BC2BD834295615620030016C /* RecipeListViewController.swift */,
+				BC93A989295889A7004DCE13 /* UIViewController+Alert.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 		BC2BD83B2956238B0030016C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BC6F56F22959065D0003E73A /* API.swift */,
 				BC2BD836295615DD0030016C /* Recipe.swift */,
 				BC2BD83829561CB10030016C /* Fridge.swift */,
 			);
@@ -316,6 +322,8 @@
 				BC2BD835295615620030016C /* RecipeListViewController.swift in Sources */,
 				BC2BD8082955D7500030016C /* Reciplease.xcdatamodeld in Sources */,
 				BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */,
+				BC93A98A295889A7004DCE13 /* UIViewController+Alert.swift in Sources */,
+				BC6F56F32959065D0003E73A /* API.swift in Sources */,
 				BC2BD837295615DE0030016C /* Recipe.swift in Sources */,
 				BC2BD83929561CB10030016C /* Fridge.swift in Sources */,
 				BC2BD7FE2955D7500030016C /* AppDelegate.swift in Sources */,

@@ -213,10 +213,10 @@
                     <navigationItem key="navigationItem" id="vZs-kT-hhX"/>
                     <connections>
                         <outlet property="addButton" destination="AdK-sm-PTM" id="iiY-cx-Ys1"/>
-                        <outlet property="addStuffsFromFridgeTextField" destination="1jX-Z0-6uh" id="O48-At-43r"/>
                         <outlet property="clearButton" destination="xqu-Qs-nqj" id="bFl-h2-hXY"/>
                         <outlet property="listOfStuffsFromFridgeTableView" destination="MdI-ah-ifZ" id="w8P-Dn-HS2"/>
                         <outlet property="searchRecipes" destination="fjI-rW-JF5" id="gEQ-bl-0Dv"/>
+                        <outlet property="stuffsFromFridgeTextField" destination="1jX-Z0-6uh" id="4ti-df-lJs"/>
                         <segue destination="ewp-Pr-JLI" kind="show" id="bMK-SJ-1JV"/>
                     </connections>
                 </viewController>
