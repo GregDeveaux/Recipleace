@@ -1,5 +1,5 @@
 //
-//  RecipeListViewController.swift
+//  RecipeDetailViewController.swift
 //  Reciplease
 //
 //  Created by Greg-Mini on 23/12/2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecipeListViewController: UIViewController {
+class RecipeDetailViewController: UIViewController {
 
     
     override func viewDidLoad() {

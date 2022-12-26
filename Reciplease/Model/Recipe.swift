@@ -5,13 +5,13 @@
 //  Created by Greg-Mini on 23/12/2022.
 //
 
-import Foundation
+import UIKit 
 
 struct Recipe {
     let title: String
-    let image: String
+    let image: UIImage
     let ingredients: [String]
-    let duration: Int
+    let durationInMinutes: Int
     let note: Int
-    let favorite: Bool
+    let favorite: Bool = false
 }
