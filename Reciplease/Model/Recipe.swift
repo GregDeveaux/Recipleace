@@ -9,9 +9,9 @@ import UIKit
 
 struct Recipe {
     let title: String
-    let image: UIImage
-    let ingredients: [String]
+    let image: String
+    let ingredients: [Ingredient]
     let durationInMinutes: Int
-    let note: Int
+    let note: Int?
     let favorite: Bool = false
 }

@@ -65,7 +65,54 @@ class FridgeViewController: UIViewController {
 
     @IBAction func tappedSearchRecipes(_ sender: Any) {
         // send stuff to recover the possible recipes
-        
+        API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
+
+            var listOfRecipesFounded: [Recipe] = []
+
+            switch result {
+                case .success(let recipes):
+                        let recipesFrom = recipes.from
+                        let recipesTo = recipes.to
+                        let recipesTotal = recipes.total
+                        print("✅ FRIDGE_VC: \(recipesTotal) recipes founded")
+                        dump(recipes)
+
+                        for recipe in recipes.founded {
+                            let title = recipe.recipe.title
+                            let image = recipe.recipe.image
+
+                            let totalTime = Int(recipe.recipe.totalTime)
+
+                            var ingredients: [Ingredient] = {
+                                let ingredientsReceive = recipe.recipe.ingredients
+                                var ingredients: [Ingredient] = []
+                                for ingredient in ingredientsReceive {
+                                    let newIngredient = Ingredient(foodCategory: ingredient.foodCategory, image: ingredient.image, weight: ingredient.weight, food: ingredient.food)
+                                    ingredients.append(newIngredient)
+                                }
+                                return ingredients
+                            }()
+
+                            let recipeFounded = Recipe(title: title, image: image, ingredients: ingredients, durationInMinutes: totalTime, note: nil)
+                            listOfRecipesFounded.append(recipeFounded)
+                        }
+
+                    self.performSegue(withIdentifier: "SegueListOfRecipe", sender: listOfRecipesFounded)
+
+                case .failure(let error):
+                    self.presentAlert(with: "Sorry, there was a problem, please try again")
+                    print("🛑 FRIDGE_VC: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueListOfRecipe" {
+            let destinationController = segue.destination as? RecipesTableViewController
+            guard let recipe = sender as? Recipe else { return }
+            destinationController?.listOfRecipes.append(recipe)
+            destinationController?.listOfRecipesTableView.reloadData()
+        }
     }
 
 }

@@ -9,15 +9,15 @@ import UIKit
 
 class RecipesTableViewController: UITableViewController {
 
-    var listOfRecipes: [Recipe] = [
-        Recipe(title: "Pizza", image: UIImage(named: "Pizza")!, ingredients: ["Mozzarella", "Basil", "Tomato"], durationInMinutes: 10, note: 5),
-        Recipe(title: "Pizza", image: UIImage(named: "Pizza")!, ingredients: ["Mozzarella", "Basil", "Tomato"], durationInMinutes: 10, note: 5),
-        Recipe(title: "Pizza", image: UIImage(named: "Pizza")!, ingredients: ["Mozzarella", "Basil", "Tomato"], durationInMinutes: 10, note: 5)
-    ]
+    var listOfRecipes: [Recipe] = []
 
+    @IBOutlet var listOfRecipesTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        listOfRecipesTableView.delegate = self
+        listOfRecipesTableView.dataSource = self
     }
 
     // MARK: - Table view data source
@@ -39,7 +39,7 @@ class RecipesTableViewController: UITableViewController {
 
         cell.titleLabel.text = listOfRecipes[indexPath.row].title
 //        cell.ingredientsLabel.text = listOfRecipes[indexPath.row].ingredients
-        cell.recipeImage.image = listOfRecipes[indexPath.row].image
+        cell.recipeImage.image = UIImage(named: listOfRecipes[indexPath.row].image) 
 
         return cell
     }

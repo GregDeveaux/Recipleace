@@ -14,66 +14,80 @@ struct API {
     }
 
         //MARK: - Edaman API Recipes
-    enum RecipesEdamam {
+    enum Edamam {
             // number found and recipes
-        struct Details: Decodable {
-            var recipeFrom: Int
-            var recipeTo: Int
-            var totalRecipes: Int
-            var otherRecipes: ShowOtherRecipes
-            var recipesFounded: [RecipesFounded]
+        struct Recipes: Decodable {
+            let from: Int
+            let to: Int
+            let total: Int
+            let otherRecipes: ShowOtherRecipes
+            let founded: [RecipesFounded]
 
             enum CodingKeys: String, CodingKey {
-                case recipeFrom = "from"
-                case recipeTo = "to"
-                case totalRecipes = "count"
+                case from
+                case to
+                case total = "count"
                 case otherRecipes = "_links"
-                case recipesFounded = "hits"
+                case founded = "hits"
             }
+        }
+
+        struct RecipesFounded: Decodable {
+            let recipe: DetailsRecipes
         }
 
         struct ShowOtherRecipes: Decodable {
-            var before: Links
-            var next: Links
+            let before: Links?
+            let next: Links
+
+            enum CodingKeys: String, CodingKey {
+                case before = "self"
+                case next
+            }
 
             struct Links: Decodable {
-                var href: String
+                let href: String
             }
         }
 
 
-        struct RecipesFounded: Decodable {
-            var uri: String
-            var title: String
-            var image: String
-            var source: String
-            var sourceUrl: String
-            var numberOfPieces: String
-            var healthLabels: [String]
-            var cautions: [String]
-            var ingredients: [Ingredients]
-            var calories: Double
-            var totalTime: Double
-            var cuisineType: String
-            var mealType: String
+        struct DetailsRecipes: Decodable {
+            let uri: String
+            let title: String
+            let image: String
+            let source: String
+            let sourceUrl: String
+            let numberOfPieces: Double
+            let healthLabels: [String]
+            let cautions: [String]
+            let ingredients: [Ingredients]
+            let calories: Double
+            let totalTime: Double
+            let cuisineType: [String]
+            let mealType: [String]
 
             enum CodingKeys: String, CodingKey {
-                case uri, image, source, totalTime
+                case uri
                 case title = "label"
+                case image
+                case source
                 case sourceUrl = "url"
                 case numberOfPieces = "yield"
-                case ingredients, cuisineType, mealType
-                case healthLabels, cautions, calories
+                case healthLabels
+                case cautions
+                case ingredients
+                case calories
+                case totalTime
+                case cuisineType
+                case mealType
             }
-            
-
         }
 
         struct Ingredients: Decodable {
-            var image: String
-            var weight: Double
-            var food: String
-            var foodCategory: String
+            let image: String
+            let weight: Double
+            let food: String
+            let foodCategory: String
         }
     }
 
@@ -92,20 +106,28 @@ struct API {
     }
 
     enum EndPoint {
+        case recipes(stuffs: [String])
+
         var url: URL {
             var components = URLComponents()
-
             components.scheme = "https"
-            components.host = "api.edamam.com"
-            components.path = "/api/recipes/v2"
-            components.queryItems = [
-                URLQueryItem(name: "type", value: "public"),
-                URLQueryItem(name: "q", value: ""),
-                URLQueryItem(name: "app_id", value: APIKeys.IdValue.rawValue),
-                URLQueryItem(name: "app_key", value: APIKeys.keyValue.rawValue)
-            ]
 
-            return components.url!
+            switch self {
+                case .recipes(let stuffs):
+                    components.host = "api.edamam.com"
+                    components.path = "/api/recipes/v2"
+                    components.queryItems = [
+                        URLQueryItem(name: "type", value: "public"),
+                        URLQueryItem(name: "q", value: "\(stuffs)"),
+                        URLQueryItem(name: "app_id", value: APIKeys.IdValue.rawValue),
+                        URLQueryItem(name: "app_key", value: APIKeys.keyValue.rawValue)
+                    ]
+            }
+            guard let url = components.url else {
+                preconditionFailure("🛑 ENDPOINT: Invalid URL components: \(components) ")
+            }
+
+            return url
         }
     }
 }
