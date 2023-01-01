@@ -9,23 +9,22 @@ import UIKit
 
 class FridgeViewController: UIViewController {
 
-    //MARK: - properties
+    //MARK: properties
     var listOfStuffsFromFridge: [String] = ["orange", "lemon"]
 
-    //MARK: - IBOutlet
+    //MARK: outlet
     @IBOutlet weak var stuffsFromFridgeTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var searchRecipes: UIButton!
-    
     @IBOutlet weak var listOfStuffsFromFridgeTableView: UITableView!
 
-        //MARK: - view did load
+        //MARK: view did load
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-        //MARK: - actions
+        //MARK: actions
     @IBAction func tappedAddStuffsFromFridge(_ sender: Any) {
         addStuffFromFridgeInTheList()
     }
@@ -36,6 +35,7 @@ class FridgeViewController: UIViewController {
                 // if the textField is empty give the user alert
             return presentAlert(with: "Please enter the stuff \n before tapped Add button, \n thank you 😃")
         }
+
             // add a new stuff of fridge in the array of the list
         listOfStuffsFromFridge.append(newStuff)
 
@@ -47,8 +47,8 @@ class FridgeViewController: UIViewController {
         listOfStuffsFromFridgeTableView.insertRows(at: [indexPath], with: .top)
         listOfStuffsFromFridgeTableView.endUpdates()
 
-            // reveal inside tableView in debug
-        print("✅ FRIDGE_VC: stuff added: \(newStuff)")
+            // reveal the inside of the tableView in debug
+        print("✅ FRIDGE_VC/ADD: stuff added: \(newStuff)")
         dump(listOfStuffsFromFridge)
 
             // reinit a add stuffsFromFridgeTextField empty for new stuff
@@ -59,6 +59,7 @@ class FridgeViewController: UIViewController {
     @IBAction func tappedClearAllStuffsFromFridge(_ sender: Any) {
             // delete the whole stuffs of the list
         listOfStuffsFromFridge.removeAll()
+        print("✅ FRIDGE_VC/CLEAR: all stuffs deleted: \(listOfStuffsFromFridge)")
             // delete the whole stuffs of the tableView
         listOfStuffsFromFridgeTableView.reloadData()
     }
@@ -71,37 +72,40 @@ class FridgeViewController: UIViewController {
 
             switch result {
                 case .success(let recipes):
-                        let recipesFrom = recipes.from
-                        let recipesTo = recipes.to
-                        let recipesTotal = recipes.total
-                        print("✅ FRIDGE_VC: \(recipesTotal) recipes founded")
-                        dump(recipes)
+                    let recipesFrom = recipes.from
+                    let recipesTo = recipes.to
+                    let recipesTotal = recipes.total
+                    print("✅ FRIDGE_VC/SEARCH: \(recipesTotal) recipes founded")
+                    dump(recipes)
 
-                        for recipe in recipes.founded {
-                            let title = recipe.recipe.title
-                            let image = recipe.recipe.image
+                    for recipe in recipes.founded {
+                        let title = recipe.recipe.title
 
-                            let totalTime = Int(recipe.recipe.totalTime)
+                        let urlString = recipe.recipe.image
+                        guard let imageURL = URL(string: urlString) else { return }
+                        let image = imageURL
 
-                            var ingredients: [Ingredient] = {
-                                let ingredientsReceive = recipe.recipe.ingredients
-                                var ingredients: [Ingredient] = []
-                                for ingredient in ingredientsReceive {
-                                    let newIngredient = Ingredient(foodCategory: ingredient.foodCategory, image: ingredient.image, weight: ingredient.weight, food: ingredient.food)
-                                    ingredients.append(newIngredient)
-                                }
-                                return ingredients
-                            }()
+                        let totalTime = Int(recipe.recipe.totalTime)
 
-                            let recipeFounded = Recipe(title: title, image: image, ingredients: ingredients, durationInMinutes: totalTime, note: nil)
-                            listOfRecipesFounded.append(recipeFounded)
-                        }
+                        let ingredients: [Ingredient] = {
+                            let ingredientsReceive = recipe.recipe.ingredients
+                            var ingredients: [Ingredient] = []
+                            for ingredient in ingredientsReceive {
+                                let newIngredient = Ingredient(foodCategory: ingredient.foodCategory, image: ingredient.image, weight: ingredient.weight, food: ingredient.food)
+                                ingredients.append(newIngredient)
+                            }
+                            return ingredients
+                        }()
+
+                        let recipeFounded = Recipe(title: title, image: urlString, ingredients: ingredients, durationInMinutes: totalTime, note: nil)
+                        listOfRecipesFounded.append(recipeFounded)
+                    }
 
                     self.performSegue(withIdentifier: "SegueListOfRecipe", sender: listOfRecipesFounded)
 
                 case .failure(let error):
                     self.presentAlert(with: "Sorry, there was a problem, please try again")
-                    print("🛑 FRIDGE_VC: \(error.localizedDescription)")
+                    print("🛑 FRIDGE_VC/SEARCH: \(error.localizedDescription)")
             }
         }
     }
@@ -111,6 +115,7 @@ class FridgeViewController: UIViewController {
             let destinationController = segue.destination as? RecipesTableViewController
             guard let recipe = sender as? Recipe else { return }
             destinationController?.listOfRecipes.append(recipe)
+            print("✅ FRIDGE_VC/SEGUE: \(String(describing: destinationController?.listOfRecipes))")
             destinationController?.listOfRecipesTableView.reloadData()
         }
     }

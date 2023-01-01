@@ -9,8 +9,33 @@ import UIKit
 
 class RecipesTableViewController: UITableViewController {
 
-    var listOfRecipes: [Recipe] = []
+        //MARK: properties
+    var listOfRecipes: [Recipe] = [Recipe(title: "Citrus Glaze recipes",
+                                          image: "Pizza",
+                                          ingredients: [Ingredient(foodCategory: "sugars",
+                                                                   image: "https://www.edamam.com/food-img/290/290624aa4c0e279551e462443e38bb40.jpg",
+                                                                   weight: 150.0,
+                                                                   food: "confectioners\' sugar"),
+                                                        Ingredient(foodCategory: "fruit",
+                                                                   image: "https://www.edamam.com/food-img/8ea/8ea264a802d6e643c1a340a77863c6ef.jpg",
+                                                                   weight: 0.937500000047551,
+                                                                   food: "orange")],
+                                          durationInMinutes: 15,
+                                          note: 5),
+                                   Recipe(title: "Pizza",
+                                          image: "Pizza",
+                                          ingredients: [Ingredient(foodCategory: "sugars",
+                                                                   image: "https://www.edamam.com/food-img/290/290624aa4c0e279551e462443e38bb40.jpg",
+                                                                   weight: 150.0,
+                                                                   food: "confectioners\' sugar"),
+                                                        Ingredient(foodCategory: "fruit",
+                                                                   image: "https://www.edamam.com/food-img/8ea/8ea264a802d6e643c1a340a77863c6ef.jpg",
+                                                                   weight: 0.937500000047551,
+                                                                   food: "orange")],
+                                          durationInMinutes: 15,
+                                          note: 5)]
 
+        //MARK: outlets
     @IBOutlet var listOfRecipesTableView: UITableView!
     
     override func viewDidLoad() {
@@ -21,8 +46,7 @@ class RecipesTableViewController: UITableViewController {
         listOfRecipesTableView.dataSource = self
     }
 
-    // MARK: - Table view data source
-
+        // MARK: table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -39,7 +63,9 @@ class RecipesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
         cell.titleLabel.text = listOfRecipes[indexPath.row].title
-//        cell.ingredientsLabel.text = listOfRecipes[indexPath.row].ingredients
+        listOfRecipes[indexPath.row].ingredients.forEach({ ingredient in
+            cell.ingredientsLabel.text = ingredient.food
+        })
         cell.recipeImage.image = UIImage(named: listOfRecipes[indexPath.row].image) 
 
         return cell

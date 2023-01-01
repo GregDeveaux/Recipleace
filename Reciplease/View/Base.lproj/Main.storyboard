@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FLK-DL-ngA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fkZ-cU-Hmb">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -82,12 +82,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVD-zC-p1s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2248.8000000000002" y="-457.42128935532236"/>
+            <point key="canvasLocation" x="2210" y="-470"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Recipe Detail Table View Controller-->
         <scene sceneID="Ff0-id-SoX">
             <objects>
-                <tableViewController id="m4y-mH-16k" sceneMemberID="viewController">
+                <tableViewController id="m4y-mH-16k" customClass="RecipeDetailTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="bLy-7t-0Kc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,7 +130,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sxf-DB-0pj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3009" y="-457"/>
+            <point key="canvasLocation" x="3049" y="-470"/>
         </scene>
         <!--Fridge View Controller-->
         <scene sceneID="n6l-ks-fbd">
@@ -174,6 +174,9 @@
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lemon, Cheese, Sausage..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1jX-Z0-6uh">
                                                         <rect key="frame" x="0.0" y="0.0" width="235" height="32"/>
+                                                        <accessibility key="accessibilityConfiguration">
+                                                            <accessibilityTraits key="traits" searchField="YES"/>
+                                                        </accessibility>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -307,7 +310,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NdK-RE-CDu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1501.5999999999999" y="-456.52173913043481"/>
+            <point key="canvasLocation" x="1390" y="-470"/>
         </scene>
         <!--Search-->
         <scene sceneID="vKH-yt-idu">
@@ -328,24 +331,47 @@
             <point key="canvasLocation" x="543" y="-470"/>
         </scene>
         <!--Login View Controller-->
+        <scene sceneID="ALf-EW-0dV">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fkZ-cU-Hmb" customClass="LoginViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fV9-XV-bV2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="5Fx-lY-cG8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <segue destination="FLK-DL-ngA" kind="presentation" identifier="LoginSegueSignUp" modalPresentationStyle="fullScreen" id="gXI-FA-sTE"/>
+                        <segue destination="jC0-yX-VL6" kind="presentation" identifier="LoginSegueTabBar" modalPresentationStyle="fullScreen" id="14n-l3-rGH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UpS-81-tmE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1438" y="-171"/>
+        </scene>
+        <!--Sign Up View Controller-->
         <scene sceneID="268-VG-e6E">
             <objects>
-                <viewController id="FLK-DL-ngA" customClass="LoginViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FLK-DL-ngA" customClass="SignUpViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sa6-Ew-IcM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="183-8l-IkK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="jC0-yX-VL6" kind="presentation" identifier="SignUpSegueTabBar" modalPresentationStyle="fullScreen" id="ECn-sK-zjv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rbt-qT-Jlt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1127" y="-171"/>
+            <point key="canvasLocation" x="-1439" y="568"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cbr-DP-8yg">
             <objects>
                 <tabBarController id="jC0-yX-VL6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="RkF-zi-7r8"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="fill" id="ueB-4z-9lZ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -382,6 +408,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="DlH-LI-L19" kind="relationship" relationship="rootViewController" id="mU3-V1-DKz"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9H-3O-YAs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -472,7 +501,85 @@
             </objects>
             <point key="canvasLocation" x="3890" y="-457"/>
         </scene>
+        <!--Root View Controller-->
+        <scene sceneID="8FZ-8n-vES">
+            <objects>
+                <tableViewController id="DlH-LI-L19" customClass="RecipesTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Fma-Qm-Ov3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oEP-8Y-WMt">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="33.5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="30"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecipeCell" rowHeight="150" id="mAm-xU-oof" customClass="RecipesTableViewCell" customModule="Reciplease" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="83.5" width="375" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mAm-xU-oof" id="8Ta-Yu-dAE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qy1-YA-RCE">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="fJe-dm-Y6T" userLabel="Text Stack View">
+                                            <rect key="frame" x="16" y="86.5" width="343" height="51.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFA-p1-5Th">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="32.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                                    <color key="textColor" systemColor="tintColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of ingredients..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rO8-d1-yf5">
+                                                    <rect key="frame" x="0.0" y="33.5" width="343" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fJe-dm-Y6T" secondAttribute="trailing" id="6ud-po-dcd"/>
+                                        <constraint firstItem="qy1-YA-RCE" firstAttribute="leading" secondItem="8Ta-Yu-dAE" secondAttribute="leading" id="ZVv-mn-t7Z"/>
+                                        <constraint firstItem="fJe-dm-Y6T" firstAttribute="leading" secondItem="8Ta-Yu-dAE" secondAttribute="leadingMargin" id="cij-EJ-WoO"/>
+                                        <constraint firstItem="qy1-YA-RCE" firstAttribute="top" secondItem="8Ta-Yu-dAE" secondAttribute="top" id="m7E-yx-e6x"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fJe-dm-Y6T" secondAttribute="bottom" constant="1" id="oCh-gX-n47"/>
+                                        <constraint firstAttribute="trailing" secondItem="qy1-YA-RCE" secondAttribute="trailing" id="rv1-4g-Tiv"/>
+                                        <constraint firstAttribute="bottom" secondItem="qy1-YA-RCE" secondAttribute="bottom" id="txa-xY-TqK"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ingredientsLabel" destination="rO8-d1-yf5" id="dcV-3T-Y5O"/>
+                                    <outlet property="recipeImage" destination="qy1-YA-RCE" id="aCW-9m-81m"/>
+                                    <outlet property="titleLabel" destination="UFA-p1-5Th" id="HPW-8D-gmR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="DlH-LI-L19" id="RF8-jZ-DFq"/>
+                            <outlet property="delegate" destination="DlH-LI-L19" id="63a-sn-vp9"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="KRS-5B-tij"/>
+                    <connections>
+                        <outlet property="listOfRecipesTableView" destination="Fma-Qm-Ov3" id="ouB-Qs-9po"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g1k-9W-SLC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1390" y="283"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ECn-sK-zjv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
         <systemColor name="systemBackgroundColor">

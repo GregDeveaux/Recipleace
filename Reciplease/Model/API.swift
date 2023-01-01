@@ -98,9 +98,9 @@ struct API {
         var errorDescription: String? {
             switch self {
             case .generic(let reason):
-                return "🛑 Generic error: \(reason)"
+                return "📭 Generic error: \(reason)"
             case .internal(let reason):
-                return "🛑 Interne error: \(reason)"
+                return "📬 Interne error: \(reason)"
             }
         }
     }

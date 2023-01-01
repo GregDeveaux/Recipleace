@@ -28,7 +28,7 @@ extension API {
             var request = URLRequest(url: endpoint.url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
 
             request.httpMethod = method.rawValue
-            print ("✅ QUERY SERVICE: \(request)")
+            print ("✅ QUERY_SERVICE: \(request)")
 
             task?.cancel()
 
@@ -44,13 +44,15 @@ extension API {
                         return
                     }
 
-                    print("✅ QUERY SERVICE: the task received \(String(data: data, encoding: .utf8)!)")
+                    print("✅ QUERY_SERVICE: the task received \(String(data: data, encoding: .utf8)!)")
 
                     let decoder = JSONDecoder()
 
                     do {
                         let decodeData = try decoder.decode(Response.self, from: data)
-                        callback(.success(decodeData))
+                        DispatchQueue.main.async {
+                            callback(.success(decodeData))
+                        }
                     } catch {
                         print("🛑 Decoding error: \(error)")
                         callback(.failure(.internal(reason: "not decode data!")))
