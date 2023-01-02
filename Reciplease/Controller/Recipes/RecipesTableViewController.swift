@@ -9,51 +9,59 @@ import UIKit
 
 class RecipesTableViewController: UITableViewController {
 
-        //MARK: properties
-    var listOfRecipes: [Recipe] = [Recipe(title: "Citrus Glaze recipes",
-                                          image: "Pizza",
-                                          ingredients: [Ingredient(foodCategory: "sugars",
-                                                                   image: "https://www.edamam.com/food-img/290/290624aa4c0e279551e462443e38bb40.jpg",
-                                                                   weight: 150.0,
-                                                                   food: "confectioners\' sugar"),
-                                                        Ingredient(foodCategory: "fruit",
-                                                                   image: "https://www.edamam.com/food-img/8ea/8ea264a802d6e643c1a340a77863c6ef.jpg",
-                                                                   weight: 0.937500000047551,
-                                                                   food: "orange")],
-                                          durationInMinutes: 15,
-                                          note: 5),
-                                   Recipe(title: "Pizza",
-                                          image: "Pizza",
-                                          ingredients: [Ingredient(foodCategory: "sugars",
-                                                                   image: "https://www.edamam.com/food-img/290/290624aa4c0e279551e462443e38bb40.jpg",
-                                                                   weight: 150.0,
-                                                                   food: "confectioners\' sugar"),
-                                                        Ingredient(foodCategory: "fruit",
-                                                                   image: "https://www.edamam.com/food-img/8ea/8ea264a802d6e643c1a340a77863c6ef.jpg",
-                                                                   weight: 0.937500000047551,
-                                                                   food: "orange")],
-                                          durationInMinutes: 15,
-                                          note: 5)]
+        //MARK: - properties
+
+    var listOfStuffsFromFridge: [String] = []
+    var listOfRecipes: [API.Edamam.RecipesFounded] = []
+
+    var isLoadingRecipes = false
+
 
         //MARK: outlets
+
     @IBOutlet var listOfRecipesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print(listOfRecipes)
-        listOfRecipesTableView.delegate = self
-        listOfRecipesTableView.dataSource = self
+        receiveRecipes()
     }
 
-        // MARK: table view data source
+
+        // MARK: - receiveRecipes
+
+    func receiveRecipes() {
+        print("✅ RECIPES_VC/RECEIVE: list of stuffs founded into the fridge sent to the API: \(listOfStuffsFromFridge)")
+        self.isLoadingRecipes = true
+
+        API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
+
+            switch result {
+                case .success(let recipes):
+                    let recipesTotal = recipes.total
+
+                        // we save the data into the array of recipes
+                    self.listOfRecipes = recipes.founded
+                    print("✅ RECIPES_VC/RECEIVE: \(recipesTotal) recipes founded")
+                    dump(self.listOfRecipes)
+                    self.isLoadingRecipes = false
+                    self.listOfRecipesTableView.reloadData()
+
+                case .failure(let error):
+                    self.isLoadingRecipes = false
+                    self.presentAlert(with: "Sorry, there was a problem, please try again")
+                    print("🛑 RECIPES_VC/RECEIVE: \(error.localizedDescription)")
+            }
+        }
+    }
+
+
+        // MARK: - tableView
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return listOfRecipes.count
     }
 
@@ -62,58 +70,24 @@ class RecipesTableViewController: UITableViewController {
         let cellIdentifier = "RecipeCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
-        cell.titleLabel.text = listOfRecipes[indexPath.row].title
-        listOfRecipes[indexPath.row].ingredients.forEach({ ingredient in
+        cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
+        print("✅ RECIPES_VC/TABLEVIEW: 🧁 \(String(describing: cell.titleLabel.text))")
+
+        listOfRecipes[indexPath.row].recipe.ingredients.forEach({ ingredient in
             cell.ingredientsLabel.text = ingredient.food
+            print("✅ RECIPES_VC/TABLEVIEW: 🍓 \(String(describing: cell.ingredientsLabel.text))")
         })
-        cell.recipeImage.image = UIImage(named: listOfRecipes[indexPath.row].image) 
+
+        let urlImage = URL(string: listOfRecipes[indexPath.row].recipe.image)!
+        if let dataImage = try? Data(contentsOf: urlImage) {
+            cell.recipeImage.image = UIImage(data: dataImage)
+        }
+        print("✅ RECIPES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

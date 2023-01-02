@@ -13,7 +13,7 @@
             <objects>
                 <tableViewController id="ewp-Pr-JLI" customClass="RecipesTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="03X-sz-uSq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Srb-3e-RZU">
@@ -31,8 +31,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qLh-ga-Eld">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qLh-ga-Eld">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="150" id="zUQ-VT-hvR"/>
+                                            </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="b7D-tR-Tip" userLabel="Text Stack View">
                                             <rect key="frame" x="16" y="86.5" width="343" height="51.5"/>
@@ -54,10 +57,14 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="b7D-tR-Tip" secondAttribute="trailing" id="0FQ-ZP-UrO"/>
+                                        <constraint firstItem="qLh-ga-Eld" firstAttribute="top" secondItem="gld-PD-BW8" secondAttribute="top" id="7J6-nb-w83"/>
                                         <constraint firstItem="qLh-ga-Eld" firstAttribute="top" secondItem="gld-PD-BW8" secondAttribute="top" id="Emf-kA-s1F"/>
+                                        <constraint firstAttribute="trailing" secondItem="qLh-ga-Eld" secondAttribute="trailing" id="Ha4-u1-Hca"/>
                                         <constraint firstItem="qLh-ga-Eld" firstAttribute="leading" secondItem="gld-PD-BW8" secondAttribute="leading" id="J6K-dp-h9Z"/>
                                         <constraint firstAttribute="trailing" secondItem="qLh-ga-Eld" secondAttribute="trailing" id="SXS-LU-aVF"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="b7D-tR-Tip" secondAttribute="bottom" constant="1" id="VL0-pr-HBd"/>
+                                        <constraint firstAttribute="bottom" secondItem="qLh-ga-Eld" secondAttribute="bottom" id="VUk-HW-ESj"/>
+                                        <constraint firstItem="qLh-ga-Eld" firstAttribute="leading" secondItem="gld-PD-BW8" secondAttribute="leading" id="acU-WO-16w"/>
                                         <constraint firstItem="b7D-tR-Tip" firstAttribute="leading" secondItem="gld-PD-BW8" secondAttribute="leadingMargin" id="ccS-0A-v6h"/>
                                         <constraint firstAttribute="bottom" secondItem="qLh-ga-Eld" secondAttribute="bottom" id="ntE-Cp-zJj"/>
                                     </constraints>
@@ -89,7 +96,7 @@
             <objects>
                 <tableViewController id="m4y-mH-16k" customClass="RecipeDetailTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="bLy-7t-0Kc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kOw-MP-gvH">
@@ -137,7 +144,7 @@
             <objects>
                 <viewController id="DDW-gg-OnG" customClass="FridgeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OoO-A7-kDk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjI-rW-JF5">
@@ -155,7 +162,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6AK-vb-9jA">
-                                <rect key="frame" x="0.0" y="117.5" width="375" height="120"/>
+                                <rect key="frame" x="0.0" y="129.5" width="375" height="120"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's in your fridge ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75e-2P-NRh">
                                         <rect key="frame" x="0.0" y="20" width="375" height="30"/>
@@ -218,13 +225,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6C2-NS-7s9">
-                                <rect key="frame" x="0.0" y="64" width="375" height="33.5"/>
+                                <rect key="frame" x="0.0" y="76" width="375" height="33.5"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="1RT-og-zQB">
-                                <rect key="frame" x="20" y="257.5" width="335" height="34.5"/>
+                                <rect key="frame" x="20" y="269.5" width="335" height="34.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your ingredients:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySW-96-dsT">
                                         <rect key="frame" x="0.0" y="0.0" width="216" height="34.5"/>
@@ -249,7 +256,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="25" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MdI-ah-ifZ">
-                                <rect key="frame" x="20" y="312" width="335" height="216"/>
+                                <rect key="frame" x="20" y="324" width="335" height="204"/>
                                 <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StuffsFromFridge" textLabel="xMb-xW-mKr" style="IBUITableViewCellStyleDefault" id="tno-7R-Cd2">
@@ -318,7 +325,7 @@
                 <navigationController id="ncr-ny-pRy" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" id="yCo-0P-hvD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HeJ-m0-xxp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.34962487219999999" green="0.57332998509999999" blue="0.38371044399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
@@ -341,8 +348,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <segue destination="FLK-DL-ngA" kind="presentation" identifier="LoginSegueSignUp" modalPresentationStyle="fullScreen" id="gXI-FA-sTE"/>
-                        <segue destination="jC0-yX-VL6" kind="presentation" identifier="LoginSegueTabBar" modalPresentationStyle="fullScreen" id="14n-l3-rGH"/>
+                        <segue destination="FLK-DL-ngA" kind="show" identifier="LoginSegueSignUp" id="gXI-FA-sTE"/>
+                        <segue destination="jC0-yX-VL6" kind="show" identifier="LoginSegueTabBar" id="14n-l3-rGH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UpS-81-tmE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -354,13 +361,14 @@
             <objects>
                 <viewController storyboardIdentifier="SignUpViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FLK-DL-ngA" customClass="SignUpViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sa6-Ew-IcM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="183-8l-IkK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="zRz-rI-wa8"/>
                     <connections>
-                        <segue destination="jC0-yX-VL6" kind="presentation" identifier="SignUpSegueTabBar" modalPresentationStyle="fullScreen" id="ECn-sK-zjv"/>
+                        <segue destination="jC0-yX-VL6" kind="show" identifier="SignUpSegueTabBar" id="ECn-sK-zjv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rbt-qT-Jlt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -405,7 +413,7 @@
                 <navigationController id="qJw-BP-JEo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorite" id="C1p-5S-QPf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1y7-E0-sQy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -506,7 +514,7 @@
             <objects>
                 <tableViewController id="DlH-LI-L19" customClass="RecipesTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Fma-Qm-Ov3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oEP-8Y-WMt">

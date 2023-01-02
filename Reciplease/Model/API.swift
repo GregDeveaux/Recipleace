@@ -33,15 +33,15 @@ struct API {
         }
 
         struct RecipesFounded: Decodable {
-            let recipe: DetailsRecipes
+            let recipe: Recipe
         }
 
         struct ShowOtherRecipes: Decodable {
-            let before: Links?
+            let previous: Links?
             let next: Links
 
             enum CodingKeys: String, CodingKey {
-                case before = "self"
+                case previous = "self"
                 case next
             }
 
@@ -50,8 +50,7 @@ struct API {
             }
         }
 
-
-        struct DetailsRecipes: Decodable {
+        struct Recipe: Decodable {
             let uri: String
             let title: String
             let image: String
@@ -91,6 +90,9 @@ struct API {
         }
     }
 
+
+        //MARK: - error
+
     enum Error: LocalizedError {
         case generic(reason: String)
         case `internal`(reason: String)
@@ -104,6 +106,9 @@ struct API {
             }
         }
     }
+
+
+        //MARK: - endpoint
 
     enum EndPoint {
         case recipes(stuffs: [String])
