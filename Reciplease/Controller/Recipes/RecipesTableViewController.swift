@@ -17,12 +17,19 @@ class RecipesTableViewController: UITableViewController {
     var isLoadingRecipes = false
 
 
-        //MARK: outlets
+        //MARK: - outlets
 
     @IBOutlet var listOfRecipesTableView: UITableView!
-    
+
+
+        //MARK: - views
+
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func loadView() {
+        super.loadView()
         receiveRecipes()
     }
 
@@ -62,6 +69,7 @@ class RecipesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("✅ RECIPES_VC/TOTAL_ROWS: \(listOfRecipes.count)")
         return listOfRecipes.count
     }
 
@@ -71,7 +79,7 @@ class RecipesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
         cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
-        print("✅ RECIPES_VC/TABLEVIEW: 🧁 \(String(describing: cell.titleLabel.text))")
+        print("✅ RECIPES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 
         listOfRecipes[indexPath.row].recipe.ingredients.forEach({ ingredient in
             cell.ingredientsLabel.text = ingredient.food
@@ -89,5 +97,12 @@ class RecipesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueDetailRecipe" {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let destinationController = segue.destination as! RecipeDetailViewController
+        }
     }
 }
