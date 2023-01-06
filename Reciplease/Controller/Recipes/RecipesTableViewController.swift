@@ -20,6 +20,7 @@ class RecipesTableViewController: UITableViewController {
         //MARK: - outlets
 
     @IBOutlet var listOfRecipesTableView: UITableView!
+    @IBOutlet weak var totalRecipeLabel: UILabel!
 
 
         //MARK: - views
@@ -45,6 +46,7 @@ class RecipesTableViewController: UITableViewController {
             switch result {
                 case .success(let recipes):
                     let recipesTotal = recipes.total
+                    self.totalRecipeLabel.text = "Total reciepe founded: \(recipesTotal)"
 
                         // we save the data into the array of recipes
                     self.listOfRecipes = recipes.founded
@@ -103,6 +105,10 @@ class RecipesTableViewController: UITableViewController {
         if segue.identifier == "SegueDetailRecipe" {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let destinationController = segue.destination as! RecipeDetailViewController
+            destinationController.recipeForDetails = listOfRecipes[indexPath.row].recipe
+            print("✅ RECIPES_VC/PREPARE: 🍜 \(String(describing: listOfRecipes[indexPath.row].recipe.title))")
+            dump(listOfRecipes[indexPath.row].recipe)
+
         }
     }
 }

@@ -39,7 +39,7 @@ extension RecipeDetailTableViewCell: UICollectionViewDelegate, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "", for: indexPath) as? IngredientsCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IngredientsCell", for: indexPath) as? IngredientsCollectionViewCell else {
             return UICollectionViewCell()
         }
         let urlImage = URL(string: ingredients[indexPath.row].image)!

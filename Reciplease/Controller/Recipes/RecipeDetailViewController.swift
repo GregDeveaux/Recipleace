@@ -9,6 +9,10 @@ import UIKit
 
 class RecipeDetailViewController: UIViewController {
 
+        //MARK: - properties
+
+    var recipeForDetails: API.Edamam.Recipe!
+
         //MARK: - outlets
 
     @IBOutlet weak var recipeDetailTableView: UITableView!
@@ -18,10 +22,10 @@ class RecipeDetailViewController: UIViewController {
             recipeTitleLabel.numberOfLines = 0
         }
     }
-    @IBOutlet weak var mealType: UILabel! {
+    @IBOutlet weak var mealTypeLabel: UILabel! {
         didSet {
-            mealType.layer.cornerRadius = 2.5
-            mealType.layer.masksToBounds = true
+            mealTypeLabel.layer.cornerRadius = 10
+            mealTypeLabel.layer.masksToBounds = true
         }
     }
 
@@ -34,6 +38,8 @@ class RecipeDetailViewController: UIViewController {
         setupNavigationBar()
         recipeDetailTableView.delegate = self
         recipeDetailTableView.dataSource = self
+
+        setupRecipe()
     }
 
     func setupNavigationBar() {
@@ -46,10 +52,18 @@ class RecipeDetailViewController: UIViewController {
         recipeDetailTableView.contentInsetAdjustmentBehavior = .never
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    func setupRecipe() {
+        recipeTitleLabel.text = recipeForDetails.title
+        mealTypeLabel.text = recipeForDetails.mealType[0]
 
+        print("✅ RECIPES_DETAIL_VC/RECEIVED: 🍜 \(String(describing: recipeForDetails.title))")
+        dump(recipeForDetails)
+
+        guard let urlImage = URL(string: recipeForDetails.image) else { return }
+        if let dataImage = try? Data(contentsOf: urlImage) {
+            recipeImageView.image = UIImage(data: dataImage)
+        }
+    }
 }
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -58,7 +72,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,17 +82,12 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             case 0:
                 let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
                 cell.ingredientsLabel.text = "Ingredients"
+                cell.ingredients = recipeForDetails.ingredients
                 return cell
-
-            case 1:
-                let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
-                cell.ingredientsLabel.text = "Ingredients"
-                return cell
-
             default:
-                fatalError("")
+                let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
+                cell.ingredientsLabel.text = "Recipe"
+                return cell
         }
     }
-
-
 }
