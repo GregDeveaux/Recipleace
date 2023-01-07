@@ -28,6 +28,7 @@ class RecipeDetailViewController: UIViewController {
             mealTypeLabel.layer.masksToBounds = true
         }
     }
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
 
 
         //MARK: - view did load
@@ -64,6 +65,18 @@ class RecipeDetailViewController: UIViewController {
             recipeImageView.image = UIImage(data: dataImage)
         }
     }
+    @IBAction func TappedFavorite(_ sender: Any) {
+        if !recipeForDetails.isFavorite {
+            favoriteButton.image = UIImage(systemName: "heart.fill")
+            favoriteButton.tintColor = .red
+            recipeForDetails.isFavorite = true
+        }
+        else {
+            favoriteButton.image = UIImage(systemName: "heart")
+            recipeForDetails.isFavorite = false
+        }
+    }
+
 }
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {

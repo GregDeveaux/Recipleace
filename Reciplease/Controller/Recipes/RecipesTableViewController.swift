@@ -42,7 +42,6 @@ class RecipesTableViewController: UITableViewController {
         self.isLoadingRecipes = true
 
         API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
-
             switch result {
                 case .success(let recipes):
                     let recipesTotal = recipes.total
@@ -77,9 +76,11 @@ class RecipesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
+//        let placeholder = UITableViewPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "RecipeCell", rowHeight: 150)
+//        placeholder.cellUpdateHandler
+
         let cellIdentifier = "RecipeCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
-
         cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
         print("✅ RECIPES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 

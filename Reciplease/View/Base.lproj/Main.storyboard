@@ -581,8 +581,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="ydl-tI-C8x">
                         <barButtonItem key="backBarButtonItem" title=" " id="Sav-2f-Mp8"/>
+                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" id="fwt-yr-WMZ">
+                            <connections>
+                                <action selector="TappedFavorite:" destination="rzM-hP-v4E" id="3uP-8s-RJY"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="fwt-yr-WMZ" id="ng1-sI-FyY"/>
                         <outlet property="mealTypeLabel" destination="gBZ-8n-fSh" id="NVQ-mY-QKq"/>
                         <outlet property="recipeDetailTableView" destination="l0k-75-hQc" id="jaJ-n6-aDh"/>
                         <outlet property="recipeImageView" destination="l7q-V7-fel" id="dhr-DQ-I3o"/>
@@ -676,6 +682,7 @@
     <resources>
         <image name="Pizza" width="1280" height="720"/>
         <image name="firebase_28dp.png" width="56" height="56"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

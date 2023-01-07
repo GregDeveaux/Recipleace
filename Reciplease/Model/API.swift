@@ -64,6 +64,7 @@ struct API {
             let totalTime: Double
             let cuisineType: [String]
             let mealType: [String]
+            var isFavorite: Bool = false
 
             enum CodingKeys: String, CodingKey {
                 case uri
