@@ -30,17 +30,22 @@ class LoginViewController: UIViewController {
                                                                isSecure: true,
                                                                accessibilityMessage: "Write your password here")
 
-    let greenColor = UIColor.simpleRGB(red: 89, green: 146, blue: 98)
-    let orangeColor = UIColor.simpleRGB(red: 100, green: 50, blue: 20)
+
 
     lazy var loginButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Log in", color: greenColor, accessibilityMessage: "the button launches receipt of recipes")
+        let myButton: UIButton = .setupButton(title: "Log in",
+                                              color: .greenColor,
+                                              image: "person.fill.checkmark",
+                                              accessibilityMessage: "the button launches receipt of recipes")
         myButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return myButton
     }()
 
     lazy var signUpButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Sign up", color: orangeColor, accessibilityMessage: "the button launches receipt of recipes")
+        let myButton: UIButton = .setupButton(title: "Sign up",
+                                              color: .orangeColor,
+                                              image: "person.fill.questionmark",
+                                              accessibilityMessage: "the button launches receipt of recipes")
         myButton.addTarget(self, action: #selector(handleGoSignUp), for: .touchUpInside)
         return myButton
     }()

@@ -36,11 +36,15 @@ class SignUpViewController: UIViewController {
                                                                accessibilityMessage: "write here your password")
 
     lazy var signUpButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Sign up", color: .simpleRGB(red: 89, green: 146, blue: 98), accessibilityMessage: "the button launches receipt of recipes")
+        let myButton: UIButton = .setupButton(title: "Sign up",
+                                              color: .simpleRGB(red: 89, green: 146, blue: 98),
+                                              image: "person.fill.questionmark",
+                                              accessibilityMessage: "the button launches receipt of recipes")
         myButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return myButton
     }()
 
+        //MARK: Database Firebase
     var refDatabase: DatabaseReference = Database.database().reference()
     var authentification: Auth = .auth()
 
@@ -70,6 +74,7 @@ class SignUpViewController: UIViewController {
             print("✅ LOGIN_VC/FIREBASE_AUTH: The user has been create: \(userUid)")
 
             let target = "users/\(userUid)/username"
+
             self.refDatabase.child(target).setValue(username) { error, reference in
                 if let error = error {
                     print("🛑 LOGIN_VC/FIREBASE_DATABASE: Failed to save data of user, \(error)")

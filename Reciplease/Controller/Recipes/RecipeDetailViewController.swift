@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Firebase
+import SafariServices
 
 class RecipeDetailViewController: UIViewController {
 
         //MARK: - properties
 
     var recipeForDetails: API.Edamam.Recipe!
+    var database = Database.database()
 
         //MARK: - outlets
 
@@ -85,22 +88,41 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "RecipeDetailTableViewCell"
 
-        switch indexPath.row {
-            case 0:
-                let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
-                cell.ingredientsLabel.text = "Ingredients"
-                cell.ingredients = recipeForDetails.ingredients
-                return cell
-            default:
-                let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
-                cell.ingredientsLabel.text = "Recipe"
-                return cell
-        }
+        let cell = recipeDetailTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! RecipeDetailTableViewCell
+        cell.ingredientsLabel.text = "Ingredients"
+        cell.ingredients = recipeForDetails.ingredients
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+
+        guard section == 0 else { return nil }
+
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+
+        let recipeLinkButton: UIButton = .setupButton(title: "Go to the recipe", color: .greenColor, image: "link", accessibilityMessage: "link to the recipe")
+        recipeLinkButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        recipeLinkButton.center = footerView.center
+        recipeLinkButton.addTarget(self, action: #selector(linkRecipe), for: .touchUpInside)
+
+        footerView.addSubview(recipeLinkButton)
+
+        return footerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+
+    @objc func linkRecipe() {
+        guard let recipeURL = URL(string: recipeForDetails.sourceUrl) else { return }
+        let safariViewController = SFSafariViewController(url: recipeURL)
+        present(safariViewController, animated: true)
     }
 }

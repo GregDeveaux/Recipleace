@@ -12,6 +12,8 @@ class RecipesTableViewCell: UITableViewCell {
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
+    @IBOutlet weak var numberOfLikeLabel: UILabel!
+    @IBOutlet weak var favoriteImage: UIImageView!
     @IBOutlet weak var leafView: UIView! {
         didSet {
             leafView.layer.cornerRadius = 20
