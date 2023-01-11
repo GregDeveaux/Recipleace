@@ -16,7 +16,7 @@ struct API {
         //MARK: - Edaman API Recipes
     enum Edamam {
             // number found and recipes
-        struct Recipes: Decodable {
+        struct Recipes: Codable {
             let from: Int
             let to: Int
             let total: Int
@@ -32,11 +32,11 @@ struct API {
             }
         }
 
-        struct RecipesFounded: Decodable {
+        struct RecipesFounded: Codable {
             let recipe: Recipe
         }
 
-        struct ShowOtherRecipes: Decodable {
+        struct ShowOtherRecipes: Codable {
             let previous: Links?
             let next: Links
 
@@ -45,12 +45,12 @@ struct API {
                 case next
             }
 
-            struct Links: Decodable {
+            struct Links: Codable {
                 let href: String
             }
         }
 
-        struct Recipe: Decodable {
+        struct Recipe: Codable {
             let uri: String
             let title: String
             let image: String
@@ -83,7 +83,7 @@ struct API {
             }
         }
 
-        struct Ingredients: Decodable {
+        struct Ingredients: Codable {
             let image: String
             let weight: Double
             let food: String

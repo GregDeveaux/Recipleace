@@ -36,6 +36,7 @@
 		BC9877592961E9AE00EE5523 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9877582961E9AE00EE5523 /* LoginViewController.swift */; };
 		BC98775B2961EB1200EE5523 /* UITextField+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */; };
 		BC98775D2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */; };
+		BCCDE621296F5C1900E741B0 /* FavoriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */; };
 		BCD5DBD9295D0C03004ED95C /* UIImageView+LoadURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD5DBD8295D0C03004ED95C /* UIImageView+LoadURL.swift */; };
 		BCF3A862295A251A006415C2 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3A861295A251A006415C2 /* RecipesTableViewCell.swift */; };
 		BCF3A864295A2B35006415C2 /* RecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3A863295A2B35006415C2 /* RecipesTableViewController.swift */; };
@@ -87,6 +88,7 @@
 		BC9877582961E9AE00EE5523 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+setupWithAccessibility.swift"; sourceTree = "<group>"; };
 		BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setupWithAccessibility.swift"; sourceTree = "<group>"; };
+		BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewController.swift; sourceTree = "<group>"; };
 		BCD5DBD8295D0C03004ED95C /* UIImageView+LoadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LoadURL.swift"; sourceTree = "<group>"; };
 		BCF3A861295A251A006415C2 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 		BCF3A863295A2B35006415C2 /* RecipesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				BC2BD834295615620030016C /* RecipeDetailViewController.swift */,
 				BC8AE0C02966168100AB13C5 /* RecipeDetailTableViewCell.swift */,
 				BC8AE0C229661B9300AB13C5 /* IngredientsCollectionViewCell.swift */,
+				BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				BCD5DBD9295D0C03004ED95C /* UIImageView+LoadURL.swift in Sources */,
 				BC8AE0C329661B9300AB13C5 /* IngredientsCollectionViewCell.swift in Sources */,
 				BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */,
+				BCCDE621296F5C1900E741B0 /* FavoriteTableViewController.swift in Sources */,
 				BC93A98A295889A7004DCE13 /* UIViewController+Alert.swift in Sources */,
 				BC98775D2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift in Sources */,
 				BC9877592961E9AE00EE5523 /* LoginViewController.swift in Sources */,

@@ -45,8 +45,8 @@ class SignUpViewController: UIViewController {
     }()
 
         //MARK: Database Firebase
-    var refDatabase: DatabaseReference = Database.database().reference()
-    var authentification: Auth = .auth()
+    let refDatabase: DatabaseReference = Database.database().reference()
+    let authentification: Auth = .auth()
 
     @objc func handleSignUp() {
         guard let email = emaiTextField.text?.lowercased(), !email.isEmpty else {
@@ -74,8 +74,9 @@ class SignUpViewController: UIViewController {
             print("✅ LOGIN_VC/FIREBASE_AUTH: The user has been create: \(userUid)")
 
             let target = "users/\(userUid)/username"
+            let usernameReference = self.refDatabase.child(target)
 
-            self.refDatabase.child(target).setValue(username) { error, reference in
+            usernameReference.setValue(username) { error, reference in
                 if let error = error {
                     print("🛑 LOGIN_VC/FIREBASE_DATABASE: Failed to save data of user, \(error)")
                     return
