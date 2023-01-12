@@ -6,84 +6,95 @@
 //
 
 import UIKit
+import Firebase
 
 class FavoriteTableViewController: UITableViewController {
 
+        //MARK: - properties
+    var listOfFavoritesRecipes: [API.Edamam.Recipe] = []
+
+    let databaseReference: DatabaseReference = Database.database().reference()
+    private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
+        guard let userID = Auth.auth().currentUser?.uid else { return nil }
+        print("✅ FAVORITES_VC/USER: \(String(describing: userID))")
+
+        let favoritesRecipesReferencePath = databaseReference.child("users/\(userID)/favoritesRecipes")
+        return favoritesRecipesReferencePath
+    }()
+
+    private let decoder = JSONDecoder()
+
+        //MARK: - outlets
+    @IBOutlet var favoritesRecipesTableView: UITableView!
+    @IBOutlet weak var totalFavoritesRecipes: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showFavoritesRecipes()
+    }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+
+    func showFavoritesRecipes() {
+        favoritesRecipesReferencePath?.observe(.value, with: { snapshot in
+            var jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
+            print("✅ FAVORITES_VC/JSON: \(String(describing: jsonOfFavoritesRecipes))")
+
+            do {
+                let recipeData = try JSONSerialization.data(withJSONObject: jsonOfFavoritesRecipes as Any)
+                let recipe = try self.decoder.decode(API.Edamam.Recipe.self, from: recipeData)
+                self.listOfFavoritesRecipes.append(recipe)
+                self.favoritesRecipesTableView.reloadData()
+            } catch {
+                print("🛑 FAVORITES_VC/TABLEVIEW: an error occurred", error)
+            }
+        })
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return listOfFavoritesRecipes.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cellIdentifier = "RecipeCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
-        // Configure the cell...
+        cell.titleLabel.text = listOfFavoritesRecipes[indexPath.row].title
+        print("✅ FAVORITES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 
+        listOfFavoritesRecipes[indexPath.row].ingredients.forEach({ ingredient in
+            cell.ingredientsLabel.text = ingredient.food
+            print("✅ FAVORITES_VC/TABLEVIEW: 🍓 \(String(describing: cell.ingredientsLabel.text))")
+        })
+
+        let urlImage = URL(string: listOfFavoritesRecipes[indexPath.row].image)!
+        if let dataImage = try? Data(contentsOf: urlImage) {
+            cell.recipeImage.image = UIImage(data: dataImage)
+        }
+        print("✅ FAVORITES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SegueDetailRecipe" {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let destinationController = segue.destination as! RecipeDetailViewController
+            destinationController.recipeForDetails = listOfFavoritesRecipes[indexPath.row]
+            print("✅ FAVORITES_VC/PREPARE: 🍜 \(String(describing: listOfFavoritesRecipes[indexPath.row].title))")
+            dump(listOfFavoritesRecipes[indexPath.row])
+        }
     }
-    */
 
 }

@@ -26,7 +26,6 @@ class RecipeDetailViewController: UIViewController {
     }()
 
     private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
 
         //MARK: - outlets
 
@@ -81,12 +80,19 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     @IBAction func TappedFavorite(_ sender: Any) {
+        guard let favoritesRecipesReferencePath = favoritesRecipesReferencePath else { return }
+
+        let recipeID: String = {
+            let uri = self.recipeForDetails.uri
+            let recipeID = uri.split(separator: "#").last.map(String.init)
+            print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
+            return recipeID ?? "not recipe ID"
+        }()
+
         if !recipeForDetails.isFavorite {
             favoriteButton.image = UIImage(systemName: "heart.fill")
             favoriteButton.tintColor = .red
             recipeForDetails.isFavorite = true
-
-            guard let favoritesRecipesReferencePath = favoritesRecipesReferencePath else { return }
 
             let recipe = API.Edamam.Recipe(uri: recipeForDetails.uri,
                                            title: recipeForDetails.title,
@@ -101,18 +107,13 @@ class RecipeDetailViewController: UIViewController {
                                            totalTime: recipeForDetails.totalTime,
                                            cuisineType: recipeForDetails.cuisineType,
                                            mealType: recipeForDetails.mealType,
-                                           isFavorite: true)
+                                           isFavorite: recipeForDetails.isFavorite)
 
             do {
                 let data = try encoder.encode(recipe)
                 let json = try JSONSerialization.jsonObject(with: data)
 
-                let recipeID: String = {
-                    let uri = self.recipeForDetails.uri
-                    let recipeID = uri.split(separator: "#").last.map(String.init)
-                    print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
-                    return recipeID ?? "not recipe ID"
-                }()
+
 
                 favoritesRecipesReferencePath.child(recipeID).setValue(json)
                 print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: Favorite recipe saved successfully")
@@ -124,6 +125,8 @@ class RecipeDetailViewController: UIViewController {
         else {
             favoriteButton.image = UIImage(systemName: "heart")
             recipeForDetails.isFavorite = false
+
+            favoritesRecipesReferencePath.child(recipeID).removeValue()
         }
     }
 }

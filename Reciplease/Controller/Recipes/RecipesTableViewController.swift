@@ -43,10 +43,12 @@ class RecipesTableViewController: UITableViewController {
         self.isLoadingRecipes = true
 
         API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
+            print("✅ RECIPES_VC/DATA: \(result)")
+
             switch result {
                 case .success(let recipes):
                     let recipesTotal = recipes.total
-                    self.totalRecipeLabel.text = "Total reciepe founded: \(recipesTotal)"
+                    self.totalRecipeLabel?.text = "Total reciepe founded: \(recipesTotal)"
 
                         // we save the data into the array of recipes
                     self.listOfRecipes = recipes.founded
@@ -102,6 +104,8 @@ class RecipesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+
+        // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueDetailRecipe" {

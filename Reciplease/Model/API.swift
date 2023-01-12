@@ -20,7 +20,7 @@ struct API {
             let from: Int
             let to: Int
             let total: Int
-            let otherRecipes: ShowOtherRecipes
+            let otherRecipes: ShowOtherRecipes?
             let founded: [RecipesFounded]
 
             enum CodingKeys: String, CodingKey {
@@ -84,10 +84,10 @@ struct API {
         }
 
         struct Ingredients: Codable {
-            let image: String
+            let image: String?
             let weight: Double
             let food: String
-            let foodCategory: String
+            let foodCategory: String?
         }
     }
 
