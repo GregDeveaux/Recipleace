@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class FavoriteTableViewController: UITableViewController {
 
@@ -14,6 +15,7 @@ class FavoriteTableViewController: UITableViewController {
     var listOfFavoritesRecipes: [API.Edamam.Recipe] = []
 
     let databaseReference: DatabaseReference = Database.database().reference()
+
     private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
         guard let userID = Auth.auth().currentUser?.uid else { return nil }
         print("✅ FAVORITES_VC/USER: \(String(describing: userID))")
@@ -39,9 +41,9 @@ class FavoriteTableViewController: UITableViewController {
 
 
     func showFavoritesRecipes() {
-        favoritesRecipesReferencePath?.observe(.value, with: { snapshot in
-            var jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
-            print("✅ FAVORITES_VC/JSON: \(String(describing: jsonOfFavoritesRecipes))")
+        favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
+            let jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
+            print("✅ FAVORITES_VC/JSON: \(String(describing: snapshot.value))")
 
             do {
                 let recipeData = try JSONSerialization.data(withJSONObject: jsonOfFavoritesRecipes as Any)
@@ -85,10 +87,11 @@ class FavoriteTableViewController: UITableViewController {
     }
 
 
+
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SegueDetailRecipe" {
+        if segue.identifier == "SegueDetailFavoriteRecipe" {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let destinationController = segue.destination as! RecipeDetailViewController
             destinationController.recipeForDetails = listOfFavoritesRecipes[indexPath.row]

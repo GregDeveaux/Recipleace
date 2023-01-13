@@ -596,7 +596,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CIo-li-xYi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3191" y="-127"/>
+            <point key="canvasLocation" x="3414" y="-171"/>
         </scene>
         <!--Favorite Table View Controller-->
         <scene sceneID="8FZ-8n-vES">
@@ -614,7 +614,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Srb-3e-RZU">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="42.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="42.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="35"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -734,6 +734,7 @@
                                     <outlet property="numberOfLikeLabel" destination="lcR-x4-53z" id="RJO-M5-UMW"/>
                                     <outlet property="recipeImage" destination="LvU-u9-1GU" id="GPO-xi-2dN"/>
                                     <outlet property="titleLabel" destination="WDA-XT-ZGD" id="Nv2-lF-5zW"/>
+                                    <segue destination="rzM-hP-v4E" kind="show" identifier="SegueDetailFavoriteRecipe" id="cr7-mN-8Zd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -746,7 +747,6 @@
                     <connections>
                         <outlet property="favoritesRecipesTableView" destination="Fma-Qm-Ov3" id="xNF-IO-cW0"/>
                         <outlet property="totalFavoritesRecipes" destination="3Ah-kb-1mD" id="Ucx-d3-atz"/>
-                        <segue destination="rzM-hP-v4E" kind="show" id="9cZ-La-aKb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g1k-9W-SLC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -755,7 +755,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9cZ-La-aKb"/>
+        <segue reference="Mxf-oh-2dT"/>
         <segue reference="14n-l3-rGH"/>
     </inferredMetricsTieBreakers>
     <resources>

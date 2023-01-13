@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 import SafariServices
 
 class RecipeDetailViewController: UIViewController {
@@ -82,7 +83,7 @@ class RecipeDetailViewController: UIViewController {
     @IBAction func TappedFavorite(_ sender: Any) {
         guard let favoritesRecipesReferencePath = favoritesRecipesReferencePath else { return }
 
-        let recipeID: String = {
+        lazy var recipeID: String = {
             let uri = self.recipeForDetails.uri
             let recipeID = uri.split(separator: "#").last.map(String.init)
             print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
@@ -93,6 +94,14 @@ class RecipeDetailViewController: UIViewController {
             favoriteButton.image = UIImage(systemName: "heart.fill")
             favoriteButton.tintColor = .red
             recipeForDetails.isFavorite = true
+
+//            let urlImage = URL(string: recipeForDetails.image)!
+//            guard let dataImage = try? Data(contentsOf: urlImage) else { return }
+//            recipeForDetails.image = dataImage
+//
+//            guard let image = recipeForDetails.image else { return }
+//            let uploadData = jpegData(compressionQuality: 0.8)
+//            uploadImage(image: uploadData!, ID: recipeID)  //TODO: remove force-unwrap
 
             let recipe = API.Edamam.Recipe(uri: recipeForDetails.uri,
                                            title: recipeForDetails.title,
@@ -113,8 +122,6 @@ class RecipeDetailViewController: UIViewController {
                 let data = try encoder.encode(recipe)
                 let json = try JSONSerialization.jsonObject(with: data)
 
-
-
                 favoritesRecipesReferencePath.child(recipeID).setValue(json)
                 print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: Favorite recipe saved successfully")
 
@@ -127,6 +134,25 @@ class RecipeDetailViewController: UIViewController {
             recipeForDetails.isFavorite = false
 
             favoritesRecipesReferencePath.child(recipeID).removeValue()
+        }
+    }
+
+    func uploadImage(image: Data, ID: String) {
+        let userID = Auth.auth().currentUser?.uid
+        let storageReference = Storage.storage().reference()
+        let imageReference = storageReference.child("users/\(userID ?? "")/recipeImages").child(ID)
+
+        imageReference.putData(image) { metadata, error in
+            if let error = error {
+                print("🛑 RECIPES_VC/FIREBASE_STORAGE: \(error.localizedDescription)")
+                return
+            }
+
+            storageReference.downloadURL { downloadURL, error in
+                guard let imageRecipeURL = downloadURL?.absoluteString else { return }
+                print("✅ RECIPES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageRecipeURL))")
+
+            }
         }
     }
 }

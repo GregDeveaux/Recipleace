@@ -53,7 +53,7 @@ struct API {
         struct Recipe: Codable {
             let uri: String
             let title: String
-            let image: String
+            var image: String
             let source: String
             let sourceUrl: String
             let numberOfPieces: Double

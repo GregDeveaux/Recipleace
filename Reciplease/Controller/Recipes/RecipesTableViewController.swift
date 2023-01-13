@@ -101,10 +101,6 @@ class RecipesTableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-
         // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

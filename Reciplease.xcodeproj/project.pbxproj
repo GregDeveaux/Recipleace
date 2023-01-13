@@ -21,6 +21,7 @@
 		BC2BD83D295627790030016C /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD83C295627790030016C /* APIKeys.swift */; };
 		BC2FDC7D295A57D8002B17D0 /* RecipesRiceTomatoApple.json in Resources */ = {isa = PBXBuildFile; fileRef = BC2FDC7C295A57D8002B17D0 /* RecipesRiceTomatoApple.json */; };
 		BC2FDC7F295A695F002B17D0 /* APIQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDC7E295A695F002B17D0 /* APIQueryService.swift */; };
+		BC4E8B012970C789009A82F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC4E8B002970C789009A82F7 /* GoogleService-Info.plist */; };
 		BC4EDD64295E1CB200B53EE3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BC4EDD63295E1CB200B53EE3 /* FirebaseAnalyticsSwift */; };
 		BC4EDD66295E1CB200B53EE3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BC4EDD65295E1CB200B53EE3 /* FirebaseAuth */; };
 		BC4EDD68295E1CB200B53EE3 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BC4EDD67295E1CB200B53EE3 /* FirebaseCrashlytics */; };
@@ -32,7 +33,6 @@
 		BC8AE0C12966168100AB13C5 /* RecipeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8AE0C02966168100AB13C5 /* RecipeDetailTableViewCell.swift */; };
 		BC8AE0C329661B9300AB13C5 /* IngredientsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8AE0C229661B9300AB13C5 /* IngredientsCollectionViewCell.swift */; };
 		BC93A98A295889A7004DCE13 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC93A989295889A7004DCE13 /* UIViewController+Alert.swift */; };
-		BC9877572960F94800EE5523 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC9877562960F94800EE5523 /* GoogleService-Info.plist */; };
 		BC9877592961E9AE00EE5523 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9877582961E9AE00EE5523 /* LoginViewController.swift */; };
 		BC98775B2961EB1200EE5523 /* UITextField+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */; };
 		BC98775D2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */; };
@@ -78,13 +78,13 @@
 		BC2BD83C295627790030016C /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		BC2FDC7C295A57D8002B17D0 /* RecipesRiceTomatoApple.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RecipesRiceTomatoApple.json; sourceTree = "<group>"; };
 		BC2FDC7E295A695F002B17D0 /* APIQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQueryService.swift; sourceTree = "<group>"; };
+		BC4E8B002970C789009A82F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC4EDD6D295E20E700B53EE3 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BC4EDD6F295E45CA00B53EE3 /* UIColor+SimpleRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SimpleRGB.swift"; sourceTree = "<group>"; };
 		BC6F56F22959065D0003E73A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC8AE0C02966168100AB13C5 /* RecipeDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailTableViewCell.swift; sourceTree = "<group>"; };
 		BC8AE0C229661B9300AB13C5 /* IngredientsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsCollectionViewCell.swift; sourceTree = "<group>"; };
 		BC93A989295889A7004DCE13 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
-		BC9877562960F94800EE5523 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC9877582961E9AE00EE5523 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+setupWithAccessibility.swift"; sourceTree = "<group>"; };
 		BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setupWithAccessibility.swift"; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		BC2BD83A295623780030016C /* Secrets */ = {
 			isa = PBXGroup;
 			children = (
-				BC9877562960F94800EE5523 /* GoogleService-Info.plist */,
+				BC4E8B002970C789009A82F7 /* GoogleService-Info.plist */,
 				BC2BD83C295627790030016C /* APIKeys.swift */,
 			);
 			path = Secrets;
@@ -365,7 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC2BD80D2955D7510030016C /* LaunchScreen.storyboard in Resources */,
-				BC9877572960F94800EE5523 /* GoogleService-Info.plist in Resources */,
+				BC4E8B012970C789009A82F7 /* GoogleService-Info.plist in Resources */,
 				BC2BD80A2955D7510030016C /* Assets.xcassets in Resources */,
 				BC2BD8052955D7500030016C /* Main.storyboard in Resources */,
 			);

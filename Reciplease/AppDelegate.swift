@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             // Override point for customization after application launch.
         FirebaseApp.configure()
+            // Add data persistence
+        Database.database().isPersistenceEnabled = true
 
             // modify icon back of Views
         let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")
