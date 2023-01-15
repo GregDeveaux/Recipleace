@@ -83,9 +83,10 @@ class FavoriteTableViewController: UITableViewController {
             cell.recipeImage.image = UIImage(data: dataImage)
         }
         print("✅ FAVORITES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
+
+        cell.favoriteButton?.recipeIsSelected(listOfFavoritesRecipes[indexPath.row])
         return cell
     }
-
 
 
     // MARK: - Navigation

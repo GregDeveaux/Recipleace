@@ -14,4 +14,6 @@ extension UIColor {
 
     static let greenColor = UIColor.simpleRGB(red: 115, green: 246, blue: 119)
     static let orangeColor = UIColor.simpleRGB(red: 255, green: 69, blue: 0)
+    static let greenFlashColor = UIColor.simpleRGB(red: 240, green: 255, blue: 66)
+    static let darkBlue = UIColor.simpleRGB(red: 24, green: 29, blue: 50)
 }

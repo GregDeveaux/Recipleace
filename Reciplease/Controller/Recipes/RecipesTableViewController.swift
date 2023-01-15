@@ -10,21 +10,27 @@ import Firebase
 
 class RecipesTableViewController: UITableViewController {
 
-        //MARK: - properties
+        // -----------------------------------------
+        // MARK: - properties
+        // -----------------------------------------
 
     var listOfStuffsFromFridge: [String] = []
     var listOfRecipes: [API.Edamam.RecipesFounded] = []
 
     var isLoadingRecipes = false
 
-
+    
+        // -----------------------------------------
         //MARK: - outlets
+        // -----------------------------------------
 
     @IBOutlet var listOfRecipesTableView: UITableView!
     @IBOutlet weak var totalRecipeLabel: UILabel!
 
 
-        //MARK: - views
+        // -----------------------------------------
+        //MARK: - cycle of views
+        // -----------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +41,10 @@ class RecipesTableViewController: UITableViewController {
         receiveRecipes()
     }
 
-
+    
+        // -----------------------------------------
         // MARK: - receiveRecipes
+        // -----------------------------------------
 
     func receiveRecipes() {
         print("✅ RECIPES_VC/RECEIVE: list of stuffs founded into the fridge sent to the API: \(listOfStuffsFromFridge)")
@@ -98,8 +106,11 @@ class RecipesTableViewController: UITableViewController {
         }
         print("✅ RECIPES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
+        cell.favoriteButton.recipeIsSelected(listOfRecipes[indexPath.row].recipe)
+
         return cell
     }
+    
 
         // MARK: - Navigation
 
@@ -108,9 +119,9 @@ class RecipesTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let destinationController = segue.destination as! RecipeDetailViewController
             destinationController.recipeForDetails = listOfRecipes[indexPath.row].recipe
+
             print("✅ RECIPES_VC/PREPARE: 🍜 \(String(describing: listOfRecipes[indexPath.row].recipe.title))")
             dump(listOfRecipes[indexPath.row].recipe)
-
         }
     }
 }

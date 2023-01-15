@@ -34,12 +34,20 @@ class SignUpViewController: UIViewController {
     lazy var passwordTextField: UITextField = .setupTextFields(placeholder: "Password",
                                                                isSecure: true,
                                                                accessibilityMessage: "write here your password")
+    private var isSignUp = false {
+        didSet {
+            signUpButton.setNeedsUpdateConfiguration()
+        }
+    }
 
     lazy var signUpButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Sign up",
-                                              color: .simpleRGB(red: 89, green: 146, blue: 98),
+        let myButton: UIButton = .setupButton(style: UIButton.Configuration.filled(),
+                                              title: "Sign up",
+                                              colorText: .white,
+                                              colorBackground: .simpleRGB(red: 89, green: 146, blue: 98),
                                               image: "person.fill.questionmark",
-                                              accessibilityMessage: "the button launches receipt of recipes")
+                                              accessibilityMessage: "the button launches receipt of recipes",
+                                              activity: isSignUp)
         myButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return myButton
     }()

@@ -8,28 +8,48 @@
 import UIKit
 
 extension UIButton {
-    static func setupButton(title: String, color: UIColor, image: String, accessibilityMessage: String) -> UIButton { 
-        let loginButton = UIButton()
-        loginButton.configuration = .tinted()
-        loginButton.configuration?.baseBackgroundColor = color
-        loginButton.configuration?.baseForegroundColor = color
-        loginButton.configuration?.cornerStyle = .dynamic
+        // setup which use the configuration button
+    static func setupButton(style: UIButton.Configuration, title: String, colorText: UIColor, colorBackground: UIColor, image: String, accessibilityMessage: String, activity: Bool) -> UIButton {
+        let button = UIButton()
 
-        loginButton.configuration?.image = UIImage(systemName: image)
-        loginButton.configuration?.imagePadding = 6
-        loginButton.configuration?.title = title
+            // modify appearance of the button
+        var configuration = style
+        configuration.baseBackgroundColor = colorBackground
+        configuration.baseForegroundColor = colorText
+        configuration.cornerStyle = .dynamic
 
+            // add an image in the button with placement
+        configuration.image = UIImage(systemName: image)
+        configuration.imagePadding = 10
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
+        configuration.imagePlacement = .trailing
+        configuration.title = title
+
+            // modify the font of the button
         let transformer = UIConfigurationTextAttributesTransformer { listTransform in
             var fontTransform = listTransform
             fontTransform.font = UIFont.boldSystemFont(ofSize: 20)
             return fontTransform
         }
-        loginButton.configuration?.titleTextAttributesTransformer = transformer
+        configuration.titleTextAttributesTransformer = transformer
 
-        loginButton.isAccessibilityElement = true
-        loginButton.accessibilityTraits = .button
-        loginButton.accessibilityHint = accessibilityMessage
+        button.addAction(
+            UIAction { _ in
+                print(title)
+            }, for: .touchUpInside)
 
-        return loginButton
+        button.isAccessibilityElement = true
+        button.accessibilityTraits = .button
+        button.accessibilityHint = accessibilityMessage
+
+        button.configurationUpdateHandler = { button in
+            var configuration = button.configuration
+            configuration?.showsActivityIndicator = activity
+            configuration?.imagePlacement = activity ? .leading : . trailing
+            button.configuration = configuration
+        }
+
+        button.configuration = configuration
+        return button
     }
 }

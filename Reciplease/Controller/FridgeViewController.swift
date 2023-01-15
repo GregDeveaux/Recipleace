@@ -9,17 +9,17 @@ import UIKit
 
 class FridgeViewController: UIViewController {
 
-    //MARK: properties
+        //MARK: properties
     var listOfStuffsFromFridge: [String] = ["orange", "lemon"]
 
-    //MARK: outlet
+        //MARK: outlet
     @IBOutlet weak var stuffsFromFridgeTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var searchRecipes: UIButton!
     @IBOutlet weak var listOfStuffsFromFridgeTableView: UITableView!
 
-        //MARK: view did load
+        //MARK: cycle of view
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -65,10 +65,11 @@ class FridgeViewController: UIViewController {
     }
 
     @IBAction func tappedSearchRecipes(_ sender: Any) {
-        // send stuff to recover the possible recipes
+            // send stuff to recover the possible recipes
         self.performSegue(withIdentifier: "SegueListOfRecipe", sender: listOfStuffsFromFridge)
     }
 
+        // Send the information to RecipesTableViewController which will use the API.Edamam
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueListOfRecipe" {
             let destinationController = segue.destination as? RecipesTableViewController
@@ -81,10 +82,11 @@ class FridgeViewController: UIViewController {
 
     //MARK: - list of stuffs from fridge TableView
 extension FridgeViewController: UITableViewDataSource {
+        // calculate the number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listOfStuffsFromFridge.count
     }
-
+        // here create the different cells of the list
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "StuffsFromFridge"
         let cell = listOfStuffsFromFridgeTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)

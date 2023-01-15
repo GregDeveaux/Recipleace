@@ -30,22 +30,38 @@ class LoginViewController: UIViewController {
                                                                isSecure: true,
                                                                accessibilityMessage: "Write your password here")
 
-
-
+    private var isLogin = false {
+        didSet {
+            loginButton.setNeedsUpdateConfiguration()
+        }
+    }
+    private var isSignUp = false {
+        didSet {
+            signUpButton.setNeedsUpdateConfiguration()
+        }
+    }
     lazy var loginButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Log in",
-                                              color: .greenColor,
+        var configuration = UIButton.Configuration.filled()
+        let myButton: UIButton = .setupButton(style: configuration,
+                                              title: "Log in",
+                                              colorText: .darkBlue,
+                                              colorBackground: .greenColor,
                                               image: "person.fill.checkmark",
-                                              accessibilityMessage: "the button launches receipt of recipes")
+                                              accessibilityMessage: "the button launches receipt of recipes",
+                                              activity: isLogin)
         myButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return myButton
     }()
 
     lazy var signUpButton: UIButton = {
-        let myButton: UIButton = .setupButton(title: "Sign up",
-                                              color: .orangeColor,
+        var configuration = UIButton.Configuration.tinted()
+        let myButton: UIButton = .setupButton(style: configuration,
+                                              title: "Sign up",
+                                              colorText: .greenColor,
+                                              colorBackground: .greenColor,
                                               image: "person.fill.questionmark",
-                                              accessibilityMessage: "the button launches receipt of recipes")
+                                              accessibilityMessage: "the button launches receipt of recipes",
+                                              activity: isSignUp)
         myButton.addTarget(self, action: #selector(handleGoSignUp), for: .touchUpInside)
         return myButton
     }()
@@ -68,7 +84,7 @@ class LoginViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = UIColor.simpleRGB(red: 54, green: 51, blue: 50)
+        view.backgroundColor = .darkBlue
         setupLogo()
         setupTextFieldsStackView()
 
