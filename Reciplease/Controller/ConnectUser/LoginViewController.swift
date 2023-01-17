@@ -11,16 +11,11 @@ class LoginViewController: UIViewController {
 
         //MARK: - properties
 
-    lazy var logoReciplease: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "Fridge")
-        imageView.contentMode = .scaleAspectFit
-        imageView.isAccessibilityElement = true
-        imageView.accessibilityTraits = .image
-        imageView.accessibilityHint = "Welcome to ReciPlease, this app offers you recipes with stuffs from the fridge"
-        return imageView
-    }()
+    lazy var logoReciplease: UIImageView = setupImage(named: "logoRecipleaseText",
+                                                      accessibilityText: "Welcome to ReciPlease, this app offers you recipes with stuffs from the fridge")
+
+    lazy var dishLogin: UIImageView = setupImage(named: "DishLogin",
+                                                 accessibilityText: "This page present dish of mushrooms and broccoli")
 
     lazy var usernameTextField: UITextField = .setupTextFields(placeholder: "Username",
                                                                isSecure: false,
@@ -47,26 +42,31 @@ class LoginViewController: UIViewController {
                                               colorText: .darkBlue,
                                               colorBackground: .greenColor,
                                               image: "person.fill.checkmark",
-                                              accessibilityMessage: "the button launches receipt of recipes",
+                                              accessibilityMessage: "used the button to log into existing account",
                                               activity: isLogin)
-        myButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+
+        myButton.addAction(
+            UIAction { _ in
+                self.handleLogin()
+            }, for: .touchUpInside)
+//        myButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return myButton
     }()
 
     lazy var signUpButton: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
+        var configuration = UIButton.Configuration.filled()
         let myButton: UIButton = .setupButton(style: configuration,
                                               title: "Sign up",
                                               colorText: .greenColor,
-                                              colorBackground: .greenColor,
+                                              colorBackground: .darkGreen,
                                               image: "person.fill.questionmark",
-                                              accessibilityMessage: "the button launches receipt of recipes",
+                                              accessibilityMessage: "used the button to register your account",
                                               activity: isSignUp)
         myButton.addTarget(self, action: #selector(handleGoSignUp), for: .touchUpInside)
         return myButton
     }()
 
-    @objc func handleLogin() {
+    func handleLogin() {
         self.performSegue(withIdentifier: "LoginSegueTabBar", sender: self)
     }
 
@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
     }
 
 
-        //MARK: - view did load
+        //MARK: - cycle of view
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,21 +83,25 @@ class LoginViewController: UIViewController {
         setupView()
     }
 
+
+        //MARK: - design
+        // background color
     private func setupView() {
         view.backgroundColor = .darkBlue
         setupLogo()
+        setupDish()
         setupTextFieldsStackView()
-
     }
-
+        // logo of the top
     private func setupLogo() {
         view.addSubview(logoReciplease)
         logoReciplease.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        logoReciplease.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        logoReciplease.widthAnchor.constraint(equalToConstant: 140).isActive = true
+        logoReciplease.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        logoReciplease.widthAnchor.constraint(equalToConstant: 300).isActive = true
         logoReciplease.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
+        // text fields of the middle
     private func setupTextFieldsStackView() {
         let stackView = UIStackView(arrangedSubviews: [usernameTextField, passwordTextField, loginButton, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -113,5 +117,39 @@ class LoginViewController: UIViewController {
             stackView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
+        // dish of the bottom
+    private func setupDish() {
+        view.addSubview(dishLogin)
+        dishLogin.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20).isActive = true
+        dishLogin.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        dishLogin.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        dishLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
 
+    private func setupImage(named: String, accessibilityText: String) -> UIImageView {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: named)
+        imageView.contentMode = .scaleAspectFit
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityTraits = .image
+        imageView.accessibilityHint = accessibilityText
+        return imageView
+    }
+}
+
+    // -------------------------------------------------------
+    // MARK: Keyboard setup dismiss
+    // -------------------------------------------------------
+
+extension LoginViewController: UITextFieldDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
+    }
 }

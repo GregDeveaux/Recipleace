@@ -33,11 +33,6 @@ extension UIButton {
         }
         configuration.titleTextAttributesTransformer = transformer
 
-        button.addAction(
-            UIAction { _ in
-                print(title)
-            }, for: .touchUpInside)
-
         button.isAccessibilityElement = true
         button.accessibilityTraits = .button
         button.accessibilityHint = accessibilityMessage

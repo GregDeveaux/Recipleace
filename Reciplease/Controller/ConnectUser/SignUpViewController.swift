@@ -15,11 +15,11 @@ class SignUpViewController: UIViewController {
     lazy var logoReciplease: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "Fridge")
+        imageView.image = UIImage(named: "logoReciplease")
         imageView.contentMode = .scaleAspectFit
         imageView.isAccessibilityElement = true
         imageView.accessibilityTraits = .image
-        imageView.accessibilityHint = "Welcome to ReciPlease, this app offers you recipes with stuffs from the fridge"
+        imageView.accessibilityHint = "Sign up to ReciPlease, save your favorite by registering"
         return imageView
     }()
 
@@ -43,8 +43,8 @@ class SignUpViewController: UIViewController {
     lazy var signUpButton: UIButton = {
         let myButton: UIButton = .setupButton(style: UIButton.Configuration.filled(),
                                               title: "Sign up",
-                                              colorText: .white,
-                                              colorBackground: .simpleRGB(red: 89, green: 146, blue: 98),
+                                              colorText: .darkBlue,
+                                              colorBackground: .greenColor,
                                               image: "person.fill.questionmark",
                                               accessibilityMessage: "the button launches receipt of recipes",
                                               activity: isSignUp)
@@ -107,7 +107,7 @@ class SignUpViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = UIColor.simpleRGB(red: 54, green: 51, blue: 50)
+        view.backgroundColor = UIColor.darkBlue
         setupLogo()
         setupTextFieldsStackView()
     }
@@ -115,8 +115,8 @@ class SignUpViewController: UIViewController {
     private func setupLogo() {
         view.addSubview(logoReciplease)
         logoReciplease.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        logoReciplease.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        logoReciplease.widthAnchor.constraint(equalToConstant: 140).isActive = true
+        logoReciplease.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        logoReciplease.widthAnchor.constraint(equalToConstant: 200).isActive = true
         logoReciplease.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
@@ -134,5 +134,23 @@ class SignUpViewController: UIViewController {
             stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
             stackView.heightAnchor.constraint(equalToConstant: 200)
         ])
+    }
+}
+
+
+    // -------------------------------------------------------
+    // MARK: Keyboard setup dismiss
+    // -------------------------------------------------------
+
+extension SignUpViewController: UITextFieldDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameTextField.resignFirstResponder()
+        emaiTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
     }
 }

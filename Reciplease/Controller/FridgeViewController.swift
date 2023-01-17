@@ -11,6 +11,11 @@ class FridgeViewController: UIViewController {
 
         //MARK: properties
     var listOfStuffsFromFridge: [String] = ["orange", "lemon"]
+    private var sendTheIngredient = false {
+        didSet {
+            searchRecipes.setNeedsUpdateConfiguration()
+        }
+    }
 
         //MARK: outlet
     @IBOutlet weak var stuffsFromFridgeTextField: UITextField!
