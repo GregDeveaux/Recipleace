@@ -26,6 +26,13 @@ class RecipeDetailViewController: UIViewController {
         return favoritesRecipesReferencePath
     }()
 
+    lazy var recipeID: String = {
+        let uri = self.recipeForDetails.uri
+        let recipeID = uri.split(separator: "#").last.map(String.init)
+        print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
+        return recipeID ?? "not recipe ID"
+    }()
+
     private let encoder = JSONEncoder()
 
 
@@ -44,8 +51,8 @@ class RecipeDetailViewController: UIViewController {
             mealTypeLabel.layer.masksToBounds = true
         }
     }
-    @IBOutlet weak var favoriteButton: UIBarButtonItem!
-
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
 
         //MARK: - view did load
 
@@ -79,8 +86,19 @@ class RecipeDetailViewController: UIViewController {
         guard let urlImage = URL(string: recipeForDetails.image) else { return }
         if let dataImage = try? Data(contentsOf: urlImage) {
             recipeImageView.image = UIImage(data: dataImage)
+            uploadImage(image: dataImage, ID: recipeID)
         }
     }
+    @IBAction func TappedLogOut(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            print("✅ User is sign out")
+            self.navigationController?.popToRootViewController(animated: true)
+        } catch {
+            print("🛑 SignOut impossible")
+        }
+    }
+
     @IBAction func TappedFavorite(_ sender: Any) {
 //        guard let favoritesRecipesReferencePath = favoritesRecipesReferencePath else { return }
 //
@@ -152,7 +170,6 @@ class RecipeDetailViewController: UIViewController {
             storageReference.downloadURL { downloadURL, error in
                 guard let imageRecipeURL = downloadURL?.absoluteString else { return }
                 print("✅ RECIPES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageRecipeURL))")
-
             }
         }
     }
@@ -180,7 +197,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 
         guard section == 0 else { return nil }
 
-        var recipeLinkIsSentToSafari = false {
+        var recipeLinkIsSentToSafari: Bool = false {
             didSet {
                 recipeLinkButton.setNeedsUpdateConfiguration()
             }
@@ -216,4 +233,6 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
         let safariViewController = SFSafariViewController(url: recipeURL)
         present(safariViewController, animated: true)
     }
+
+
 }

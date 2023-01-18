@@ -10,7 +10,17 @@ import Firebase
 
 class SignUpViewController: UIViewController {
 
-    //MARK: - properties
+        // -------------------------------------------------------
+        // MARK: - database Firebase
+        // -------------------------------------------------------
+
+    let referenceDatabase: DatabaseReference = Database.database().reference()
+    let authentification: Auth = .auth()
+
+
+        // -------------------------------------------------------
+        // MARK: - properties
+        // -------------------------------------------------------
 
     lazy var logoReciplease: UIImageView = {
         let imageView = UIImageView()
@@ -23,7 +33,7 @@ class SignUpViewController: UIViewController {
         return imageView
     }()
 
-    lazy var emaiTextField: UITextField = .setupTextFields(placeholder: "Email",
+    lazy var emailTextField: UITextField = .setupTextFields(placeholder: "Email",
                                                            isSecure: false,
                                                            accessibilityMessage: "write here your email address")
 
@@ -48,16 +58,16 @@ class SignUpViewController: UIViewController {
                                               image: "person.fill.questionmark",
                                               accessibilityMessage: "the button launches receipt of recipes",
                                               activity: isSignUp)
-        myButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        myButton.addAction(
+            UIAction { _ in
+                self.handleSignUp()
+                print("✅ User go sign up")
+            }, for: .touchUpInside)
         return myButton
     }()
 
-        //MARK: Database Firebase
-    let refDatabase: DatabaseReference = Database.database().reference()
-    let authentification: Auth = .auth()
-
-    @objc func handleSignUp() {
-        guard let email = emaiTextField.text?.lowercased(), !email.isEmpty else {
+    func handleSignUp() {
+        guard let email = emailTextField.text?.lowercased(), !email.isEmpty else {
             presentAlert(with: "Oh no! you just forget\n to write your email")
             return
         }
@@ -82,7 +92,7 @@ class SignUpViewController: UIViewController {
             print("✅ LOGIN_VC/FIREBASE_AUTH: The user has been create: \(userUid)")
 
             let target = "users/\(userUid)/username"
-            let usernameReference = self.refDatabase.child(target)
+            let usernameReference = self.referenceDatabase.child(target)
 
             usernameReference.setValue(username) { error, reference in
                 if let error = error {
@@ -98,7 +108,9 @@ class SignUpViewController: UIViewController {
     }
 
 
-        //MARK: - view did load
+        // -------------------------------------------------------
+        //MARK: - cycle of view
+        // -------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +133,7 @@ class SignUpViewController: UIViewController {
     }
 
     private func setupTextFieldsStackView() {
-        let stackView = UIStackView(arrangedSubviews: [emaiTextField, usernameTextField, passwordTextField, signUpButton])
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, usernameTextField, passwordTextField, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
@@ -149,7 +161,7 @@ extension SignUpViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         usernameTextField.resignFirstResponder()
-        emaiTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         return true
     }

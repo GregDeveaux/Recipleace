@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import Firebase
 
 class FridgeViewController: UIViewController {
 
+        // -------------------------------------------------------
         //MARK: properties
+        // -------------------------------------------------------
+
     var listOfStuffsFromFridge: [String] = ["orange", "lemon"]
     private var sendTheIngredient = false {
         didSet {
@@ -17,19 +21,34 @@ class FridgeViewController: UIViewController {
         }
     }
 
+        // -------------------------------------------------------
         //MARK: outlet
+        // -------------------------------------------------------
+
     @IBOutlet weak var stuffsFromFridgeTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var searchRecipes: UIButton!
     @IBOutlet weak var listOfStuffsFromFridgeTableView: UITableView!
+    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var whiteBoardView: UIView! {
+        didSet {
+            whiteBoardView.layer.cornerRadius = 5
+        }
+    }
 
+        // -------------------------------------------------------
         //MARK: cycle of view
+        // -------------------------------------------------------
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+        // -------------------------------------------------------
         //MARK: actions
+        // -------------------------------------------------------
+
     @IBAction func tappedAddStuffsFromFridge(_ sender: Any) {
         addStuffFromFridgeInTheList()
     }
@@ -83,9 +102,23 @@ class FridgeViewController: UIViewController {
         }
     }
 
+    @IBAction func tappedSignOut(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            print("✅ User is sign out")
+            dismiss(animated: true)
+        } catch {
+            print("🛑 SignOut impossible")
+        }
+    }
+
 }
 
+
+    // -------------------------------------------------------
     //MARK: - list of stuffs from fridge TableView
+    // -------------------------------------------------------
+
 extension FridgeViewController: UITableViewDataSource {
         // calculate the number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

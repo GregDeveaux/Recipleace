@@ -26,19 +26,28 @@ class FavoriteTableViewController: UITableViewController {
 
     private let decoder = JSONDecoder()
 
+
+        // -------------------------------------------------------
         //MARK: - outlets
+        // -------------------------------------------------------
+
     @IBOutlet var favoritesRecipesTableView: UITableView!
     @IBOutlet weak var totalFavoritesRecipes: UILabel!
 
+
+        // -------------------------------------------------------
+        //MARK: - cycle of view
+        // -------------------------------------------------------
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         showFavoritesRecipes()
     }
 
+
+        // -------------------------------------------------------
+        //MARK: - list of favorites recipes
+        // -------------------------------------------------------
 
     func showFavoritesRecipes() {
         favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
@@ -98,6 +107,32 @@ class FavoriteTableViewController: UITableViewController {
             destinationController.recipeForDetails = listOfFavoritesRecipes[indexPath.row]
             print("✅ FAVORITES_VC/PREPARE: 🍜 \(String(describing: listOfFavoritesRecipes[indexPath.row].title))")
             dump(listOfFavoritesRecipes[indexPath.row])
+        }
+    }
+
+    func downloadImageFirebase(image: Data, ID: String) {
+        let userID = Auth.auth().currentUser?.uid
+        let storageReference = Storage.storage().reference()
+        let imageReference = storageReference.child("users/\(userID ?? "")/recipeImages").child(ID)
+
+        lazy var recipeID: String = {
+            let uri = self.listOfFavoritesRecipes[0].uri
+            let recipeID = uri.split(separator: "#").last.map(String.init)
+            print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
+            return recipeID ?? "not recipe ID"
+        }()
+
+        imageReference.putData(image) { metadata, error in
+            if let error = error {
+                print("🛑 RECIPES_VC/FIREBASE_STORAGE: \(error.localizedDescription)")
+                return
+            }
+
+            storageReference.downloadURL { downloadURL, error in
+                guard let imageRecipeURL = downloadURL?.absoluteString else { return }
+                UserDefaults.setValue(imageRecipeURL, forKey: recipeID)
+                print("✅ RECIPES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageRecipeURL))")
+            }
         }
     }
 

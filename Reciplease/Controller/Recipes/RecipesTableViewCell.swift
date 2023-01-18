@@ -18,7 +18,6 @@ class RecipesTableViewCell: UITableViewCell {
     let databaseReference: DatabaseReference = Database.database().reference()
     var isFavorite = false
 
-
     private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
         guard let userID = Auth.auth().currentUser?.uid else { return nil }
         print("✅ RECIPES_DETAIL_VC/USER: \(String(describing: userID))")

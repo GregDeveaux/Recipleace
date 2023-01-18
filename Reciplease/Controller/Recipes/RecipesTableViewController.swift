@@ -10,45 +10,55 @@ import Firebase
 
 class RecipesTableViewController: UITableViewController {
 
-        // -----------------------------------------
+        // -------------------------------------------------------
         // MARK: - properties
-        // -----------------------------------------
+        // -------------------------------------------------------
 
     var listOfStuffsFromFridge: [String] = []
     var listOfRecipes: [API.Edamam.RecipesFounded] = []
 
     var isLoadingRecipes = false
+    let activityIndicator = UIActivityIndicatorView(style: .large)
 
     
-        // -----------------------------------------
+        // -------------------------------------------------------
         //MARK: - outlets
-        // -----------------------------------------
+        // -------------------------------------------------------
 
     @IBOutlet var listOfRecipesTableView: UITableView!
     @IBOutlet weak var totalRecipeLabel: UILabel!
 
 
-        // -----------------------------------------
+        // -------------------------------------------------------
         //MARK: - cycle of views
-        // -----------------------------------------
+        // -------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupActivityIndicator()
     }
 
     override func loadView() {
         super.loadView()
+
         receiveRecipes()
     }
 
     
-        // -----------------------------------------
+        // -------------------------------------------------------
         // MARK: - receiveRecipes
-        // -----------------------------------------
+        // -------------------------------------------------------
 
     func receiveRecipes() {
         print("✅ RECIPES_VC/RECEIVE: list of stuffs founded into the fridge sent to the API: \(listOfStuffsFromFridge)")
         self.isLoadingRecipes = true
+
+        if isLoadingRecipes {
+            activityIndicator.startAnimating()
+            print("✅ RECIPES_VC/ACTIVITY_INDICATOR: start")
+        }
+
 
         API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
             print("✅ RECIPES_VC/DATA: \(result)")
@@ -62,7 +72,9 @@ class RecipesTableViewController: UITableViewController {
                     self.listOfRecipes = recipes.founded
                     print("✅ RECIPES_VC/RECEIVE: \(recipesTotal) recipes founded")
                     dump(self.listOfRecipes)
+
                     self.isLoadingRecipes = false
+                    self.activityIndicator.stopAnimating()
                     self.listOfRecipesTableView.reloadData()
 
                 case .failure(let error):
@@ -73,8 +85,19 @@ class RecipesTableViewController: UITableViewController {
         }
     }
 
+    func setupActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .white
+        listOfRecipesTableView.addSubview(activityIndicator)
 
+        activityIndicator.centerXAnchor.constraint(equalTo: listOfRecipesTableView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: listOfRecipesTableView.centerYAnchor).isActive = true
+    }
+
+
+        // -------------------------------------------------------
         // MARK: - tableView
+        // -------------------------------------------------------
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -87,7 +110,7 @@ class RecipesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-//        let placeholder = UITableViewPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "RecipeCell", rowHeight: 150)
+//        let placeholder = UITableViewPlaceholder(insertionIndexPath: indexPath, reuseIdentifier: "MockRecipesTableViewCell", rowHeight: 150)
 //        placeholder.cellUpdateHandler
 
         let cellIdentifier = "RecipeCell"
@@ -110,9 +133,11 @@ class RecipesTableViewController: UITableViewController {
 
         return cell
     }
-    
 
+    
+        // -------------------------------------------------------
         // MARK: - Navigation
+        // -------------------------------------------------------
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueDetailRecipe" {
@@ -125,3 +150,4 @@ class RecipesTableViewController: UITableViewController {
         }
     }
 }
+

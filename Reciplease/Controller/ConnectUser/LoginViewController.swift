@@ -6,35 +6,36 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
-        //MARK: - properties
+        // -------------------------------------------------------
+        // MARK: - database Firebase
+        // -------------------------------------------------------
 
+    let referenceDatabase: DatabaseReference = Database.database().reference()
+    let authentification: Auth = .auth()
+    
+
+        // -------------------------------------------------------
+        // MARK: - properties
+        // -------------------------------------------------------
+        // logo top
     lazy var logoReciplease: UIImageView = setupImage(named: "logoRecipleaseText",
                                                       accessibilityText: "Welcome to ReciPlease, this app offers you recipes with stuffs from the fridge")
-
+        // dish picture bottom
     lazy var dishLogin: UIImageView = setupImage(named: "DishLogin",
                                                  accessibilityText: "This page present dish of mushrooms and broccoli")
 
-    lazy var usernameTextField: UITextField = .setupTextFields(placeholder: "Username",
+    lazy var emailTextField: UITextField = .setupTextFields(placeholder: "Email",
                                                                isSecure: false,
-                                                               accessibilityMessage: "Write your username here")
+                                                               accessibilityMessage: "write here your email address")
 
     lazy var passwordTextField: UITextField = .setupTextFields(placeholder: "Password",
                                                                isSecure: true,
                                                                accessibilityMessage: "Write your password here")
 
-    private var isLogin = false {
-        didSet {
-            loginButton.setNeedsUpdateConfiguration()
-        }
-    }
-    private var isSignUp = false {
-        didSet {
-            signUpButton.setNeedsUpdateConfiguration()
-        }
-    }
     lazy var loginButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         let myButton: UIButton = .setupButton(style: configuration,
@@ -44,12 +45,11 @@ class LoginViewController: UIViewController {
                                               image: "person.fill.checkmark",
                                               accessibilityMessage: "used the button to log into existing account",
                                               activity: isLogin)
-
         myButton.addAction(
             UIAction { _ in
                 self.handleLogin()
+                print("✅ User is log in")
             }, for: .touchUpInside)
-//        myButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return myButton
     }()
 
@@ -62,20 +62,57 @@ class LoginViewController: UIViewController {
                                               image: "person.fill.questionmark",
                                               accessibilityMessage: "used the button to register your account",
                                               activity: isSignUp)
-        myButton.addTarget(self, action: #selector(handleGoSignUp), for: .touchUpInside)
+        myButton.addAction(
+            UIAction { _ in
+                self.handleGoSignUp()
+                print("✅ User go sign up")
+            }, for: .touchUpInside)
         return myButton
     }()
 
-    func handleLogin() {
-        self.performSegue(withIdentifier: "LoginSegueTabBar", sender: self)
+        // used to action activity indicator is button
+    private var isLogin = false {
+        didSet {
+            loginButton.setNeedsUpdateConfiguration()
+        }
+    }
+    private var isSignUp = false {
+        didSet {
+            signUpButton.setNeedsUpdateConfiguration()
+        }
     }
 
-    @objc func handleGoSignUp() {
+
+        // -------------------------------------------------------
+        //MARK: - actions
+        // -------------------------------------------------------
+
+    func handleLogin() {
+        guard let email = emailTextField.text?.lowercased(), !email.isEmpty else {
+            presentAlert(with: "Oh no! you just forget\n to write your email")
+            return
+        }
+        guard let password = passwordTextField.text, password.count >= 6 else {
+            presentAlert(with: "Oh no! you just forget\n to write your password\n or the password not contains\n 6 min characters")
+            return
+        }
+
+        authentification.signIn(withEmail: email, password: password) { [weak self] user, error in
+            guard let strongSelf = self else { return }
+            if let error = error, user == nil {
+                strongSelf.presentAlert(with: "Sign In failed: \(error.localizedDescription)")
+            }
+            strongSelf.performSegue(withIdentifier: "LoginSegueTabBar", sender: self)
+        }
+    }
+
+    func handleGoSignUp() {
         self.performSegue(withIdentifier: "LoginSegueSignUp", sender: self)
     }
 
-
+        // -------------------------------------------------------
         //MARK: - cycle of view
+        // -------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,8 +120,10 @@ class LoginViewController: UIViewController {
         setupView()
     }
 
-
+    
+        // -------------------------------------------------------
         //MARK: - design
+        // -------------------------------------------------------
         // background color
     private func setupView() {
         view.backgroundColor = .darkBlue
@@ -103,7 +142,7 @@ class LoginViewController: UIViewController {
 
         // text fields of the middle
     private func setupTextFieldsStackView() {
-        let stackView = UIStackView(arrangedSubviews: [usernameTextField, passwordTextField, loginButton, signUpButton])
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
@@ -126,6 +165,10 @@ class LoginViewController: UIViewController {
         dishLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
+        /// A method to create image
+        /// - Parameters:
+        ///   - named: name of image used
+        ///   - accessibilityText: description text for VoiceOver
     private func setupImage(named: String, accessibilityText: String) -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +191,7 @@ extension LoginViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        usernameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         return true
     }
