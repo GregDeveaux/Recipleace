@@ -40,7 +40,7 @@ extension UIButton {
         button.configurationUpdateHandler = { button in
             var configuration = button.configuration
             configuration?.showsActivityIndicator = activity
-            configuration?.imagePlacement = activity ? .leading : . trailing
+            configuration?.imagePlacement = activity ? .leading : .trailing
             button.configuration = configuration
         }
 

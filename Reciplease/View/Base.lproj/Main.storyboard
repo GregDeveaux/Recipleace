@@ -20,21 +20,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1010728255" green="0.11080571259999999" blue="0.19096472859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="OyW-KB-7iu">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="gof-wG-1fQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <rect key="frame" x="0.0" y="20" width="375" height="80"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="logoRecipleaseText" translatesAutoresizingMaskIntoConstraints="NO" id="Qcd-oN-haU">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="ez2-Wb-Il2"/>
                                                 <constraint firstAttribute="width" constant="250" id="t00-hc-Lje"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total reciepe founded: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sP3-NY-Rwi">
-                                            <rect key="frame" x="0.0" y="35" width="375" height="25"/>
+                                            <rect key="frame" x="0.0" y="55" width="375" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="NtV-wW-oDL"/>
                                             </constraints>
@@ -51,14 +51,14 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="gof-wG-1fQ" secondAttribute="bottom" id="9aa-Zb-1cS"/>
-                                <constraint firstItem="gof-wG-1fQ" firstAttribute="top" secondItem="OyW-KB-7iu" secondAttribute="top" id="Kjn-73-cgd"/>
+                                <constraint firstItem="gof-wG-1fQ" firstAttribute="top" secondItem="OyW-KB-7iu" secondAttribute="top" constant="20" id="Kjn-73-cgd"/>
                                 <constraint firstItem="gof-wG-1fQ" firstAttribute="leading" secondItem="OyW-KB-7iu" secondAttribute="leading" id="fir-Zi-niD"/>
                                 <constraint firstAttribute="trailing" secondItem="gof-wG-1fQ" secondAttribute="trailing" id="ve8-i2-iTJ"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecipeCell" rowHeight="165" id="PmD-1z-Dxa" customClass="RecipesTableViewCell" customModule="Reciplease" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="110" width="375" height="165"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="165"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PmD-1z-Dxa" id="gld-PD-BW8">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="165"/>
@@ -135,7 +135,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.31372549019607843" green="1" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="F3F-Vv-jdX" secondAttribute="trailing" constant="10" id="1gn-nd-ta1"/>
                                         <constraint firstItem="F3F-Vv-jdX" firstAttribute="leading" secondItem="gld-PD-BW8" secondAttribute="leading" constant="10" id="CIw-Iw-X9m"/>
@@ -163,12 +163,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Nwa-RQ-VPn">
                         <barButtonItem key="backBarButtonItem" title=" " id="FPt-Yu-X9g"/>
-                        <barButtonItem key="rightBarButtonItem" title="Log out" style="plain" id="Wk0-jc-HHM">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="3q0-fe-IMH">
-                                <rect key="frame" x="272" y="4.5" width="87" height="35"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Wk0-jc-HHM">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3q0-fe-IMH">
+                                <rect key="frame" x="278" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Sign out">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="baseForegroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="baseBackgroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
@@ -374,12 +375,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="vZs-kT-hhX">
                         <barButtonItem key="backBarButtonItem" title=" " id="AiA-Wu-dk9"/>
-                        <barButtonItem key="rightBarButtonItem" title="Log out" style="plain" changesSelectionAsPrimaryAction="YES" id="5Vj-QX-xpA">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="iyK-eC-uml">
-                                <rect key="frame" x="272" y="4.5" width="87" height="35"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" changesSelectionAsPrimaryAction="YES" id="5Vj-QX-xpA">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iyK-eC-uml">
+                                <rect key="frame" x="278" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Sign out">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="baseForegroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="baseBackgroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
@@ -411,11 +413,15 @@
         <scene sceneID="vKH-yt-idu">
             <objects>
                 <navigationController id="ncr-ny-pRy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="yCo-0P-hvD"/>
+                    <tabBarItem key="tabBarItem" title="Search" id="yCo-0P-hvD">
+                        <imageReference key="largeContentSizeImage" image="magnifyingglass" catalog="system" symbolScale="large"/>
+                        <color key="badgeColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HeJ-m0-xxp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.34962487219999999" green="0.57332998509999999" blue="0.38371044399999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.1806401312" green="0.26485276219999998" blue="0.24610120059999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <connections>
                         <segue destination="DDW-gg-OnG" kind="relationship" relationship="rootViewController" id="nIZ-o7-s2W"/>
@@ -468,17 +474,19 @@
             <objects>
                 <tabBarController id="jC0-yX-VL6" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="RkF-zi-7r8"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="fill" id="ueB-4z-9lZ">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="centered" id="ueB-4z-9lZ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <tabBarAppearance key="standardAppearance">
+                        <color key="backgroundColor" red="0.1806401312" green="0.26485276219999998" blue="0.24610120059999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.1010728255" green="0.11080571259999999" blue="0.19096472859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <tabBarAppearance key="standardAppearance" stackedItemPositioning="fill" stackedItemWidth="0.0" stackedItemSpacing="0.0">
+                            <color key="backgroundColor" red="0.1806401312" green="0.26485276219999998" blue="0.24610120059999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <tabBarItemAppearance key="stackedLayoutAppearance">
                                 <tabBarItemStateAppearance key="normal">
                                     <textAttributes key="titleTextAttributes">
-                                        <color key="textColor" red="0.58506113289999995" green="0.97647482159999999" blue="0.71381515259999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" name="Palatino-Bold" family="Palatino" pointSize="18"/>
+                                        <color key="textColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </textAttributes>
-                                    <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-5"/>
                                 </tabBarItemStateAppearance>
                                 <tabBarItemStateAppearance key="selected"/>
                                 <tabBarItemStateAppearance key="disabled"/>
@@ -495,11 +503,14 @@
             </objects>
             <point key="canvasLocation" x="-353" y="-171"/>
         </scene>
-        <!--Favorite-->
+        <!--Favorites-->
         <scene sceneID="vbY-4x-Uh5">
             <objects>
                 <navigationController id="qJw-BP-JEo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorite" id="C1p-5S-QPf"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" largeContentSizeImage="star.fill" catalog="system" id="C1p-5S-QPf">
+                        <color key="badgeColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-20"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1y7-E0-sQy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -522,7 +533,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l0k-75-hQc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="569"/>
-                                <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.1010728255" green="0.11080571259999999" blue="0.19096472859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="mwW-81-iyv" userLabel="Header View">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="331"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -552,7 +563,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="backgroundColor" red="0.1010728255" green="0.11080571259999999" blue="0.19096472859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="l7q-V7-fel" secondAttribute="trailing" id="Etl-bP-hUG"/>
                                         <constraint firstAttribute="bottom" secondItem="LI5-YU-QGN" secondAttribute="bottom" constant="10" id="F2H-Kn-Jgm"/>
@@ -666,7 +677,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DSs-2D-Nzs"/>
-                        <color key="backgroundColor" red="0.21347901229999999" green="0.2007388473" blue="0.19611996409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.1010728255" green="0.11080571259999999" blue="0.19096472859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="DSs-2D-Nzs" firstAttribute="bottom" secondItem="l0k-75-hQc" secondAttribute="bottom" id="B3U-xR-WbC"/>
                             <constraint firstItem="l0k-75-hQc" firstAttribute="leading" secondItem="DSs-2D-Nzs" secondAttribute="leading" id="Pxh-Mt-335"/>
@@ -677,12 +688,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ydl-tI-C8x">
                         <barButtonItem key="backBarButtonItem" title=" " id="Sav-2f-Mp8"/>
-                        <barButtonItem key="rightBarButtonItem" title="Log out" style="plain" changesSelectionAsPrimaryAction="YES" id="54n-Ne-oDn">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="yLx-Xt-4TD">
-                                <rect key="frame" x="272" y="4.5" width="87" height="35"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" changesSelectionAsPrimaryAction="YES" id="54n-Ne-oDn">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yLx-Xt-4TD">
+                                <rect key="frame" x="278" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Sign out">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="baseForegroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="baseBackgroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
@@ -851,12 +863,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="KRS-5B-tij">
-                        <barButtonItem key="rightBarButtonItem" title="Log out" style="plain" id="ChD-i5-22N">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="gHt-MH-2e5">
-                                <rect key="frame" x="272" y="4.5" width="87" height="35"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="ChD-i5-22N">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gHt-MH-2e5">
+                                <rect key="frame" x="278" y="6" width="81" height="32"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Sign out">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="baseForegroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="baseBackgroundColor" red="0.58575910330000003" green="0.95480316880000005" blue="0.52840840820000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
@@ -1047,7 +1060,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Mxf-oh-2dT"/>
+        <segue reference="cr7-mN-8Zd"/>
         <segue reference="14n-l3-rGH"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1057,7 +1070,9 @@
         <image name="hexagon" catalog="system" width="128" height="123"/>
         <image name="list.number" catalog="system" width="128" height="97"/>
         <image name="logoRecipleaseText" width="1024" height="224"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

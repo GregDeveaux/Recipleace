@@ -35,7 +35,6 @@ class RecipesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupActivityIndicator()
     }
 
@@ -85,13 +84,13 @@ class RecipesTableViewController: UITableViewController {
         }
     }
 
+        // present activity indicator if data is loading...
     func setupActivityIndicator() {
+            // wheel indicator
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .white
-        listOfRecipesTableView.addSubview(activityIndicator)
+        activityIndicator.color = .greenColor
 
-        activityIndicator.centerXAnchor.constraint(equalTo: listOfRecipesTableView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: listOfRecipesTableView.centerYAnchor).isActive = true
+        listOfRecipesTableView.backgroundView = activityIndicator
     }
 
 
