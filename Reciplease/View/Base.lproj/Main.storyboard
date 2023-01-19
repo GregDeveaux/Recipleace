@@ -158,6 +158,7 @@
                         <connections>
                             <outlet property="dataSource" destination="ewp-Pr-JLI" id="wyU-ON-wWA"/>
                             <outlet property="delegate" destination="ewp-Pr-JLI" id="mt8-PC-Soy"/>
+                            <outlet property="prefetchDataSource" destination="ewp-Pr-JLI" id="aRQ-20-mgf"/>
                         </connections>
                     </tableView>
                     <toolbarItems/>
@@ -1060,7 +1061,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cr7-mN-8Zd"/>
+        <segue reference="Mxf-oh-2dT"/>
         <segue reference="14n-l3-rGH"/>
     </inferredMetricsTieBreakers>
     <resources>

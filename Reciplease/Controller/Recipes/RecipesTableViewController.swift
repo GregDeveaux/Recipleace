@@ -16,6 +16,7 @@ class RecipesTableViewController: UITableViewController {
 
     var listOfStuffsFromFridge: [String] = []
     var listOfRecipes: [API.Edamam.RecipesFounded] = []
+    var nextPage: String = ""
 
     var isLoadingRecipes = false
     let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -75,6 +76,8 @@ class RecipesTableViewController: UITableViewController {
                     self.isLoadingRecipes = false
                     self.activityIndicator.stopAnimating()
                     self.listOfRecipesTableView.reloadData()
+                    guard let hrefNextPage = recipes.otherRecipes?.next.href else { return }
+                    self.nextPage = hrefNextPage
 
                 case .failure(let error):
                     self.isLoadingRecipes = false
@@ -132,7 +135,6 @@ class RecipesTableViewController: UITableViewController {
 
         return cell
     }
-
     
         // -------------------------------------------------------
         // MARK: - Navigation
@@ -150,3 +152,17 @@ class RecipesTableViewController: UITableViewController {
     }
 }
 
+extension RecipesTableViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print("☢️ RECIPES_VC/DATA_NEXT_PAGE: \(indexPaths)")
+
+        for indexPath in indexPaths {
+            guard let _ = <#expression#> else { return <#return value#> }
+        }
+        if indexPaths.count > listOfRecipes.count {
+            API.QueryService.shared.getData(endpoint: .recipesNext(nextPage: nextPage), type: API.Edamam.Recipes.self) { result in
+                print("✅ RECIPES_VC/DATA_NEXT_PAGE: \(result)")
+            }
+        }
+    }
+}

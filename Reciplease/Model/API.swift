@@ -113,6 +113,7 @@ struct API {
 
     enum EndPoint {
         case recipes(stuffs: [String])
+        case recipesNext(nextPage: String)
 
         var url: URL {
             var components = URLComponents()
@@ -128,6 +129,8 @@ struct API {
                         URLQueryItem(name: "app_id", value: APIKeys.IdValue.rawValue),
                         URLQueryItem(name: "app_key", value: APIKeys.keyValue.rawValue)
                     ]
+                case .recipesNext(let nextPage):
+                    components = URLComponents(string: nextPage)!
             }
             guard let url = components.url else {
                 preconditionFailure("🛑 ENDPOINT: Invalid URL components: \(components) ")
