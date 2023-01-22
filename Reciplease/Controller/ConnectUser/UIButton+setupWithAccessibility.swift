@@ -9,23 +9,30 @@ import UIKit
 
 extension UIButton {
         // setup which use the configuration button
-    static func setupButton(style: UIButton.Configuration, title: String, colorText: UIColor, colorBackground: UIColor, image: String, accessibilityMessage: String, activity: Bool) -> UIButton {
+    static func setupButton(style: UIButton.Configuration,
+                            title: String,
+                            colorText: UIColor,
+                            colorBackground: UIColor,
+                            image: String,
+                            accessibilityMessage: String,
+                            activity: Bool) -> UIButton {
+
         let button = UIButton()
 
-            // modify appearance of the button
+            /// modify appearance of the button
         var configuration = style
         configuration.baseBackgroundColor = colorBackground
         configuration.baseForegroundColor = colorText
         configuration.cornerStyle = .dynamic
 
-            // add an image in the button with placement
+            /// add an image in the button with placement
         configuration.image = UIImage(systemName: image)
         configuration.imagePadding = 10
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .medium)
         configuration.imagePlacement = .trailing
         configuration.title = title
 
-            // modify the font of the button
+            /// modify the font of the button
         let transformer = UIConfigurationTextAttributesTransformer { listTransform in
             var fontTransform = listTransform
             fontTransform.font = UIFont.boldSystemFont(ofSize: 20)

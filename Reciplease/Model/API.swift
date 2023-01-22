@@ -133,7 +133,7 @@ struct API {
                     components = URLComponents(string: nextPage)!
             }
             guard let url = components.url else {
-                preconditionFailure("🛑 ENDPOINT: Invalid URL components: \(components) ")
+                preconditionFailure("🛑 ENDPOINT: Invalid URL components: \(self.url)")
             }
 
             return url

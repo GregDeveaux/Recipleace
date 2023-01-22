@@ -111,7 +111,6 @@ class FridgeViewController: UIViewController {
             print("🛑 SignOut impossible")
         }
     }
-
 }
 
 

@@ -47,9 +47,18 @@ class RecipesTableViewCell: UITableViewCell {
         }
     }
 
-    @IBOutlet weak var favoriteButton: FavoriteButton!
+    @IBOutlet weak var favoriteButton: UIButton! {
+        didSet {
+            var configuration = UIButton.Configuration.filled()
+            configuration.cornerStyle = .capsule
+            configuration.baseBackgroundColor = .darkBlue
+            configuration.baseForegroundColor = .greenColor
+            favoriteButton.configuration = configuration
+        }
+    }
 
     @IBAction func tappedFavorite(_ sender: Any) {
         favoriteButton.setNeedsUpdateConfiguration()
     }
+
 }

@@ -42,10 +42,12 @@ extension RecipeDetailTableViewCell: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IngredientsCell", for: indexPath) as? IngredientsCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let urlImage = URL(string: ingredients[indexPath.row].image ?? "image not found")!   // TODO: problem optional
-        if let dataImage = try? Data(contentsOf: urlImage) {
-            cell.ingredientImageView.image = UIImage(data: dataImage)
+        if let urlImage = URL(string: ingredients[indexPath.row].image ?? "image not found") {
+            if let dataImage = try? Data(contentsOf: urlImage) {
+                cell.ingredientImageView.image = UIImage(data: dataImage)
+            }
         }
+
         print("✅ RECIPE_DETAIL_TVC/COLLECTION_VIEW: 🌠 \(String(describing: cell.ingredientImageView.image))")
 
         cell.ingredientNameLabel.text = ingredients[indexPath.row].food

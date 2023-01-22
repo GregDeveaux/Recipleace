@@ -16,6 +16,8 @@ final class APIEdamamRecipesTests: XCTestCase {
     var APIEdamam: API.Edamam.Recipes!
     let apiURL = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&q=%5B%22rice%22,%20%22tomato%22,%20%22apple%22%5D&app_id=\(APIKeys.IdValue.rawValue)&app_key=\(APIKeys.keyValue.rawValue)")
 
+    let stuffs = ["rice", "tomato","apple"]
+
     override func setUpWithError() throws {
 
             // Transform URLProtocol from MockURLProtocol
@@ -39,10 +41,15 @@ final class APIEdamamRecipesTests: XCTestCase {
         XCTAssertEqual(urlEndpoint, apiURL)
     }
 
+    func test_GivenTheGoodURLRequestNewPageRecipe_ThenTheGenerationOftheURLIsOk() {
+        let nextPage = "https://api.edamam.com/api/recipes/v2?q=rice%2C%20tomato%2C%20apple%20%20&app_key=269fde3a9ed8c6c87bee2e07b8f7ebe6&_cont=CHcVQBtNNQphDmgVQ3tAEX4BYlxtAgEDRmFJC2QWZFdxAgYBUXlSA2ISNVZ6AlcCF20SVWNCNVIlDAZSFTFAAGVANQF7BVYVLnlSVSBMPkd5BgMbUSYRVTdgMgksRlpSAAcRXTVGcV84SU4%3D&type=public&app_id=256576d2"
+        let urlEndpoint = API.EndPoint.recipesNext(nextPage: nextPage).url
+        XCTAssertEqual(urlEndpoint, URL(string: nextPage))
+    }
+
     func test_GivenTheGoodURLWithIngredients_WhenIAskAListOfRecipes_ThenTheAnswerIsAListWithTheCheckedIngredients() {
             // Given
         expectation = expectation(description: "Expectation")
-        let stuffs = ["rice", "tomato","apple"]
 
             //When
         let data = MockResponseData.edamamRecipesCorrectData
@@ -100,47 +107,47 @@ final class APIEdamamRecipesTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10.0)
     }
-//
-//
-//    func test_GivenIAskATranslation_WhenINotRecoverAStatusCode500_ThenMyResponseFailed() {
-//
-//        baseQueryCurrency(data: MockResponseData.currencyCorrectData, response: MockResponseData.responseFailed)
-//
-//        API.QueryService.shared.getData(endpoint: .weather(city: currencyUser, units: units),
-//                                        type: API.Weather.DataForCity.self) { result in
-//            switch result {
-//                case .failure(let error):
-//                    XCTAssertEqual(error.localizedDescription, "🛑 Generic error: there is not a response!")
-//
-//                case .success(let result):
-//                    XCTAssertNil(result)
-//                    XCTFail("shouldn't execute this block")
-//            }
-//            self.expectation.fulfill()
-//        }
-//        wait(for: [expectation], timeout: 10.0)
-//    }
-//
-//    func test_GivenIAskAConversion_WhenIRecoverABadData_ThenDecodeJsonDataFailed() {
-//
-//        baseQueryCurrency(data: MockResponseData.mockDataFailed, response: MockResponseData.responseOK)
-//
-//        API.QueryService.shared.getData(endpoint: .weather(city: currencyUser, units: units),
-//                                        type: API.Weather.DataForCity.self) { result in
-//            XCTAssertNotNil(result)
-//
-//            switch result {
-//                case .failure(let error):
-//                    XCTAssertEqual(error.localizedDescription, "🛑 Interne error: not decode data!")
-//
-//                case .success(let result):
-//                    XCTAssertNil(result)
-//                    XCTFail("shouldn't execute this block")
-//            }
-//            self.expectation.fulfill()
-//        }
-//        wait(for: [expectation], timeout: 10.0)
-//    }
+
+
+    func test_GivenIAskATranslation_WhenINotRecoverAStatusCode500_ThenMyResponseFailed() {
+
+        baseQueryCurrency(data: MockResponseData.edamamRecipesCorrectData, response: MockResponseData.responseFailed)
+
+        API.QueryService.shared.getData(endpoint: .recipes(stuffs: stuffs),
+                                        type: API.Edamam.Recipes.self) { result in
+            switch result {
+                case .failure(let error):
+                    XCTAssertEqual(error.localizedDescription, "📭 Generic error: there is not a response!")
+
+                case .success(let result):
+                    XCTAssertNil(result)
+                    XCTFail("shouldn't execute this block")
+            }
+            self.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func test_GivenIAskAConversion_WhenIRecoverABadData_ThenDecodeJsonDataFailed() {
+
+        baseQueryCurrency(data: MockResponseData.mockDataFailed, response: MockResponseData.responseOK)
+
+        API.QueryService.shared.getData(endpoint: .recipes(stuffs: stuffs),
+                                        type: API.Edamam.Recipes.self) { result in
+            XCTAssertNotNil(result)
+
+            switch result {
+                case .failure(let error):
+                    XCTAssertEqual(error.localizedDescription, "📬 Interne error: not decode data!")
+
+                case .success(let result):
+                    XCTAssertNil(result)
+                    XCTFail("shouldn't execute this block")
+            }
+            self.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
 
 
         // -------------------------------------------------------
