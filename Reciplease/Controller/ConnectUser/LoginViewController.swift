@@ -120,7 +120,8 @@ class LoginViewController: UIViewController {
         setupView()
     }
 
-    
+    @IBAction func unwindToLogin(segue:UIStoryboardSegue) { }
+
         // -------------------------------------------------------
         //MARK: - design
         // -------------------------------------------------------

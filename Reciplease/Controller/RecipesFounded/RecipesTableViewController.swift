@@ -142,6 +142,7 @@ class RecipesTableViewController: UITableViewController {
         let cellIdentifier = "RecipeCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
+        listOfRecipesTableView.beginUpdates()
             // initialize recipeID
         lazy var recipeID: String = {
             let uri = listOfRecipes[indexPath.row].recipe.uri
@@ -164,23 +165,55 @@ class RecipesTableViewController: UITableViewController {
         }
         print("✅ RECIPES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
+        setupFavoriteButton(cell.favoriteButton, recipeID: recipeID, indexPath: indexPath)
+        
+        listOfRecipesTableView.endUpdates()
+
+        return cell
+    }
+
+    func favoritesRecipesIDInUserDefaults(_ recipeID: String, isFavorites: Bool) {
+            // if not info create a empty array
+        var savedFavorites: [String] = userDefaults.array(forKey: favorites) as? [String] ?? []
+
+        if isFavorites && !savedFavorites.contains(where: {$0 == recipeID}) {
+            savedFavorites.append(recipeID)
+            print("✅ RECIPES_VC/USERDEFAULTS: Recipe is save in favorites: \(savedFavorites)")
+        } else {
+            savedFavorites = savedFavorites.filter({ $0 != recipeID })
+//            savedFavorites.removeAll(where: { $0 == recipeID })
+            print("✅ RECIPES_VC/USERDEFAULTS: Recipe is delete in favorites: \(savedFavorites)")
+        }
+            // setting userDefaults
+        userDefaults.set(savedFavorites, forKey: favorites)
+    }
+
+    func setupFavoriteButton(_ myFavoriteButton: UIButton, recipeID: String, indexPath: IndexPath) {
             // check these recipes is favorites according to save in userDefaults
         let savedFavorites: [String] = userDefaults.array(forKey: favorites) as? [String] ?? []
+
         if savedFavorites.contains(recipeID) {
             isFavorite = true
             print("✅⭐️ RECIPES_VC/CELL: Recipe is ever favorite")
         }
 
+        var configuration = UIButton.Configuration.filled()
+        configuration.cornerStyle = .capsule
+        configuration.baseBackgroundColor = .darkBlue
+        configuration.baseForegroundColor = .greenColor
+
             // update image button according by the isFavorite
-        cell.favoriteButton.configurationUpdateHandler = { button in
+        myFavoriteButton.configurationUpdateHandler = { button in
             var configuration = button.configuration
             let symbolName = self.isFavorite ? "star.fill" : "star"
             configuration?.image = UIImage(systemName: symbolName)
-            cell.favoriteButton.configuration = configuration
+            myFavoriteButton.configuration = configuration
         }
+        
+        myFavoriteButton.configuration = configuration
 
              // action of favorite button
-        cell.favoriteButton.addAction(
+        myFavoriteButton.addAction(
             UIAction { _ in
                 if self.isFavorite {
                     self.isFavorite = false
@@ -203,23 +236,6 @@ class RecipesTableViewController: UITableViewController {
             },
             for: .touchUpInside)
 
-        return cell
-    }
-
-    func favoritesRecipesIDInUserDefaults(_ recipeID: String, isFavorites: Bool) {
-            // if not info create a empty array
-        var savedFavorites: [String] = userDefaults.array(forKey: favorites) as? [String] ?? []
-
-        if isFavorites && !savedFavorites.contains(where: {$0 == recipeID}) {
-            savedFavorites.append(recipeID)
-            print("✅ RECIPES_VC/USERDEFAULTS: Recipe is save in favorites: \(savedFavorites)")
-        } else {
-            savedFavorites = savedFavorites.filter({ $0 != recipeID })
-//            savedFavorites.removeAll(where: { $0 == recipeID })
-            print("✅ RECIPES_VC/USERDEFAULTS: Recipe is delete in favorites: \(savedFavorites)")
-        }
-            // setting userDefaults
-        userDefaults.set(savedFavorites, forKey: favorites)
     }
 
 
@@ -238,15 +254,15 @@ class RecipesTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func tappedSignOut(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            print("✅ RECIPE_VC/BUTTON_SIGNOUT: User is sign out")
-            dismiss(animated: true)
-        } catch {
-            print("🛑 RECIPE_VC/BUTTON_SIGNOUT: SignOut impossible")
-        }
-    }
+//    @IBAction func tappedSignOut(_ sender: Any) {
+//        do {
+//            try Auth.auth().signOut()
+//            print("✅ RECIPE_VC/BUTTON_SIGNOUT: User is sign out")
+//            dismiss(animated: true)
+//        } catch {
+//            print("🛑 RECIPE_VC/BUTTON_SIGNOUT: SignOut impossible")
+//        }
+//    }
 }
 
 extension RecipesTableViewController: UITableViewDataSourcePrefetching {
