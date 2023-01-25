@@ -104,6 +104,9 @@ class LoginViewController: UIViewController {
             }
             strongSelf.performSegue(withIdentifier: "LoginSegueTabBar", sender: self)
         }
+
+        emailTextField.text = ""
+        passwordTextField.text = ""
     }
 
     func handleGoSignUp() {

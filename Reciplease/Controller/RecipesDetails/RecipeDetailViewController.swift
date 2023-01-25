@@ -31,7 +31,7 @@ class RecipeDetailViewController: UIViewController {
         return favoritesRecipesReferencePath
     }()
 
-    lazy var recipeID: String = {
+    private lazy var recipeID: String = {
         let uri = self.recipeForDetails.uri
         let recipeID = uri.split(separator: "#").last.map(String.init)
         print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
@@ -59,6 +59,10 @@ class RecipeDetailViewController: UIViewController {
     }
     @IBOutlet weak var favoriteButton: UIButton! {
         didSet {
+                // create a counter with likes of recipes
+            let favoritesReferencePath = databaseReference.child("recipes")
+            let favoritesCountReferencePath = favoritesReferencePath.child("\(self.recipeID)")
+
             var configuration = UIButton.Configuration.filled()
             configuration.baseForegroundColor = .greenColor
             configuration.baseBackgroundColor = .darkBlue
@@ -83,11 +87,14 @@ class RecipeDetailViewController: UIViewController {
                     print("✅ RECIPES_VC/TABLEVIEW: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(self.recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(self.recipeID, isFavorites: false)
+                    /// add counter of all users app and update
+                    favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                 } else {
                     self.isFavorite = true
                     print("✅ RECIPES_VC/TABLEVIEW: Recipe is favorite")
                     self.savefavoriteRecipe(recipe: self.recipeForDetails, recipeID: self.recipeID)
                     self.favoritesRecipesIDInUserDefaults(self.recipeID, isFavorites: true)
+                    favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
                 }
             }, for: .touchUpInside)
         }
@@ -131,15 +138,6 @@ class RecipeDetailViewController: UIViewController {
         if let dataImage = try? Data(contentsOf: urlImage) {
             recipeImageView.image = UIImage(data: dataImage)
             downloadImageFirebase(image: dataImage, ID: recipeID)
-        }
-    }
-    @IBAction func TappedLogOut(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            print("✅ User is sign out")
-            self.navigationController?.popToRootViewController(animated: true)
-        } catch {
-            print("🛑 SignOut impossible")
         }
     }
 

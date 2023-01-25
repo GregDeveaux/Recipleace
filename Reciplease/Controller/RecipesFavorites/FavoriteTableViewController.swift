@@ -99,22 +99,26 @@ class FavoriteTableViewController: UITableViewController {
             print("✅⭐️ FAVORITES_VC/CELL: Recipe is ever favorite")
         }
 
-            //  • 3a. write title •
+            // • 3.  create a counter with likes of recipes •
+        let favoritesReferencePath = databaseReference.child("recipes")
+        let favoritesCountReferencePath = favoritesReferencePath.child("\(recipeID)")
+
+            //  • 4a. write title •
         cell.layoutIfNeeded()
         cell.titleLabel.text = listOfFavoritesRecipes[indexPath.row].title
         print("✅ FAVORITES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 
-            //  • 3b. write ingredients •
+            //  • 4b. write ingredients •
         listOfFavoritesRecipes[indexPath.row].ingredients.forEach({ ingredient in
             cell.ingredientsLabel.text = ingredient.food
             print("✅ FAVORITES_VC/TABLEVIEW: 🍓 \(String(describing: cell.ingredientsLabel.text))")
         })
 
-            // • 3c. show image •
+            // • 4c. show image •
         uploadImage(ID: recipeID, for: cell.recipeImage)
         print("✅ FAVORITES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
-            // • 3d. update image button according by the isFavorite •
+            // • 4d. update image button according by the isFavorite •
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
         configuration.baseBackgroundColor = .darkBlue
@@ -138,6 +142,7 @@ class FavoriteTableViewController: UITableViewController {
                     self.listOfFavoritesRecipes.remove(at: indexPath.row)
                     self.favoritesRecipesTableView.reloadData()
                     self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
+                    favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                 }
             },
             for: .touchUpInside)
@@ -211,7 +216,6 @@ extension FavoriteTableViewController {
             // check recipes and retrieve
         favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
             let jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
-            print("✅ FAVORITES_VC/JSON: \(String(describing: snapshot.value))")
 
             do {
                 let recipeData = try JSONSerialization.data(withJSONObject: jsonOfFavoritesRecipes as Any)
@@ -219,7 +223,7 @@ extension FavoriteTableViewController {
                     // save recipe in list of favorites
                 self.listOfFavoritesRecipes.append(recipe)
                 self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
-                print("✅ FAVORITES_VC/JSON: recipe -> \(recipe)")
+                print("✅ FAVORITES_VC/JSON: recipe is displayed")
             } catch {
                 print("🛑 FAVORITES_VC/TABLEVIEW: an error occurred", error)
             }

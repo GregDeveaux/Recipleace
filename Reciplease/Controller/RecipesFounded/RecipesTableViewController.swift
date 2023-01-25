@@ -25,16 +25,20 @@ class RecipesTableViewController: UITableViewController {
     let activityIndicator = UIActivityIndicatorView(style: .large)
     var isFavorite = false
 
-        // UserDefaults
-    let userDefaults = UserDefaults.standard
-    let favorites = "favorites"
+        // UserDefaults to check favorites recipes present in firebase
+    private let userDefaults = UserDefaults.standard
+    private let favorites = "favorites"
+    lazy var savedFavorites: [String] = {
+        var savedFavorites = userDefaults.array(forKey: favorites) as? [String] ?? []
+        return savedFavorites
+    }()
 
         // Firebase reference
     let databaseReference: DatabaseReference = Database.database().reference()
     private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
         guard let userID = Auth.auth().currentUser?.uid else { return nil }
         print("✅ RECIPES_DETAIL_VC/USER: \(String(describing: userID))")
-            // path firebase
+            /// path firebase
         let favoritesRecipesReferencePath = databaseReference.child("users/\(userID)/favoritesRecipes")
         return favoritesRecipesReferencePath
     }()
@@ -100,6 +104,7 @@ class RecipesTableViewController: UITableViewController {
         }
     }
 
+        // method to retrieve the recipes info
     private func dataRecipes(result: Result<API.Edamam.Recipes, API.Error>) {
         switch result {
             case .success(let recipes):
@@ -142,7 +147,6 @@ class RecipesTableViewController: UITableViewController {
         let cellIdentifier = "RecipeCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
-        listOfRecipesTableView.beginUpdates()
             // initialize recipeID
         lazy var recipeID: String = {
             let uri = listOfRecipes[indexPath.row].recipe.uri
@@ -151,6 +155,7 @@ class RecipesTableViewController: UITableViewController {
             return recipeID ?? "not recipe ID"
         }()
 
+        cell.titleLabel.numberOfLines = 0
         cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
         print("✅ RECIPES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 
@@ -166,9 +171,9 @@ class RecipesTableViewController: UITableViewController {
         print("✅ RECIPES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
         setupFavoriteButton(cell.favoriteButton, recipeID: recipeID, indexPath: indexPath)
-        
-        listOfRecipesTableView.endUpdates()
 
+        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
+        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
         return cell
     }
 
@@ -189,54 +194,68 @@ class RecipesTableViewController: UITableViewController {
     }
 
     func setupFavoriteButton(_ myFavoriteButton: UIButton, recipeID: String, indexPath: IndexPath) {
-            // check these recipes is favorites according to save in userDefaults
-        let savedFavorites: [String] = userDefaults.array(forKey: favorites) as? [String] ?? []
 
-        if savedFavorites.contains(recipeID) {
-            isFavorite = true
-            print("✅⭐️ RECIPES_VC/CELL: Recipe is ever favorite")
+        if self.savedFavorites.contains(recipeID) {
+            self.isFavorite = true
+            print("✅⭐️ RECIPES_VC/SETUP_BUTTON: Recipe is ever favorite")
         }
+
+            // create a counter with likes of recipes
+        let favoritesReferencePath = databaseReference.child("recipes")
+        let favoritesCountReferencePath = favoritesReferencePath.child("\(recipeID)")
 
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
         configuration.baseBackgroundColor = .darkBlue
         configuration.baseForegroundColor = .greenColor
+        configuration.image = UIImage(systemName: "star")
 
             // update image button according by the isFavorite
         myFavoriteButton.configurationUpdateHandler = { button in
+                // check these recipes is favorites according to save in userDefaults
             var configuration = button.configuration
+//            var symbolName = ""
+//            if self.savedFavorites.contains(recipeID) {
+//                self.isFavorite = true
+//                symbolName = "star.fill"
+//                print("✅⭐️ RECIPES_VC/SETUP_BUTTON: Recipe is ever favorite")
+//            } else {
+//                symbolName = "star"
+//            }
             let symbolName = self.isFavorite ? "star.fill" : "star"
             configuration?.image = UIImage(systemName: symbolName)
-            myFavoriteButton.configuration = configuration
+            button.configuration = configuration
         }
         
-        myFavoriteButton.configuration = configuration
-
              // action of favorite button
         myFavoriteButton.addAction(
             UIAction { _ in
                 if self.isFavorite {
-                    self.isFavorite = false
                     print("✅🙈 RECIPES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
+                    configuration.image = UIImage(systemName: "star")
+                    favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
+                    self.isFavorite = false
 
                 } else {
-                    self.isFavorite = true
                     let recipeForDetails = self.listOfRecipes[indexPath.row].recipe
                     print("✅⭐️ RECIPES_VC/FAVORITE_BUTTON: Recipe is favorite")
                     self.savefavoriteRecipe(recipe: recipeForDetails, recipeID: recipeID)
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: true)
+                    configuration.image = UIImage(systemName: "star.fill")
+                    favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
 
                     let urlImage = URL(string: self.listOfRecipes[indexPath.row].recipe.image)!
                     if let dataImage = try? Data(contentsOf: urlImage) {
                         self.downloadImageFirebase(image: dataImage, ID: recipeID)
                     }
+                    self.isFavorite = true
                 }
-            },
-            for: .touchUpInside)
+            }, for: .touchUpInside)
 
-    }
+        myFavoriteButton.configuration = configuration
+   }
 
 
         // -------------------------------------------------------
@@ -253,16 +272,6 @@ class RecipesTableViewController: UITableViewController {
             dump(listOfRecipes[indexPath.row].recipe)
         }
     }
-
-//    @IBAction func tappedSignOut(_ sender: Any) {
-//        do {
-//            try Auth.auth().signOut()
-//            print("✅ RECIPE_VC/BUTTON_SIGNOUT: User is sign out")
-//            dismiss(animated: true)
-//        } catch {
-//            print("🛑 RECIPE_VC/BUTTON_SIGNOUT: SignOut impossible")
-//        }
-//    }
 }
 
 extension RecipesTableViewController: UITableViewDataSourcePrefetching {
@@ -339,18 +348,16 @@ extension RecipesTableViewController {
         }
     }
 
-    func showFavoritesRecipes() {
-        favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
-            let jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
-            print("✅ RECIPES_VC/JSON: \(String(describing: snapshot.value))")
+    func countFavoritesRecipes(dataPath: DatabaseReference, countLabel: UILabel) {
 
-            do {
-                let recipeData = try JSONSerialization.data(withJSONObject: jsonOfFavoritesRecipes as Any)
-                let recipe = try self.decoder.decode(API.Edamam.Recipe.self, from: recipeData)
-                print(recipe)
-            } catch {
-                print("🛑 RECIPES_VC/JSON: an error occurred", error)
-            }
+        dataPath.getData(completion:  { error, snapshot in
+          guard error == nil else {
+            print(error!.localizedDescription)
+            return
+          }
+            let counter = snapshot?.value as? Int ?? 0
+            countLabel.text = "\(counter)"
+            print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
         })
     }
 }
