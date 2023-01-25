@@ -115,7 +115,7 @@ class FavoriteTableViewController: UITableViewController {
         })
 
             // • 4c. show image •
-        uploadImage(ID: recipeID, for: cell.recipeImage)
+        uploadImage(ID: recipeID, for: cell.recipeImage, indexPath: indexPath)
         print("✅ FAVORITES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
             // • 4d. update image button according by the isFavorite •
@@ -188,7 +188,7 @@ extension FavoriteTableViewController {
         // -------------------------------------------------------
 
         // upload the saved image that is in Firebase
-    func uploadImage(ID: String, for imageView: UIImageView) {
+    func uploadImage(ID: String, for imageView: UIImageView, indexPath: IndexPath) {
         let userID = Auth.auth().currentUser?.uid
         let storageReference = Storage.storage().reference()
         let imageReference = storageReference.child("users/\(userID ?? "")/recipeImages").child(ID)
@@ -204,6 +204,16 @@ extension FavoriteTableViewController {
                 print("✅ FAVORITES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageView.image))")
             }
         })
+
+        imageReference.downloadURL { url, error in
+            if let error = error {
+                print("🛑 FAVORITES_VC/FIREBASE_STORAGE_URL: \(String(describing: error.localizedDescription))")
+            } else {
+                guard let url = url else { return }
+                self.listOfFavoritesRecipes[indexPath.row].image = url.absoluteString
+                print("✅ FAVORITES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: self.listOfFavoritesRecipes[indexPath.row].image))")
+            }
+        }
     }
 
 

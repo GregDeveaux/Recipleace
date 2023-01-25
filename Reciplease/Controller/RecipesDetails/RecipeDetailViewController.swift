@@ -121,8 +121,8 @@ class RecipeDetailViewController: UIViewController {
             // Create a tranparency navigationBar
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-            // font navigationBar is white
-        navigationController?.navigationBar.tintColor = .white
+            // font navigationBar is greenColor
+        navigationController?.navigationBar.tintColor = .greenColor
             // The image pass behind navigationBar and touch the top
         recipeDetailTableView.contentInsetAdjustmentBehavior = .never
     }

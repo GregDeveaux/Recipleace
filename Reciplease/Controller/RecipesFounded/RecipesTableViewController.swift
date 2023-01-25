@@ -23,7 +23,6 @@ class RecipesTableViewController: UITableViewController {
         // Loading indicator
     var isLoadingRecipes = false
     let activityIndicator = UIActivityIndicatorView(style: .large)
-    var isFavorite = false
 
         // UserDefaults to check favorites recipes present in firebase
     private let userDefaults = UserDefaults.standard
@@ -172,8 +171,8 @@ class RecipesTableViewController: UITableViewController {
 
         setupFavoriteButton(cell.favoriteButton, recipeID: recipeID, indexPath: indexPath)
 
-        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
-        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
+//        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
+//        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
         return cell
     }
 
@@ -195,10 +194,7 @@ class RecipesTableViewController: UITableViewController {
 
     func setupFavoriteButton(_ myFavoriteButton: UIButton, recipeID: String, indexPath: IndexPath) {
 
-        if self.savedFavorites.contains(recipeID) {
-            self.isFavorite = true
-            print("✅⭐️ RECIPES_VC/SETUP_BUTTON: Recipe is ever favorite")
-        }
+        var isFavorite = self.savedFavorites.contains(recipeID)
 
             // create a counter with likes of recipes
         let favoritesReferencePath = databaseReference.child("recipes")
@@ -214,15 +210,7 @@ class RecipesTableViewController: UITableViewController {
         myFavoriteButton.configurationUpdateHandler = { button in
                 // check these recipes is favorites according to save in userDefaults
             var configuration = button.configuration
-//            var symbolName = ""
-//            if self.savedFavorites.contains(recipeID) {
-//                self.isFavorite = true
-//                symbolName = "star.fill"
-//                print("✅⭐️ RECIPES_VC/SETUP_BUTTON: Recipe is ever favorite")
-//            } else {
-//                symbolName = "star"
-//            }
-            let symbolName = self.isFavorite ? "star.fill" : "star"
+            let symbolName = isFavorite ? "star.fill" : "star"
             configuration?.image = UIImage(systemName: symbolName)
             button.configuration = configuration
         }
@@ -230,13 +218,13 @@ class RecipesTableViewController: UITableViewController {
              // action of favorite button
         myFavoriteButton.addAction(
             UIAction { _ in
-                if self.isFavorite {
+                if isFavorite {
                     print("✅🙈 RECIPES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
                     configuration.image = UIImage(systemName: "star")
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
-                    self.isFavorite = false
+                    isFavorite = false
 
                 } else {
                     let recipeForDetails = self.listOfRecipes[indexPath.row].recipe
@@ -250,7 +238,7 @@ class RecipesTableViewController: UITableViewController {
                     if let dataImage = try? Data(contentsOf: urlImage) {
                         self.downloadImageFirebase(image: dataImage, ID: recipeID)
                     }
-                    self.isFavorite = true
+                    isFavorite = true
                 }
             }, for: .touchUpInside)
 
@@ -289,6 +277,7 @@ extension RecipesTableViewController: UITableViewDataSourcePrefetching {
         print("💢 RECIPES_VC/DATA_PREFETCH: \(indexPaths)")
     }
 }
+
 
 extension RecipesTableViewController {
 
@@ -348,16 +337,16 @@ extension RecipesTableViewController {
         }
     }
 
-    func countFavoritesRecipes(dataPath: DatabaseReference, countLabel: UILabel) {
-
-        dataPath.getData(completion:  { error, snapshot in
-          guard error == nil else {
-            print(error!.localizedDescription)
-            return
-          }
-            let counter = snapshot?.value as? Int ?? 0
-            countLabel.text = "\(counter)"
-            print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
-        })
-    }
+//    func countFavoritesRecipes(dataPath: DatabaseReference, countLabel: UILabel) {
+//
+//        dataPath.getData(completion:  { error, snapshot in
+//          guard error == nil else {
+//            print(error!.localizedDescription)
+//            return
+//          }
+//            let counter = snapshot?.value as? Int ?? 0
+//            countLabel.text = "\(counter)"
+//            print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
+//        })
+//    }
 }
