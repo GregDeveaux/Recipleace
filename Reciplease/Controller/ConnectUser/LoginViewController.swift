@@ -2,7 +2,7 @@
 //  SignUpViewController.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 01/01/2023.
+//  Created by Greg Deveaux on 01/01/2023.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import Firebase
 class LoginViewController: UIViewController {
 
         // -------------------------------------------------------
-        // MARK: - database Firebase
+        // MARK: - database and Authentification Firebase
         // -------------------------------------------------------
 
     let referenceDatabase: DatabaseReference = Database.database().reference()
@@ -21,16 +21,15 @@ class LoginViewController: UIViewController {
         // -------------------------------------------------------
         // MARK: - properties
         // -------------------------------------------------------
-        // logo top
     lazy var logoReciplease: UIImageView = setupImage(named: "logoRecipleaseText",
                                                       accessibilityText: "Welcome to ReciPlease, this app offers you recipes with stuffs from the fridge")
-        // dish picture bottom
+
     lazy var dishLogin: UIImageView = setupImage(named: "DishLogin",
                                                  accessibilityText: "This page present dish of mushrooms and broccoli")
 
     lazy var emailTextField: UITextField = .setupTextFields(placeholder: "Email",
-                                                               isSecure: false,
-                                                               accessibilityMessage: "write here your email address")
+                                                            isSecure: false,
+                                                            accessibilityMessage: "write here your email address")
 
     lazy var passwordTextField: UITextField = .setupTextFields(placeholder: "Password",
                                                                isSecure: true,
@@ -126,7 +125,7 @@ class LoginViewController: UIViewController {
     @IBAction func unwindToLogin(segue:UIStoryboardSegue) { }
 
         // -------------------------------------------------------
-        //MARK: - design
+        // MARK: - setup design
         // -------------------------------------------------------
         // background color
     private func setupView() {
@@ -135,7 +134,7 @@ class LoginViewController: UIViewController {
         setupDish()
         setupTextFieldsStackView()
     }
-        // logo of the top
+        // constraints of logo of the top (line version coded constraints)
     private func setupLogo() {
         view.addSubview(logoReciplease)
         logoReciplease.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
@@ -153,6 +152,7 @@ class LoginViewController: UIViewController {
         stackView.spacing = 10
 
         view.addSubview(stackView)
+            // constraints of all textFields and buttons of the bottom (array version coded constraints)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: logoReciplease.bottomAnchor, constant: 20),
             stackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
@@ -160,7 +160,7 @@ class LoginViewController: UIViewController {
             stackView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
-        // dish of the bottom
+        // constraints of dish of the bottom (line version coded constraints)
     private func setupDish() {
         view.addSubview(dishLogin)
         dishLogin.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20).isActive = true
@@ -188,6 +188,7 @@ class LoginViewController: UIViewController {
     // -------------------------------------------------------
     // MARK: Keyboard setup dismiss
     // -------------------------------------------------------
+    // if touch outside stop display keyboard
 
 extension LoginViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

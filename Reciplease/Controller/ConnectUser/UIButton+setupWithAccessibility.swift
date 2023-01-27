@@ -2,7 +2,7 @@
 //  UIButton+setupWithAccessibility.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 01/01/2023.
+//  Created by Greg Deveaux on 01/01/2023.
 //
 
 import UIKit
@@ -40,10 +40,12 @@ extension UIButton {
         }
         configuration.titleTextAttributesTransformer = transformer
 
+            /// accessibility
         button.isAccessibilityElement = true
         button.accessibilityTraits = .button
         button.accessibilityHint = accessibilityMessage
 
+            /// indicate activity indicator configuration after tapped
         button.configurationUpdateHandler = { button in
             var configuration = button.configuration
             configuration?.showsActivityIndicator = activity

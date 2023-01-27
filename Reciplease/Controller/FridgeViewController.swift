@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 23/12/2022.
+//  Created by Greg Deveaux on 23/12/2022.
 //
 
 import UIKit
@@ -25,12 +25,35 @@ class FridgeViewController: UIViewController {
         //MARK: outlet
         // -------------------------------------------------------
 
-    @IBOutlet weak var stuffsFromFridgeTextField: UITextField!
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var clearButton: UIButton!
-    @IBOutlet weak var searchRecipes: UIButton!
+    @IBOutlet weak var stuffsFromFridgeTextField: UITextField! {
+        didSet {
+            stuffsFromFridgeTextField.isAccessibilityElement = true
+            stuffsFromFridgeTextField.accessibilityTraits = .staticText
+            stuffsFromFridgeTextField.accessibilityHint = "Indicate the different stuffs from your fridge, please"
+        }
+    }
+    @IBOutlet weak var addButton: UIButton! {
+        didSet {
+            /// info to accessibility with Voice Over
+            IndicateAccessibilityOfTheButton(to: addButton, hint: "tapped here to add stuff in list")
+        }
+    }
+    @IBOutlet weak var clearButton: UIButton! {
+        didSet {
+            IndicateAccessibilityOfTheButton(to: clearButton, hint: "tapped here to clear your all list")
+        }
+    }
+    @IBOutlet weak var searchRecipes: UIButton! {
+        didSet {
+            IndicateAccessibilityOfTheButton(to: searchRecipes, hint: "tapped here to send your list and retrieve the various associated recipes")
+        }
+    }
     @IBOutlet weak var listOfStuffsFromFridgeTableView: UITableView!
-    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var signOutButton: UIButton! {
+        didSet {
+            IndicateAccessibilityOfTheButton(to: signOutButton, hint: "tapped here to sign out App")
+        }
+    }
     @IBOutlet weak var whiteBoardView: UIView! {
         didSet {
             whiteBoardView.layer.cornerRadius = 5
@@ -111,54 +134,11 @@ class FridgeViewController: UIViewController {
             print("🛑 SignOut impossible")
         }
     }
-}
 
-
-    // -------------------------------------------------------
-    //MARK: - list of stuffs from fridge TableView
-    // -------------------------------------------------------
-
-extension FridgeViewController: UITableViewDataSource {
-        // calculate the number of rows
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listOfStuffsFromFridge.count
-    }
-        // here create the different cells of the list
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = "StuffsFromFridge"
-        let cell = listOfStuffsFromFridgeTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-
-        cell.textLabel?.text = "• \(listOfStuffsFromFridge[indexPath.row])"
-
-        return cell
+    func IndicateAccessibilityOfTheButton(to button: UIButton , hint: String ) {
+        var myButton = button
+        myButton.isAccessibilityElement = true
+        myButton.accessibilityTraits = .button
+        myButton.accessibilityHint = hint
     }
 }
-
-extension FridgeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-                // delete the stuff of the list
-            listOfStuffsFromFridge.remove(at: indexPath.row)
-                // delete the stuff line of the tableView
-            listOfStuffsFromFridgeTableView.beginUpdates()
-            listOfStuffsFromFridgeTableView.deleteRows(at: [indexPath], with: .fade)
-            listOfStuffsFromFridgeTableView.endUpdates()
-        }
-    }
-}
-
-    // -------------------------------------------------------
-    // MARK: Keyboard setup dismiss
-    // -------------------------------------------------------
-
-extension FridgeViewController: UITextFieldDelegate {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        stuffsFromFridgeTextField.resignFirstResponder()
-        return true
-    }
-}
-

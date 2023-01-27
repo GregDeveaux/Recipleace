@@ -2,7 +2,7 @@
 //  API.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 25/12/2022.
+//  Created by Greg Deveaux on 25/12/2022.
 //
 
 import Foundation
@@ -14,6 +14,7 @@ struct API {
     }
 
         //MARK: - Edaman API Recipes
+        // Model to decode Json
     enum Edamam {
             // number found and recipes
         struct Recipes: Codable {
@@ -49,7 +50,7 @@ struct API {
                 let href: String
             }
         }
-
+            // part used to show recipe
         struct Recipe: Codable {
             let uri: String
             let title: String

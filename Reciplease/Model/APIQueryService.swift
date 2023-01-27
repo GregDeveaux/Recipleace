@@ -2,7 +2,7 @@
 //  APIQueryService.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 27/12/2022.
+//  Created by Greg Deveaux on 27/12/2022.
 //
 
 import UIKit

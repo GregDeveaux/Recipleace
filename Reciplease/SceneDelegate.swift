@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 23/12/2022.
+//  Created by Greg Deveaux on 23/12/2022.
 //
 
 import UIKit

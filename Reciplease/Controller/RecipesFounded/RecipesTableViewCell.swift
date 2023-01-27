@@ -2,7 +2,7 @@
 //  RecipesTableViewCell.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 26/12/2022.
+//  Created by Greg Deveaux on 26/12/2022.
 //
 
 import UIKit
@@ -12,29 +12,37 @@ import FirebaseStorage
 class RecipesTableViewCell: UITableViewCell {
 
         // -----------------------------------------
-        // MARK: - properties
-        // -----------------------------------------
-
-    let databaseReference: DatabaseReference = Database.database().reference()
-    var isFavorite = false
-
-    private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
-        guard let userID = Auth.auth().currentUser?.uid else { return nil }
-        print("✅ RECIPES_DETAIL_VC/USER: \(String(describing: userID))")
-
-        let favoritesRecipesReferencePath = databaseReference.child("users/\(userID)/favoritesRecipes")
-        return favoritesRecipesReferencePath
-    }()
-
-
-        // -----------------------------------------
         //MARK: - outlets
         // -----------------------------------------
 
-    @IBOutlet weak var recipeImage: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ingredientsLabel: UILabel!
-    @IBOutlet weak var numberOfLikeLabel: UILabel!
+    @IBOutlet weak var recipeImage: UIImageView! {
+        didSet {
+            recipeImage.isAccessibilityElement = true
+            recipeImage.accessibilityTraits = .image
+            recipeImage.accessibilityHint = "Image of the recipe"
+        }
+    }
+    @IBOutlet weak var titleLabel: UILabel!  {
+        didSet {
+            titleLabel.isAccessibilityElement = true
+            titleLabel.accessibilityTraits = .staticText
+            titleLabel.accessibilityHint = "Title of the recipe"
+        }
+    }
+    @IBOutlet weak var ingredientsLabel: UILabel! {
+        didSet {
+            ingredientsLabel.isAccessibilityElement = true
+            ingredientsLabel.accessibilityTraits = .staticText
+            ingredientsLabel.accessibilityHint = "Ingredients used"
+        }
+    }
+    @IBOutlet weak var numberOfLikeLabel: UILabel! {
+        didSet {
+            numberOfLikeLabel.isAccessibilityElement = true
+            numberOfLikeLabel.accessibilityTraits = .staticText
+            numberOfLikeLabel.accessibilityHint = "Number of like to the community for this recipe"
+        }
+    }
     @IBOutlet weak var leafView: UIView! {
         didSet {
             leafView.layer.cornerRadius = 20
@@ -47,7 +55,13 @@ class RecipesTableViewCell: UITableViewCell {
         }
     }
 
-    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton! {
+        didSet {
+            favoriteButton.isAccessibilityElement = true
+            favoriteButton.accessibilityTraits = .button
+            favoriteButton.accessibilityHint = "tapped to add the recipe in the favorites list"
+        }
+    }
 
     @IBAction func tappedFavorite(_ sender: Any) {
         favoriteButton.setNeedsUpdateConfiguration()

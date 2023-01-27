@@ -10,6 +10,8 @@
 		BC0FC8932975CCE200513DCE /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC8922975CCE200513DCE /* MockURLProtocol.swift */; };
 		BC0FC8952975CD2700513DCE /* MockResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC8942975CD2700513DCE /* MockResponseData.swift */; };
 		BC0FC8972975CE9B00513DCE /* APIEdamamRecipesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0FC8962975CE9B00513DCE /* APIEdamamRecipesTests.swift */; };
+		BC127ED82984926E006B238D /* FridgeViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC127ED72984926E006B238D /* FridgeViewController+Extensions.swift */; };
+		BC127EDA2984933E006B238D /* RecipesTableViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC127ED92984933E006B238D /* RecipesTableViewController+Extensions.swift */; };
 		BC2BD7FE2955D7500030016C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD7FD2955D7500030016C /* AppDelegate.swift */; };
 		BC2BD8002955D7500030016C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD7FF2955D7500030016C /* SceneDelegate.swift */; };
 		BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD8012955D7500030016C /* FridgeViewController.swift */; };
@@ -40,7 +42,6 @@
 		BC98775B2961EB1200EE5523 /* UITextField+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */; };
 		BC98775D2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */; };
 		BCCDE621296F5C1900E741B0 /* FavoriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */; };
-		BCD5DBD9295D0C03004ED95C /* UIImageView+LoadURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD5DBD8295D0C03004ED95C /* UIImageView+LoadURL.swift */; };
 		BCF3A862295A251A006415C2 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3A861295A251A006415C2 /* RecipesTableViewCell.swift */; };
 		BCF3A864295A2B35006415C2 /* RecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3A863295A2B35006415C2 /* RecipesTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,8 @@
 		BC0FC8922975CCE200513DCE /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		BC0FC8942975CD2700513DCE /* MockResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResponseData.swift; sourceTree = "<group>"; };
 		BC0FC8962975CE9B00513DCE /* APIEdamamRecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEdamamRecipesTests.swift; sourceTree = "<group>"; };
+		BC127ED72984926E006B238D /* FridgeViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FridgeViewController+Extensions.swift"; sourceTree = "<group>"; };
+		BC127ED92984933E006B238D /* RecipesTableViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipesTableViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BC2BD7FA2955D7500030016C /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2BD7FD2955D7500030016C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC2BD7FF2955D7500030016C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +98,6 @@
 		BC98775A2961EB1100EE5523 /* UITextField+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+setupWithAccessibility.swift"; sourceTree = "<group>"; };
 		BC98775C2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setupWithAccessibility.swift"; sourceTree = "<group>"; };
 		BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewController.swift; sourceTree = "<group>"; };
-		BCD5DBD8295D0C03004ED95C /* UIImageView+LoadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LoadURL.swift"; sourceTree = "<group>"; };
 		BCF3A861295A251A006415C2 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 		BCF3A863295A2B35006415C2 /* RecipesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 			children = (
 				BCE5B94A29622A1F00BA2EC9 /* ConnectUser */,
 				BC2BD8012955D7500030016C /* FridgeViewController.swift */,
+				BC127ED72984926E006B238D /* FridgeViewController+Extensions.swift */,
 				BCF3A865295A2B59006415C2 /* RecipesFounded */,
 				BCE3E67A297C417700FE6ABC /* RecipesDetails */,
 				BCE3E67B297C41B300FE6ABC /* RecipesFavorites */,
@@ -205,7 +208,6 @@
 			children = (
 				BC2BD8032955D7500030016C /* Main.storyboard */,
 				BC2BD80B2955D7510030016C /* LaunchScreen.storyboard */,
-				BCD5DBD8295D0C03004ED95C /* UIImageView+LoadURL.swift */,
 				BC4EDD6F295E45CA00B53EE3 /* UIColor+SimpleRGB.swift */,
 			);
 			path = View;
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				BCF3A863295A2B35006415C2 /* RecipesTableViewController.swift */,
+				BC127ED92984933E006B238D /* RecipesTableViewController+Extensions.swift */,
 				BCF3A861295A251A006415C2 /* RecipesTableViewCell.swift */,
 			);
 			path = RecipesFounded;
@@ -420,9 +423,10 @@
 			files = (
 				BC2BD835295615620030016C /* RecipeDetailViewController.swift in Sources */,
 				BC2BD8082955D7500030016C /* Reciplease.xcdatamodeld in Sources */,
-				BCD5DBD9295D0C03004ED95C /* UIImageView+LoadURL.swift in Sources */,
+				BC127EDA2984933E006B238D /* RecipesTableViewController+Extensions.swift in Sources */,
 				BC8AE0C329661B9300AB13C5 /* IngredientsCollectionViewCell.swift in Sources */,
 				BC2BD8022955D7500030016C /* FridgeViewController.swift in Sources */,
+				BC127ED82984926E006B238D /* FridgeViewController+Extensions.swift in Sources */,
 				BCCDE621296F5C1900E741B0 /* FavoriteTableViewController.swift in Sources */,
 				BC93A98A295889A7004DCE13 /* UIViewController+Alert.swift in Sources */,
 				BC98775D2961EC1800EE5523 /* UIButton+setupWithAccessibility.swift in Sources */,

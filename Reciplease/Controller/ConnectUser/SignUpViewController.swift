@@ -11,7 +11,7 @@ import Firebase
 class SignUpViewController: UIViewController {
 
         // -------------------------------------------------------
-        // MARK: - database Firebase
+        // MARK: - database and Authentification Firebase
         // -------------------------------------------------------
 
     let referenceDatabase: DatabaseReference = Database.database().reference()
@@ -34,12 +34,12 @@ class SignUpViewController: UIViewController {
     }()
 
     lazy var emailTextField: UITextField = .setupTextFields(placeholder: "Email",
-                                                           isSecure: false,
-                                                           accessibilityMessage: "write here your email address")
+                                                            isSecure: false,
+                                                            accessibilityMessage: "write here your email address")
 
     lazy var usernameTextField: UITextField = .setupTextFields(placeholder: "Username",
-                                                           isSecure: false,
-                                                           accessibilityMessage: "write here your username")
+                                                               isSecure: false,
+                                                               accessibilityMessage: "write here your username")
 
     lazy var passwordTextField: UITextField = .setupTextFields(placeholder: "Password",
                                                                isSecure: true,
@@ -79,7 +79,7 @@ class SignUpViewController: UIViewController {
             presentAlert(with: "Oh no! you just forget\n to write your password\n or the password not contains\n 6 min characters")
             return
         }
-
+            // Save a new user informations
         authentification.createUser(withEmail: email, password: password) { user, error in
             guard let user = user, error == nil else {
                 if let error = error {
@@ -87,7 +87,7 @@ class SignUpViewController: UIViewController {
                 }
                 return
             }
-
+                // and save his username in data according to the userID (used to whole app)
             let userUid = user.user.uid
             print("✅ LOGIN_VC/FIREBASE_AUTH: The user has been create: \(userUid)")
 
@@ -109,7 +109,7 @@ class SignUpViewController: UIViewController {
 
 
         // -------------------------------------------------------
-        //MARK: - cycle of view
+        //MARK: - life cycle
         // -------------------------------------------------------
 
     override func viewDidLoad() {
@@ -117,6 +117,11 @@ class SignUpViewController: UIViewController {
 
         setupView()
     }
+    
+
+        // -------------------------------------------------------
+        //MARK: - setup design
+        // -------------------------------------------------------
 
     private func setupView() {
         view.backgroundColor = UIColor.darkBlue
@@ -153,6 +158,7 @@ class SignUpViewController: UIViewController {
     // -------------------------------------------------------
     // MARK: Keyboard setup dismiss
     // -------------------------------------------------------
+    // if touch outside stop display keyboard
 
 extension SignUpViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

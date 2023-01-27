@@ -2,7 +2,7 @@
 //  RecipesTableViewController.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 26/12/2022.
+//  Created by Greg Deveaux on 26/12/2022.
 //
 
 import UIKit
@@ -34,7 +34,7 @@ class RecipesTableViewController: UITableViewController {
 
         // Firebase reference
     let databaseReference: DatabaseReference = Database.database().reference()
-    private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
+    lazy var favoritesRecipesReferencePath: DatabaseReference? = {
         guard let userID = Auth.auth().currentUser?.uid else { return nil }
         print("✅ RECIPES_DETAIL_VC/USER: \(String(describing: userID))")
             /// path firebase
@@ -42,7 +42,6 @@ class RecipesTableViewController: UITableViewController {
         return favoritesRecipesReferencePath
     }()
 
-    private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
     
@@ -51,7 +50,12 @@ class RecipesTableViewController: UITableViewController {
         // -------------------------------------------------------
 
     @IBOutlet var listOfRecipesTableView: UITableView!
-    @IBOutlet weak var totalRecipeLabel: UILabel!
+    @IBOutlet weak var totalRecipeLabel: UILabel! {
+        didSet {
+            totalRecipeLabel.accessibilityTraits = .staticText
+            totalRecipeLabel.accessibilityHint = "the total number of the possible recipes to load in the list"
+        }
+    }
 
 
         // -------------------------------------------------------
@@ -131,29 +135,32 @@ class RecipesTableViewController: UITableViewController {
         // -------------------------------------------------------
         // MARK: - tableView
         // -------------------------------------------------------
+        // setup listOfRecipesTableView according to RecipeCell
 
+        /// number of section(s)
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
+        /// number of rows in section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("✅ RECIPES_VC/TOTAL_ROWS: \(listOfRecipes.count)")
         return listOfRecipes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            // initialize cell
+            /// initialize cell
         let cellIdentifier = "RecipeCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipesTableViewCell
 
-            // initialize recipeID
+            /// initialize recipeID
         lazy var recipeID: String = {
             let uri = listOfRecipes[indexPath.row].recipe.uri
             let recipeID = uri.split(separator: "#").last.map(String.init)
             print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
             return recipeID ?? "not recipe ID"
         }()
-
+            /// label extensible by title
         cell.titleLabel.numberOfLines = 0
         cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
         print("✅ RECIPES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
@@ -171,8 +178,6 @@ class RecipesTableViewController: UITableViewController {
 
         setupFavoriteButton(cell.favoriteButton, recipeID: recipeID, indexPath: indexPath)
 
-//        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
-//        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
         return cell
     }
 
@@ -223,6 +228,7 @@ class RecipesTableViewController: UITableViewController {
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
                     configuration.image = UIImage(systemName: "star")
+                    /// save in the counter firebase
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                     isFavorite = false
 
@@ -232,6 +238,7 @@ class RecipesTableViewController: UITableViewController {
                     self.savefavoriteRecipe(recipe: recipeForDetails, recipeID: recipeID)
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: true)
                     configuration.image = UIImage(systemName: "star.fill")
+                        /// save in the counter firebase
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
 
                     let urlImage = URL(string: self.listOfRecipes[indexPath.row].recipe.image)!
@@ -260,93 +267,4 @@ class RecipesTableViewController: UITableViewController {
             dump(listOfRecipes[indexPath.row].recipe)
         }
     }
-}
-
-extension RecipesTableViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print("🔰 RECIPES_VC/DATA_PREFETCH: \(indexPaths)")
-
-        indexPaths.forEach { indexpath in
-            if indexpath.row == listOfRecipes.count - 1 {
-                getNextRecipes(urlNextPage: nextPage)
-            }
-        }
-    }
-
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        print("💢 RECIPES_VC/DATA_PREFETCH: \(indexPaths)")
-    }
-}
-
-
-extension RecipesTableViewController {
-
-        //MARK: - save the favorites recipes in firebase
-    func downloadImageFirebase(image: Data, ID: String) {
-        let userID = Auth.auth().currentUser?.uid
-        let storageReference = Storage.storage().reference()
-        let imageReference = storageReference.child("users/\(userID ?? "")/recipeImages").child(ID)
-
-        imageReference.putData(image) { metadata, error in
-            if let error = error {
-                print("🛑 FAVORITES_VC/FIREBASE_STORAGE: \(error.localizedDescription)")
-                return
-            }
-
-            storageReference.downloadURL { downloadURL, error in
-                guard let imageRecipeURL = downloadURL?.absoluteString else { return }
-                UserDefaults.setValue(imageRecipeURL, forKey: ID)
-                print("✅ FAVORITES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageRecipeURL))")
-            }
-        }
-    }
-
-    func createID(for recipe: API.Edamam.Recipe) -> String {
-        let uri = recipe.uri
-        let recipeID = uri.split(separator: "#").last.map(String.init)
-        print("✅ RECIPES_VC/CREATEID: recipeID = \(recipeID as Any)")
-        return recipeID ?? "🛑 RECIPES_VC/CREATEID: The recipeID hasn't create"
-    }
-
-    func savefavoriteRecipe(recipe: API.Edamam.Recipe, recipeID: String) {
-        let recipe = API.Edamam.Recipe(uri: recipe.uri,
-                                       title: recipe.title,
-                                       image: recipe.image,
-                                       source: recipe.source,
-                                       sourceUrl: recipe.sourceUrl,
-                                       numberOfPieces: recipe.numberOfPieces,
-                                       healthLabels: recipe.healthLabels,
-                                       cautions: recipe.cautions,
-                                       ingredients: recipe.ingredients,
-                                       calories: recipe.calories,
-                                       totalTime: recipe.totalTime,
-                                       cuisineType: recipe.cuisineType,
-                                       mealType: recipe.mealType,
-                                       isFavorite: recipe.isFavorite)
-
-        do {
-            let data = try encoder.encode(recipe)
-            let json = try JSONSerialization.jsonObject(with: data)
-            DispatchQueue.main.async {
-                self.favoritesRecipesReferencePath?.child(recipeID).setValue(json)
-                print("✅ RECIPES_VC/FIREBASE_SAVE: Favorite recipe saved successfully")
-            }
-
-        } catch {
-            print("🛑 RECIPES_VC/FIREBASE_SAVE: Failed to save favorite recipe, \(error)")
-        }
-    }
-
-//    func countFavoritesRecipes(dataPath: DatabaseReference, countLabel: UILabel) {
-//
-//        dataPath.getData(completion:  { error, snapshot in
-//          guard error == nil else {
-//            print(error!.localizedDescription)
-//            return
-//          }
-//            let counter = snapshot?.value as? Int ?? 0
-//            countLabel.text = "\(counter)"
-//            print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
-//        })
-//    }
 }

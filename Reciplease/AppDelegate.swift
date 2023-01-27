@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 23/12/2022.
+//  Created by Greg Deveaux on 23/12/2022.
 //
 
 import UIKit
@@ -20,10 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Add data persistence
         Database.database().isPersistenceEnabled = true
 
-            // modify icon back of Views
+            // modify icon and color back button of Views
         let backButtonImage = UIImage(systemName: "arrow.backward.circle.fill")
         UINavigationBar.appearance().backIndicatorImage = backButtonImage
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
+        UINavigationBar.appearance().tintColor = .greenColor
+        UINavigationBar.appearance().isAccessibilityElement = true
+        UINavigationBar.appearance().accessibilityTraits = .button
+        UINavigationBar.appearance().accessibilityHint = "click on the button to back last view"
 
         return true
     }
