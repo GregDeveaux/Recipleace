@@ -136,7 +136,7 @@ class FridgeViewController: UIViewController {
     }
 
     func IndicateAccessibilityOfTheButton(to button: UIButton , hint: String ) {
-        var myButton = button
+        let myButton = button
         myButton.isAccessibilityElement = true
         myButton.accessibilityTraits = .button
         myButton.accessibilityHint = hint

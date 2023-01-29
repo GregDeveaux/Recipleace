@@ -2,7 +2,7 @@
 //  FavoriteTableViewController.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 11/01/2023.
+//  Created by Greg Deveaux on 11/01/2023.
 //
 
 import UIKit
@@ -13,7 +13,7 @@ class FavoriteTableViewController: UITableViewController {
 
         //MARK: - properties
         // list for the favoriteRecipesTableView
-    private var listOfFavoritesRecipes: [API.Edamam.Recipe] = []
+    var listOfFavoritesRecipes: [API.Edamam.Recipe] = []
 
         // UserDefaults to check favorites recipes present in firebase
     private let userDefaults = UserDefaults.standard
@@ -26,19 +26,13 @@ class FavoriteTableViewController: UITableViewController {
 
         // favorites recipes path of firebase
     private let databaseReference: DatabaseReference = Database.database().reference()
-    private lazy var favoritesRecipesReferencePath: DatabaseReference? = {
+    lazy var favoritesRecipesReferencePath: DatabaseReference? = {
         guard let userID = Auth.auth().currentUser?.uid else { return nil }
         print("✅ FAVORITES_VC/USER: \(String(describing: userID))")
 
         let favoritesRecipesReferencePath = databaseReference.child("users/\(userID)/favoritesRecipes")
         return favoritesRecipesReferencePath
     }()
-
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
-
-        // init isFavorite for favoriteButton
-    private var isFavorite = false
 
 
         // -------------------------------------------------------
@@ -94,10 +88,7 @@ class FavoriteTableViewController: UITableViewController {
         }()
 
             //  • 2. check these recipes is favorites according to save in userDefaults •
-        if savedFavorites.contains(recipeID) {
-            isFavorite = true
-            print("✅⭐️ FAVORITES_VC/CELL: Recipe is ever favorite")
-        }
+        var isFavorite = self.savedFavorites.contains(recipeID)
 
             // • 3.  create a counter with likes of recipes •
         let favoritesReferencePath = databaseReference.child("recipes")
@@ -126,29 +117,44 @@ class FavoriteTableViewController: UITableViewController {
 
         cell.favoriteButton.configurationUpdateHandler = { button in
             var configuration = button.configuration
-            let symbolName = self.isFavorite ? "star.fill" : "star"
+            let symbolName = isFavorite ? "star.fill" : "star"
             configuration?.image = UIImage(systemName: symbolName)
             cell.favoriteButton.configuration = configuration
         }
 
-        /* MARK: action of favorite button */
+        /// actions of favorite button
         cell.favoriteButton.addAction(
             UIAction { _ in
-                if self.isFavorite {
-                    self.isFavorite = false
+                if isFavorite {
                     print("✅🙈 FAVORITES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
                     self.listOfFavoritesRecipes.remove(at: indexPath.row)
-                    self.favoritesRecipesTableView.reloadData()
                     self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
+                        /// add counter of all users app and update, here we just delete
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
+                    isFavorite = false
                 }
             },
             for: .touchUpInside)
 
         cell.favoriteButton.configuration = configuration
+
+            // retrieve a global count of like for this recipe
+        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
+        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
+        favoritesRecipesTableView.reloadData()
+
         return cell
+    }
+
+
+    func setupNavigationBar() {
+            // Create a tranparency navigationBar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+            // The image pass behind navigationBar and touch the top
+        favoritesRecipesTableView.contentInsetAdjustmentBehavior = .never
     }
 
 
@@ -181,65 +187,3 @@ class FavoriteTableViewController: UITableViewController {
         }
     }
 }
-
-extension FavoriteTableViewController {
-        // -------------------------------------------------------
-        //MARK: - recover the favorites recipes in firebase
-        // -------------------------------------------------------
-
-        // upload the saved image that is in Firebase
-    func uploadImage(ID: String, for imageView: UIImageView, indexPath: IndexPath) {
-        let userID = Auth.auth().currentUser?.uid
-        let storageReference = Storage.storage().reference()
-        let imageReference = storageReference.child("users/\(userID ?? "")/recipeImages").child(ID)
-
-            // retrieve image
-        imageReference.getData(maxSize: 1 * 1024 * 1024, completion: { data, error in
-            guard let data = data, error == nil else {
-                print("🛑 FAVORITES_VC/FIREBASE_STORAGE: \(String(describing: error?.localizedDescription))")
-                return
-            }
-            DispatchQueue.main.async {
-                imageView.image = UIImage(data: data)
-                print("✅ FAVORITES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: imageView.image))")
-            }
-        })
-
-        imageReference.downloadURL { url, error in
-            if let error = error {
-                print("🛑 FAVORITES_VC/FIREBASE_STORAGE_URL: \(String(describing: error.localizedDescription))")
-            } else {
-                guard let url = url else { return }
-                self.listOfFavoritesRecipes[indexPath.row].image = url.absoluteString
-                print("✅ FAVORITES_VC/FIREBASE_STORAGE: 🖼 \(String(describing: self.listOfFavoritesRecipes[indexPath.row].image))")
-            }
-        }
-    }
-
-
-        // -------------------------------------------------------
-        // MARK: - list of favorites recipes
-        //         in Firebase
-        // -------------------------------------------------------
-
-    func showFavoritesRecipes() {
-            // check recipes and retrieve
-        favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
-            let jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
-
-            do {
-                let recipeData = try JSONSerialization.data(withJSONObject: jsonOfFavoritesRecipes as Any)
-                let recipe = try self.decoder.decode(API.Edamam.Recipe.self, from: recipeData)
-                    // save recipe in list of favorites
-                self.listOfFavoritesRecipes.append(recipe)
-                self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
-                print("✅ FAVORITES_VC/JSON: recipe is displayed")
-            } catch {
-                print("🛑 FAVORITES_VC/TABLEVIEW: an error occurred", error)
-            }
-                // reload the tableView
-            self.favoritesRecipesTableView.reloadData()
-        })
-    }
-}
-

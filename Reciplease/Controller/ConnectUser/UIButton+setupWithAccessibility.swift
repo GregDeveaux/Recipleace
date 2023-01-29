@@ -15,7 +15,7 @@ extension UIButton {
                             colorBackground: UIColor,
                             image: String,
                             accessibilityMessage: String,
-                            activity: Bool) -> UIButton {
+                            activity: Bool?) -> UIButton {
 
         let button = UIButton()
 
@@ -48,6 +48,7 @@ extension UIButton {
             /// indicate activity indicator configuration after tapped
         button.configurationUpdateHandler = { button in
             var configuration = button.configuration
+            guard let activity = activity else { return }
             configuration?.showsActivityIndicator = activity
             configuration?.imagePlacement = activity ? .leading : .trailing
             button.configuration = configuration

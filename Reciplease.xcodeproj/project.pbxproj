@@ -26,6 +26,8 @@
 		BC2BD83D295627790030016C /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2BD83C295627790030016C /* APIKeys.swift */; };
 		BC2FDC7D295A57D8002B17D0 /* RecipesRiceTomatoApple.json in Resources */ = {isa = PBXBuildFile; fileRef = BC2FDC7C295A57D8002B17D0 /* RecipesRiceTomatoApple.json */; };
 		BC2FDC7F295A695F002B17D0 /* APIQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDC7E295A695F002B17D0 /* APIQueryService.swift */; };
+		BC3D842F2985248A00A2178F /* RecipeDetailViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D842E2985248A00A2178F /* RecipeDetailViewController+Extensions.swift */; };
+		BC3D8431298529CF00A2178F /* FavoriteTableViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D8430298529CF00A2178F /* FavoriteTableViewController+Extensions.swift */; };
 		BC4E8B012970C789009A82F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC4E8B002970C789009A82F7 /* GoogleService-Info.plist */; };
 		BC4EDD64295E1CB200B53EE3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BC4EDD63295E1CB200B53EE3 /* FirebaseAnalyticsSwift */; };
 		BC4EDD66295E1CB200B53EE3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BC4EDD65295E1CB200B53EE3 /* FirebaseAuth */; };
@@ -87,6 +89,8 @@
 		BC2BD83C295627790030016C /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		BC2FDC7C295A57D8002B17D0 /* RecipesRiceTomatoApple.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RecipesRiceTomatoApple.json; sourceTree = "<group>"; };
 		BC2FDC7E295A695F002B17D0 /* APIQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIQueryService.swift; sourceTree = "<group>"; };
+		BC3D842E2985248A00A2178F /* RecipeDetailViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeDetailViewController+Extensions.swift"; sourceTree = "<group>"; };
+		BC3D8430298529CF00A2178F /* FavoriteTableViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteTableViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BC4E8B002970C789009A82F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC4EDD6D295E20E700B53EE3 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BC4EDD6F295E45CA00B53EE3 /* UIColor+SimpleRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SimpleRGB.swift"; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				BC2BD834295615620030016C /* RecipeDetailViewController.swift */,
+				BC3D842E2985248A00A2178F /* RecipeDetailViewController+Extensions.swift */,
 				BC8AE0C02966168100AB13C5 /* RecipeDetailTableViewCell.swift */,
 				BC8AE0C229661B9300AB13C5 /* IngredientsCollectionViewCell.swift */,
 			);
@@ -253,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				BCCDE620296F5C1900E741B0 /* FavoriteTableViewController.swift */,
+				BC3D8430298529CF00A2178F /* FavoriteTableViewController+Extensions.swift */,
 			);
 			path = RecipesFavorites;
 			sourceTree = "<group>";
@@ -435,6 +441,7 @@
 				BCF3A862295A251A006415C2 /* RecipesTableViewCell.swift in Sources */,
 				BC2BD7FE2955D7500030016C /* AppDelegate.swift in Sources */,
 				BC2BD83D295627790030016C /* APIKeys.swift in Sources */,
+				BC3D8431298529CF00A2178F /* FavoriteTableViewController+Extensions.swift in Sources */,
 				BC4EDD6E295E20E700B53EE3 /* SignUpViewController.swift in Sources */,
 				BCF3A864295A2B35006415C2 /* RecipesTableViewController.swift in Sources */,
 				BC98775B2961EB1200EE5523 /* UITextField+setupWithAccessibility.swift in Sources */,
@@ -442,6 +449,7 @@
 				BC4EDD70295E45CA00B53EE3 /* UIColor+SimpleRGB.swift in Sources */,
 				BC8AE0C12966168100AB13C5 /* RecipeDetailTableViewCell.swift in Sources */,
 				BC2FDC7F295A695F002B17D0 /* APIQueryService.swift in Sources */,
+				BC3D842F2985248A00A2178F /* RecipeDetailViewController+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

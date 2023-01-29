@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Reciplease
 //
-//  Created by Greg-Mini on 25/12/2022.
+//  Created by Greg Deveaux on 25/12/2022.
 //
 
 import UIKit

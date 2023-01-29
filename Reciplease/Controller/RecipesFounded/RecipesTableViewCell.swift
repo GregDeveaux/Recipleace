@@ -11,12 +11,13 @@ import FirebaseStorage
 
 class RecipesTableViewCell: UITableViewCell {
 
-        // -----------------------------------------
+        // -------------------------------------------------------
         //MARK: - outlets
-        // -----------------------------------------
+        // -------------------------------------------------------
 
     @IBOutlet weak var recipeImage: UIImageView! {
         didSet {
+                /// accessibility
             recipeImage.isAccessibilityElement = true
             recipeImage.accessibilityTraits = .image
             recipeImage.accessibilityHint = "Image of the recipe"
@@ -24,6 +25,7 @@ class RecipesTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var titleLabel: UILabel!  {
         didSet {
+                /// accessibility
             titleLabel.isAccessibilityElement = true
             titleLabel.accessibilityTraits = .staticText
             titleLabel.accessibilityHint = "Title of the recipe"
@@ -31,6 +33,7 @@ class RecipesTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var ingredientsLabel: UILabel! {
         didSet {
+                /// accessibility
             ingredientsLabel.isAccessibilityElement = true
             ingredientsLabel.accessibilityTraits = .staticText
             ingredientsLabel.accessibilityHint = "Ingredients used"
@@ -38,6 +41,7 @@ class RecipesTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var numberOfLikeLabel: UILabel! {
         didSet {
+                /// accessibility
             numberOfLikeLabel.isAccessibilityElement = true
             numberOfLikeLabel.accessibilityTraits = .staticText
             numberOfLikeLabel.accessibilityHint = "Number of like to the community for this recipe"
@@ -45,6 +49,7 @@ class RecipesTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var leafView: UIView! {
         didSet {
+                /// design
             leafView.layer.cornerRadius = 20
             leafView.layer.masksToBounds = true
 
@@ -57,6 +62,7 @@ class RecipesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var favoriteButton: UIButton! {
         didSet {
+                /// accessibility
             favoriteButton.isAccessibilityElement = true
             favoriteButton.accessibilityTraits = .button
             favoriteButton.accessibilityHint = "tapped to add the recipe in the favorites list"
@@ -64,6 +70,7 @@ class RecipesTableViewCell: UITableViewCell {
     }
 
     @IBAction func tappedFavorite(_ sender: Any) {
+            // update with action button config
         favoriteButton.setNeedsUpdateConfiguration()
     }
 

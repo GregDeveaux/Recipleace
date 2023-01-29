@@ -42,8 +42,6 @@ class RecipesTableViewController: UITableViewController {
         return favoritesRecipesReferencePath
     }()
 
-    private let decoder = JSONDecoder()
-
     
         // -------------------------------------------------------
         //MARK: - outlets
@@ -84,10 +82,11 @@ class RecipesTableViewController: UITableViewController {
         }
 
             // recover data result of API
-        API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { result in
+        API.QueryService.shared.getData(endpoint: .recipes(stuffs: listOfStuffsFromFridge), type: API.Edamam.Recipes.self) { [weak self] result in
+
+            self?.dataRecipes(result: result)
             print("✅ RECIPES_VC/DATA: \(result)")
 
-            self.dataRecipes(result: result)
         }
     }
 
@@ -102,8 +101,8 @@ class RecipesTableViewController: UITableViewController {
 
         // call the next page with url obtained of the last call
     func getNextRecipes(urlNextPage: String) {
-        API.QueryService.shared.getData(endpoint: .recipesNext(nextPage: urlNextPage), type: API.Edamam.Recipes.self) { result in
-            self.dataRecipes(result: result)
+        API.QueryService.shared.getData(endpoint: .recipesNext(nextPage: urlNextPage), type: API.Edamam.Recipes.self) { [weak self] result in
+            self?.dataRecipes(result: result)
         }
     }
 
@@ -160,22 +159,27 @@ class RecipesTableViewController: UITableViewController {
             print("✅ RECIPE_DETAIL_VC/FIREBASE_SAVE: recipeID = \(recipeID as Any)")
             return recipeID ?? "not recipe ID"
         }()
-            /// label extensible by title
+            /// title
         cell.titleLabel.numberOfLines = 0
         cell.titleLabel.text = listOfRecipes[indexPath.row].recipe.title
         print("✅ RECIPES_VC/TABLEVIEW: 🍜 \(String(describing: cell.titleLabel.text))")
 
+            /// ingredients
         listOfRecipes[indexPath.row].recipe.ingredients.forEach({ ingredient in
             cell.ingredientsLabel.text = ingredient.food
             print("✅ RECIPES_VC/TABLEVIEW: 🍓 \(String(describing: cell.ingredientsLabel.text))")
         })
-
+            /// image
         let urlImage = URL(string: listOfRecipes[indexPath.row].recipe.image)!
         if let dataImage = try? Data(contentsOf: urlImage) {
             cell.recipeImage.image = UIImage(data: dataImage)
         }
         print("✅ RECIPES_VC/TABLEVIEW: 🖼 \(String(describing: cell.recipeImage.image))")
 
+            // retrieve a global count of like for this recipe
+        let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
+        countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
+            /// button
         setupFavoriteButton(cell.favoriteButton, recipeID: recipeID, indexPath: indexPath)
 
         return cell
@@ -190,7 +194,6 @@ class RecipesTableViewController: UITableViewController {
             print("✅ RECIPES_VC/USERDEFAULTS: Recipe is save in favorites: \(savedFavorites)")
         } else {
             savedFavorites = savedFavorites.filter({ $0 != recipeID })
-//            savedFavorites.removeAll(where: { $0 == recipeID })
             print("✅ RECIPES_VC/USERDEFAULTS: Recipe is delete in favorites: \(savedFavorites)")
         }
             // setting userDefaults
@@ -198,18 +201,17 @@ class RecipesTableViewController: UITableViewController {
     }
 
     func setupFavoriteButton(_ myFavoriteButton: UIButton, recipeID: String, indexPath: IndexPath) {
-
-        var isFavorite = self.savedFavorites.contains(recipeID)
-
             // create a counter with likes of recipes
         let favoritesReferencePath = databaseReference.child("recipes")
         let favoritesCountReferencePath = favoritesReferencePath.child("\(recipeID)")
+
+            // look if recipe is favorite in userDefaults
+        var isFavorite = self.savedFavorites.contains(recipeID)
 
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
         configuration.baseBackgroundColor = .darkBlue
         configuration.baseForegroundColor = .greenColor
-        configuration.image = UIImage(systemName: "star")
 
             // update image button according by the isFavorite
         myFavoriteButton.configurationUpdateHandler = { button in
@@ -219,7 +221,7 @@ class RecipesTableViewController: UITableViewController {
             configuration?.image = UIImage(systemName: symbolName)
             button.configuration = configuration
         }
-        
+
              // action of favorite button
         myFavoriteButton.addAction(
             UIAction { _ in
@@ -240,12 +242,12 @@ class RecipesTableViewController: UITableViewController {
                     configuration.image = UIImage(systemName: "star.fill")
                         /// save in the counter firebase
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
+                    isFavorite = true
 
                     let urlImage = URL(string: self.listOfRecipes[indexPath.row].recipe.image)!
                     if let dataImage = try? Data(contentsOf: urlImage) {
                         self.downloadImageFirebase(image: dataImage, ID: recipeID)
                     }
-                    isFavorite = true
                 }
             }, for: .touchUpInside)
 

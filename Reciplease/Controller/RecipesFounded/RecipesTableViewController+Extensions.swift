@@ -83,4 +83,17 @@ extension RecipesTableViewController {
             print("🛑 RECIPES_VC/FIREBASE_SAVE: Failed to save favorite recipe, \(error)")
         }
     }
+
+    func countFavoritesRecipes(dataPath: DatabaseReference, countLabel: UILabel) {
+
+        dataPath.getData(completion:  { error, snapshot in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            let counter = snapshot?.value as? Int ?? 0
+            countLabel.text = "\(counter)"
+            print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
+        })
+    }
 }
