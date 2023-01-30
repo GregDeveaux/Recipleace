@@ -52,6 +52,12 @@ extension FavoriteTableViewController {
     func showFavoritesRecipes() {
             // check recipes and retrieve
         favoritesRecipesReferencePath?.observe(.childAdded, with: { snapshot in
+
+            if self.isLoadingRecipes {
+                self.activityIndicator.startAnimating()
+                print("✅ RECIPES_VC/ACTIVITY_INDICATOR: start")
+            }
+            
             let jsonOfFavoritesRecipes = snapshot.value as? [String: Any]
 
             do {
@@ -64,8 +70,8 @@ extension FavoriteTableViewController {
             } catch {
                 print("🛑 FAVORITES_VC/TABLEVIEW: an error occurred", error)
             }
-                // reload the tableView
-            self.favoritesRecipesTableView.reloadData()
+            self.isLoadingRecipes = false
+            self.activityIndicator.stopAnimating()
         })
     }
 
@@ -81,5 +87,6 @@ extension FavoriteTableViewController {
             print("✅ 😍⭐️ RECIPES_VC/COUNT_FAVORITES_RECIPES: \(String(describing: countLabel.text))")
         })
     }
+
 }
 

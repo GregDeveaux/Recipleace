@@ -55,7 +55,7 @@ extension RecipeDetailTableViewCell: UICollectionViewDelegate, UICollectionViewD
         }
         print("✅ RECIPE_DETAIL_CELL/COLLECTION_VIEW: 🌠 \(String(describing: cell.ingredientImageView.image))")
 
-        cell.ingredientNameLabel.text = ingredients[indexPath.row].food
+        cell.ingredientNameLabel.text = "\(Int(ingredients[indexPath.row].weight)) g\n" + ingredients[indexPath.row].food
         return cell
     }
 }

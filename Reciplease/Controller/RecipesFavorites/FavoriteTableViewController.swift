@@ -15,6 +15,10 @@ class FavoriteTableViewController: UITableViewController {
         // list for the favoriteRecipesTableView
     var listOfFavoritesRecipes: [API.Edamam.Recipe] = []
 
+        // Loading indicator
+    var isLoadingRecipes = true
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+
         // UserDefaults to check favorites recipes present in firebase
     private let userDefaults = UserDefaults.standard
     private let favorites = "favorites"
@@ -22,6 +26,7 @@ class FavoriteTableViewController: UITableViewController {
         var savedFavorites = userDefaults.array(forKey: favorites) as? [String] ?? []
         return savedFavorites
     }()
+
     private var imageURL: URL!
 
         // favorites recipes path of firebase
@@ -51,6 +56,11 @@ class FavoriteTableViewController: UITableViewController {
         super.viewDidLoad()
         // retrieve favorite in Firebase
         showFavoritesRecipes()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        favoritesRecipesTableView.reloadData()
     }
 
     @IBAction func tappedSignOut(_ sender: Any) {
@@ -114,32 +124,39 @@ class FavoriteTableViewController: UITableViewController {
         configuration.cornerStyle = .capsule
         configuration.baseBackgroundColor = .darkBlue
         configuration.baseForegroundColor = .greenColor
+        configuration.image = UIImage(systemName: "star.fill")
 
-        cell.favoriteButton.configurationUpdateHandler = { button in
-            var configuration = button.configuration
-            let symbolName = isFavorite ? "star.fill" : "star"
-            configuration?.image = UIImage(systemName: symbolName)
-            cell.favoriteButton.configuration = configuration
-        }
+        cell.favoriteButton.configuration = configuration
 
-        /// actions of favorite button
+            /// actions of favorite button
         cell.favoriteButton.addAction(
             UIAction { _ in
                 if isFavorite {
                     print("✅🙈 FAVORITES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
+
                     self.listOfFavoritesRecipes.remove(at: indexPath.row)
-                    self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
+                    
+                    if self.favoritesRecipesTableView.numberOfRows(inSection: indexPath.section) == 0 {
+                            /// remove TableView
+                        self.favoritesRecipesTableView.deleteSections(NSIndexSet(index: indexPath.section) as IndexSet, with: .automatic)
+                    }else{
+                            /// remove Row
+                        self.favoritesRecipesTableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                        /// change the sentence
+                    if self.listOfFavoritesRecipes.count == 0 {
+                        self.totalFavoritesRecipes.text = "Click on the star to add in the favorites"
+                    } else {
+                        self.totalFavoritesRecipes.text = "You are \(self.listOfFavoritesRecipes.count) favorites recipes"
+                    }
                         /// add counter of all users app and update, here we just delete
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                     isFavorite = false
-                    self.favoritesRecipesTableView.reloadData()
                 }
             },
             for: .touchUpInside)
-
-        cell.favoriteButton.configuration = configuration
 
             // retrieve a global count of like for this recipe
         let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
@@ -148,6 +165,14 @@ class FavoriteTableViewController: UITableViewController {
         return cell
     }
 
+        // present activity indicator if data is loading...
+    func setupActivityIndicator() {
+            /// wheel indicator
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .greenColor
+
+        favoritesRecipesTableView.backgroundView = activityIndicator
+    }
 
     func setupNavigationBar() {
             // Create a tranparency navigationBar
@@ -166,7 +191,6 @@ class FavoriteTableViewController: UITableViewController {
             print("✅ FAVORITES_VC/USERDEFAULTS: Recipe is save in favorites: \(savedFavorites)")
         } else {
             savedFavorites = savedFavorites.filter({ $0 != recipeID })
-//            savedFavorites.removeAll(where: { $0 == recipeID })
             print("✅ FAVORITES_VC/USERDEFAULTS: Recipe is delete in favorites: \(savedFavorites)")
         }
             // setting userDefaults

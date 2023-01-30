@@ -114,7 +114,7 @@ class RecipeDetailViewController: UIViewController {
                     /// add counter of all users app and update
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                     isFavorite = false
-                    self.countFavoritesRecipes()
+
                 } else {
                     print("✅ RECIPES_VC/TABLEVIEW: Recipe is favorite")
                     self.savefavoriteRecipe(recipe: self.recipeForDetails, recipeID: self.recipeID)
@@ -122,7 +122,6 @@ class RecipeDetailViewController: UIViewController {
                         /// add counter of all users app and update
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
                     isFavorite = true
-                    self.countFavoritesRecipes()
                 }
             }, for: .touchUpInside)
 
@@ -158,9 +157,9 @@ class RecipeDetailViewController: UIViewController {
         setupRecipe()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupRecipe()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        countFavoritesRecipes()
     }
 
 
@@ -181,8 +180,6 @@ class RecipeDetailViewController: UIViewController {
         mealTypeLabel.text = recipeForDetails.mealType[0].uppercased()
         print("✅ RECIPES_DETAIL_VC/RECEIVED: 🍜 \(String(describing: recipeForDetails.title))")
         dump(recipeForDetails)
-
-        countFavoritesRecipes()
 
         guard let urlImage = URL(string: recipeForDetails.image) else { return }
         if let dataImage = try? Data(contentsOf: urlImage) {

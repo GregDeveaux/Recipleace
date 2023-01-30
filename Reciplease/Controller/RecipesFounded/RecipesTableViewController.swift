@@ -67,6 +67,12 @@ class RecipesTableViewController: UITableViewController {
         receiveRecipes()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+            // update the view to each appear
+        listOfRecipesTableView.reloadData()
+    }
+
 
         // -------------------------------------------------------
         // MARK: - receiveRecipes
@@ -86,7 +92,6 @@ class RecipesTableViewController: UITableViewController {
 
             self?.dataRecipes(result: result)
             print("✅ RECIPES_VC/DATA: \(result)")
-
         }
     }
 
@@ -187,8 +192,6 @@ class RecipesTableViewController: UITableViewController {
 
     func favoritesRecipesIDInUserDefaults(_ recipeID: String, isFavorites: Bool) {
             // if not info create a empty array
-        var savedFavorites: [String] = userDefaults.array(forKey: favorites) as? [String] ?? []
-
         if isFavorites && !savedFavorites.contains(where: {$0 == recipeID}) {
             savedFavorites.append(recipeID)
             print("✅ RECIPES_VC/USERDEFAULTS: Recipe is save in favorites: \(savedFavorites)")
@@ -225,32 +228,30 @@ class RecipesTableViewController: UITableViewController {
              // action of favorite button
         myFavoriteButton.addAction(
             UIAction { _ in
-                self.listOfRecipesTableView.beginUpdates()
                 if isFavorite {
                     print("✅🙈 RECIPES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: false)
-                    configuration.image = UIImage(systemName: "star")
                     /// save in the counter firebase
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                     isFavorite = false
-
                 } else {
                     let recipeForDetails = self.listOfRecipes[indexPath.row].recipe
                     print("✅⭐️ RECIPES_VC/FAVORITE_BUTTON: Recipe is favorite")
                     self.savefavoriteRecipe(recipe: recipeForDetails, recipeID: recipeID)
                     self.favoritesRecipesIDInUserDefaults(recipeID, isFavorites: true)
-                    configuration.image = UIImage(systemName: "star.fill")
                         /// save in the counter firebase
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(1)])
-                    isFavorite = true
 
                     let urlImage = URL(string: self.listOfRecipes[indexPath.row].recipe.image)!
                     if let dataImage = try? Data(contentsOf: urlImage) {
                         self.downloadImageFirebase(image: dataImage, ID: recipeID)
                     }
+                    isFavorite = true
                 }
-                self.listOfRecipesTableView.endUpdates()
+                myFavoriteButton.configuration = configuration
+                self.listOfRecipesTableView.reloadData()
+
             }, for: .touchUpInside)
 
         myFavoriteButton.configuration = configuration
