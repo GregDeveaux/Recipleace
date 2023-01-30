@@ -225,6 +225,7 @@ class RecipesTableViewController: UITableViewController {
              // action of favorite button
         myFavoriteButton.addAction(
             UIAction { _ in
+                self.listOfRecipesTableView.beginUpdates()
                 if isFavorite {
                     print("✅🙈 RECIPES_VC/FAVORITE_BUTTON: Recipe is not favorite")
                     self.favoritesRecipesReferencePath?.child(recipeID).removeValue()
@@ -249,6 +250,7 @@ class RecipesTableViewController: UITableViewController {
                         self.downloadImageFirebase(image: dataImage, ID: recipeID)
                     }
                 }
+                self.listOfRecipesTableView.endUpdates()
             }, for: .touchUpInside)
 
         myFavoriteButton.configuration = configuration

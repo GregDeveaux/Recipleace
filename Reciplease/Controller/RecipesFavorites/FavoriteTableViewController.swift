@@ -134,6 +134,7 @@ class FavoriteTableViewController: UITableViewController {
                         /// add counter of all users app and update, here we just delete
                     favoritesCountReferencePath.setValue(["count": ServerValue.increment(-1)])
                     isFavorite = false
+                    self.favoritesRecipesTableView.reloadData()
                 }
             },
             for: .touchUpInside)
@@ -143,7 +144,6 @@ class FavoriteTableViewController: UITableViewController {
             // retrieve a global count of like for this recipe
         let getCounterFavoritesReferencePath = databaseReference.child("recipes/\(recipeID)/count")
         countFavoritesRecipes(dataPath: getCounterFavoritesReferencePath, countLabel: cell.numberOfLikeLabel)
-        favoritesRecipesTableView.reloadData()
 
         return cell
     }
